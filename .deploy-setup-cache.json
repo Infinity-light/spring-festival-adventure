@@ -1,0 +1,36 @@
+{
+  "project": {
+    "name": "spring-festival-adventure",
+    "type": "nextjs",
+    "language": "node",
+    "port": 3002,
+    "buildCmd": "npm install && npm run build",
+    "startCmd": "npm start -- -p 3002"
+  },
+  "server": {
+    "host": "47.98.171.82",
+    "user": "root",
+    "sshKeyPath": "~/.ssh/id_rsa",
+    "deployDir": "/opt/spring-festival-adventure"
+  },
+  "domain": {
+    "enabled": true,
+    "name": "spring.godpenai.com",
+    "https": true
+  },
+  "secrets": [],
+  "branches": {
+    "production": "master",
+    "staging": null
+  },
+  "registry": "ghcr.io",
+  "database": {
+    "type": "",
+    "dataDir": "",
+    "initCmd": "",
+    "migrateCmd": "",
+    "createAdmin": false,
+    "adminCmd": ""
+  },
+  "envVars": {}
+}

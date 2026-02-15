@@ -1,0 +1,23 @@
+services:
+  spring-festival-adventure:
+    image: ghcr.io/${GITHUB_USER:-spring-festival-adventure}/spring-festival-adventure:latest
+    container_name: spring-festival-adventure
+    restart: unless-stopped
+
+
+    ports:
+      - "3002:3002"
+
+    env_file:
+      - path: .env
+        required: false
+
+
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+
