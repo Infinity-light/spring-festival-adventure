@@ -18,14 +18,17 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
 
   const particles = useMemo(
     () =>
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 3 + Math.random() * 4,
-        size: 16 + Math.random() * 12,
-        emoji: emojis[Math.floor(Math.random() * emojis.length)],
-      })),
+      Array.from({ length: count }, (_, i) => {
+        const duration = 3 + Math.random() * 4
+        return {
+          id: i,
+          left: Math.random() * 100,
+          delay: -(Math.random() * duration),
+          duration,
+          size: 16 + Math.random() * 12,
+          emoji: emojis[Math.floor(Math.random() * emojis.length)],
+        }
+      }),
     [type, count, emojis],
   )
 

@@ -316,8 +316,8 @@ const chapter2Nodes: Record<string, StoryNode> = {
           { resource: 'money', delta: 700, message: '退票后改买高铁票，折腾一圈💫' },
           { resource: 'stamina', delta: -15 },
         ],
-        nextNodeId: 'ch2_plane_2',
-        feedback: '退票、买高铁票、拖着行李从机场赶去火车站……本马折腾了一大圈，感觉自己像个无头苍蝇 💫🚄',
+        nextNodeId: 'ch2_end',
+        feedback: '退票、买高铁票、拖着行李从机场赶去火车站……本马折腾了一大圈，但至少今晚能在高铁上睡一觉 💫🚄',
       },
       {
         id: 'ch2_plane1_argue',
