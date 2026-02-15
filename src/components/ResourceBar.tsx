@@ -10,14 +10,14 @@ interface ResourceBarProps {
 }
 
 const RESOURCE_CONFIG: Record<ResourceType, {
-  emoji: string
+  icon: string
   label: string
   colorClass: string
   maxValue: number | null
 }> = {
-  stamina: { emoji: '⚡', label: '体力', colorClass: 'bg-stamina', maxValue: 100 },
-  money:   { emoji: '💰', label: '钱包', colorClass: 'bg-money',   maxValue: null },
-  mood:    { emoji: '😊', label: '心情', colorClass: 'bg-mood',    maxValue: 100 },
+  stamina: { icon: '体', label: '体力', colorClass: 'bg-stamina', maxValue: 100 },
+  money:   { icon: '财', label: '钱包', colorClass: 'bg-money',   maxValue: null },
+  mood:    { icon: '心', label: '心情', colorClass: 'bg-mood',    maxValue: 100 },
 }
 
 const RESOURCE_KEYS: ResourceType[] = ['stamina', 'money', 'mood']
@@ -37,9 +37,9 @@ export default function ResourceBar({ resources, previousResources }: ResourceBa
   }, [resources, previousResources])
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-2 border-b border-festival-red-dark bg-bg-secondary px-3 py-2 sm:gap-4 sm:px-6">
+    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-2 border-b border-border bg-bg-secondary/95 backdrop-blur-sm px-3 py-2 sm:gap-4 sm:px-6">
       {RESOURCE_KEYS.map((key) => {
-        const { emoji, label, colorClass, maxValue } = RESOURCE_CONFIG[key]
+        const { icon, label, colorClass, maxValue } = RESOURCE_CONFIG[key]
         const value = resources[key]
         const delta = deltas?.[key]
         const percentage = maxValue ? Math.min((value / maxValue) * 100, 100) : null
@@ -47,8 +47,8 @@ export default function ResourceBar({ resources, previousResources }: ResourceBa
         return (
           <div key={key} className="flex flex-1 items-center gap-1.5 sm:gap-2">
             {/* 图标 + 资源名 */}
-            <span className="text-base sm:text-lg" role="img" aria-label={label}>
-              {emoji}
+            <span className={`text-xs font-bold w-5 h-5 rounded flex items-center justify-center text-white ${colorClass}`} aria-label={label}>
+              {icon}
             </span>
             <span className="hidden text-xs text-text-secondary sm:inline">
               {label}
@@ -86,7 +86,7 @@ export default function ResourceBar({ resources, previousResources }: ResourceBa
 
             {/* 进度条（仅体力和心情） */}
             {percentage != null && (
-              <div className="ml-1 h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="ml-1 h-2 flex-1 overflow-hidden rounded-full bg-black/8">
                 <motion.div
                   className={`h-full rounded-full ${colorClass}`}
                   initial={false}

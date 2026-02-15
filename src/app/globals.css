@@ -1,22 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  /* 春节主色调 */
-  --color-festival-red: #DC2626;
-  --color-festival-red-dark: #991B1B;
-  --color-festival-gold: #F59E0B;
-  --color-festival-gold-light: #FCD34D;
-  --color-bg-primary: #1A0A0A;
-  --color-bg-secondary: #2D1111;
-  --color-bg-card: #3D1515;
-  --color-text-primary: #FEF2F2;
-  --color-text-secondary: #FCA5A5;
-  --color-text-gold: #FCD34D;
+  /* 春节主色调 — 暖光国潮 */
+  --color-festival-red: #C53030;
+  --color-festival-red-dark: #9B2C2C;
+  --color-festival-gold: #D69E2E;
+  --color-festival-gold-light: #ECC94B;
+  --color-bg-primary: #FDF6EC;
+  --color-bg-secondary: #FAF0E0;
+  --color-bg-card: #FFFFFF;
+  --color-text-primary: #2D1B0E;
+  --color-text-secondary: #8B6F5E;
+  --color-text-gold: #B7791F;
 
   /* 资源条颜色 */
-  --color-stamina: #22C55E;
-  --color-money: #F59E0B;
-  --color-mood: #EC4899;
+  --color-stamina: #38A169;
+  --color-money: #D69E2E;
+  --color-mood: #D53F8C;
+
+  /* 补充色 */
+  --color-border: #E8D5C0;
+  --color-border-accent: #C53030;
 }
 
 @theme inline {
@@ -33,6 +37,8 @@
   --color-stamina: var(--color-stamina);
   --color-money: var(--color-money);
   --color-mood: var(--color-mood);
+  --color-border: var(--color-border);
+  --color-border-accent: var(--color-border-accent);
 }
 
 body {
@@ -47,10 +53,10 @@ body {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-primary);
+  background: var(--color-bg-secondary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-festival-red-dark);
+  background: var(--color-border);
   border-radius: 2px;
 }
 
@@ -82,8 +88,8 @@ body {
 
 /* 金色光晕 */
 @keyframes goldGlow {
-  0%, 100% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.6); }
+  0%, 100% { box-shadow: 0 0 8px rgba(214, 158, 46, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(214, 158, 46, 0.5); }
 }
 
 .animate-gold-glow {

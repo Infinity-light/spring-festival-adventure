@@ -31,7 +31,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-bg-primary antialiased">
+      <body className="min-h-screen bg-bg-primary text-text-primary antialiased">
         {children}
       </body>
     </html>

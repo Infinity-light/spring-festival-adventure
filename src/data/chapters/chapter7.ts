@@ -13,7 +13,6 @@ const chapter7Nodes: Record<string, StoryNode> = {
       {
         id: 'ch7_view_ending',
         text: '查看我的结局',
-        emoji: '🎊',
         effects: [],
         nextNodeId: 'game_end',
       },

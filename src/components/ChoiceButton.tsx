@@ -47,11 +47,11 @@ export default function ChoiceButton({
       whileTap={disabled ? undefined : { scale: 0.98 }}
       className={`
         w-full px-5 py-3 rounded-xl text-left
-        bg-bg-card border-2 text-text-primary
-        transition-colors duration-200
+        bg-bg-card border text-text-primary
+        shadow-sm transition-all duration-200
         ${isHighlighted
-          ? 'border-festival-gold shadow-lg'
-          : 'border-festival-red-dark hover:border-festival-gold'
+          ? 'border-festival-red shadow-md'
+          : 'border-border hover:border-festival-gold hover:shadow-md'
         }
         ${disabled && !isSelected
           ? 'opacity-50 cursor-not-allowed'
@@ -60,11 +60,6 @@ export default function ChoiceButton({
       `}
     >
       <span className="text-base leading-relaxed">
-        {choice.emoji && (
-          <span className="mr-2" aria-hidden="true">
-            {choice.emoji}
-          </span>
-        )}
         {choice.text}
       </span>
     </motion.button>

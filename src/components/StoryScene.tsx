@@ -44,9 +44,12 @@ export default function StoryScene({
     >
       {/* 章节标题 */}
       {node.title && (
-        <h2 className="text-sm font-medium text-text-gold text-center tracking-widest mb-6">
-          {node.title}
-        </h2>
+        <div className="text-center mb-6">
+          <span className="text-xs tracking-[0.2em] text-text-secondary uppercase">Chapter {node.chapter}</span>
+          <h2 className="text-base font-semibold text-festival-red mt-1">
+            {node.title}
+          </h2>
+        </div>
       )}
 
       {/* 叙事文本区域 */}

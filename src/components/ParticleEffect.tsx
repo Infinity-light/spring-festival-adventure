@@ -7,13 +7,7 @@ interface ParticleEffectProps {
   count?: number
 }
 
-const FIREWORK_EMOJIS = ['✨', '🎆', '🎇', '⭐']
-
-const contentMap = {
-  redpacket: () => '🧧',
-  firework: () => FIREWORK_EMOJIS[Math.floor(Math.random() * FIREWORK_EMOJIS.length)],
-  blessing: () => '福',
-}
+const SHAPES = ['circle', 'diamond', 'dot'] as const
 
 export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps) {
   const particles = useMemo(
@@ -23,11 +17,18 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
         left: Math.random() * 100,
         delay: Math.random() * 5,
         duration: 3 + Math.random() * 4,
-        size: type === 'blessing' ? 16 + Math.random() * 16 : 20 + Math.random() * 16,
-        content: contentMap[type](),
+        size: 4 + Math.random() * 8,
+        shape: SHAPES[Math.floor(Math.random() * SHAPES.length)],
+        color: type === 'firework'
+          ? ['#C53030', '#D69E2E', '#ECC94B', '#E53E3E'][Math.floor(Math.random() * 4)]
+          : type === 'redpacket'
+            ? ['#C53030', '#9B2C2C', '#E53E3E'][Math.floor(Math.random() * 3)]
+            : '#D69E2E',
       })),
     [type, count],
   )
+
+  const animName = type === 'firework' ? 'pFirework' : type === 'redpacket' ? 'pFall' : 'pBlessing'
 
   return (
     <div
@@ -36,19 +37,19 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
     >
       <style>{`
         @keyframes pFall {
-          0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-          50% { transform: translateY(50vh) translateX(15px) rotate(180deg); opacity: 1; }
+          0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.7; }
+          50% { transform: translateY(50vh) translateX(15px) rotate(180deg); opacity: 0.5; }
           100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); opacity: 0; }
         }
         @keyframes pFirework {
-          0% { transform: translateY(0) scale(1); opacity: 1; }
-          40% { transform: translateY(-50vh) scale(1.3); opacity: 1; }
-          70% { transform: translateY(-60vh) scale(1.8); opacity: 0.6; }
+          0% { transform: translateY(0) scale(1); opacity: 0.8; }
+          40% { transform: translateY(-50vh) scale(1.5); opacity: 0.7; }
+          70% { transform: translateY(-60vh) scale(2); opacity: 0.4; }
           100% { transform: translateY(-70vh) scale(0.5); opacity: 0; }
         }
         @keyframes pBlessing {
-          0% { transform: translateY(-10vh) rotate(-15deg); opacity: 0.9; }
-          50% { transform: translateY(50vh) rotate(15deg); opacity: 0.7; }
+          0% { transform: translateY(-10vh) rotate(-15deg); opacity: 0.6; }
+          50% { transform: translateY(50vh) rotate(15deg); opacity: 0.4; }
           100% { transform: translateY(110vh) rotate(-10deg); opacity: 0; }
         }
       `}</style>
@@ -60,17 +61,15 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
             left: `${p.left}%`,
             top: type === 'firework' ? 'auto' : '0',
             bottom: type === 'firework' ? '0' : 'auto',
-            fontSize: p.size,
-            animation: `${
-              type === 'redpacket' ? 'pFall' : type === 'firework' ? 'pFirework' : 'pBlessing'
-            } ${p.duration}s ${p.delay}s ease-in-out infinite`,
-            color: type === 'blessing' ? 'var(--color-festival-red)' : undefined,
-            fontWeight: type === 'blessing' ? 'bold' : undefined,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            borderRadius: p.shape === 'circle' ? '50%' : p.shape === 'dot' ? '50%' : '2px',
+            transform: p.shape === 'diamond' ? 'rotate(45deg)' : undefined,
+            animation: `${animName} ${p.duration}s ${p.delay}s ease-in-out infinite`,
             willChange: 'transform, opacity',
           }}
-        >
-          {p.content}
-        </span>
+        />
       ))}
     </div>
   )
