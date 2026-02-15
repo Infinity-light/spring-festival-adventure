@@ -46,11 +46,21 @@ export default function StoryScene({
 }: StorySceneProps) {
   const visibleParagraphs = node.narrative.slice(0, narrativeIndex + 1)
   const hasMoreNarrative = narrativeIndex < node.narrative.length - 1
+  const isTappable = !!feedbackText || hasMoreNarrative
+
+  const handleTap = () => {
+    if (feedbackText) {
+      onDismissFeedback?.()
+    } else if (hasMoreNarrative) {
+      onAdvance()
+    }
+  }
 
   return (
     <motion.div
       key={node.id}
-      className="flex flex-col flex-1 min-h-0 px-6 py-8"
+      className={`flex flex-col flex-1 min-h-0 px-6 py-8 ${isTappable ? 'cursor-pointer' : ''}`}
+      onClick={isTappable ? handleTap : undefined}
       {...SCENE_FADE}
       transition={SCENE_TRANSITION}
     >
@@ -79,20 +89,15 @@ export default function StoryScene({
             </motion.p>
           ))}
         </AnimatePresence>
-      </div>
 
-      {/* 底部操作区 */}
-      <div className="shrink-0 flex flex-col items-center gap-3">
-        {feedbackText ? (
-          <motion.button
-            type="button"
-            key="feedback-panel"
-            initial={{ opacity: 0, y: 8 }}
+        {/* Feedback 内嵌在叙事区域 */}
+        {feedbackText && (
+          <motion.div
+            key="feedback-inline"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            onClick={onDismissFeedback}
-            className="w-full max-w-md bg-festival-gold/10 border border-festival-gold/30 rounded-xl px-5 py-4 text-left cursor-pointer hover:bg-festival-gold/15 transition-colors"
-            aria-label="点击继续"
+            className="bg-white/80 border border-festival-red/12 rounded-xl px-5 py-4 shadow-sm"
           >
             {feedbackEffects && feedbackEffects.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-3">
@@ -104,8 +109,8 @@ export default function StoryScene({
                       key={i}
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
                         isPositive
-                          ? 'bg-green-500/15 text-green-400'
-                          : 'bg-red-500/15 text-red-400'
+                          ? 'bg-green-500/10 text-green-600'
+                          : 'bg-red-500/10 text-red-500'
                       }`}
                     >
                       <span>{info?.icon}</span>
@@ -115,28 +120,22 @@ export default function StoryScene({
                 })}
               </div>
             )}
-            <p className="text-lg leading-relaxed text-text-primary italic">
+            <p className="text-base leading-relaxed text-text-primary/90 italic">
               {feedbackText}
             </p>
-            <div className="flex flex-col items-center gap-1 text-text-secondary mt-3">
-              <span className="text-sm">继续</span>
-              <motion.span animate={BOUNCE_Y} className="text-lg">
-                ↓
-              </motion.span>
-            </div>
-          </motion.button>
-        ) : hasMoreNarrative ? (
-          <button
-            type="button"
-            onClick={onAdvance}
-            className="flex flex-col items-center gap-1 text-text-secondary hover:text-text-primary transition-colors py-2"
-            aria-label="继续阅读"
-          >
-            <span className="text-sm">继续</span>
+          </motion.div>
+        )}
+      </div>
+
+      {/* 底部操作区 */}
+      <div className="shrink-0 flex flex-col items-center gap-3">
+        {(feedbackText || hasMoreNarrative) ? (
+          <div className="flex flex-col items-center gap-1 text-text-secondary py-2 pointer-events-none">
+            <span className="text-sm">{feedbackText ? '点击任意处继续' : '继续'}</span>
             <motion.span animate={BOUNCE_Y} className="text-lg">
               ↓
             </motion.span>
-          </button>
+          </div>
         ) : (
           <AnimatePresence mode="sync">
             {node.choices.map((choice, index) => (

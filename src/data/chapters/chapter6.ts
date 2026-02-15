@@ -95,7 +95,9 @@ const chapter6Nodes: Record<string, StoryNode> = {
     narrative: [
       '春晚进行到了小品环节。',
       '你爸笑得前仰后合，你妈说\'这都什么啊\'，你表弟在发弹幕。',
-      '🐴 一家人最重要的就是整整齐齐地吐槽春晚。',
+      '广告时间，屏幕上轮番播放各种AI软件的广告——AI写作、AI绘画、AI做PPT、AI帮你聊天……',
+      '你妈看了一眼：\'这AI啥都能干，以后还要人干啥？\'',
+      '🐴 妈，这个问题本马每天都在想。',
     ],
     choices: [
       {
@@ -116,6 +118,16 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_fireworks',
         feedback: '朋友圈文案："这个小品的编剧是AI写的吧"——三分钟收获58个赞。本马的吐槽事业在除夕夜达到了巅峰。🎤',
+      },
+      {
+        id: 'ch6_cctv_ai_talk',
+        text: '跟家人聊起AI的事',
+        effects: [
+          { resource: 'mood', delta: 20, message: '难得的家庭对话💬' },
+          { resource: 'stamina', delta: -5, message: '难得的家庭对话💬' },
+        ],
+        nextNodeId: 'ch6_fireworks',
+        feedback: '你爸说"AI再厉害也不会包饺子"，你妈说"它能帮我种菜不"，奶奶说"能打电话就行了"。一家人七嘴八舌，说的都不在点上，但本马笑得肚子疼。这种对话，AI真给不了。💬😂',
       },
       {
         id: 'ch6_cctv_sleep',

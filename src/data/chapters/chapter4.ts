@@ -109,6 +109,15 @@ const chapter4Nodes: Record<string, StoryNode> = {
         nextNodeId: 'ch4_end',
         feedback: '你爸瞟了你一眼，没再追问，默默把车内暖风调高了两度。有些话不用说，老爸都懂。本马望着窗外，眼眶偷偷红了一圈 🚗💨',
       },
+      {
+        id: 'ch4_taxi_ai',
+        text: '还行，就是AI来了压力挺大',
+        effects: [
+          { resource: 'mood', delta: 20, message: '爸爸的话暖到了🥲' },
+        ],
+        nextNodeId: 'ch4_end',
+        feedback: '你爸沉默了一会儿，说："管它什么AI不AI的，能回来就好。你妈念叨你念叨了一个月了。"窗外路灯一盏盏掠过，本马鼻子一酸，赶紧扭头看窗外 🥲',
+      },
     ],
   },
 
