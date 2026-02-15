@@ -5,67 +5,53 @@ on:
     branches:
       - master
 
-env:
-  REGISTRY: ghcr.io
-
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set image name (lowercase)
-        run: echo "IMAGE_NAME=$(echo '${{ github.repository_owner }}/spring-festival-adventure' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-      - name: Copy files to server
+      - name: Copy source to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "docker-compose.yml"
-          target: "/opt/spring-festival-adventure/spring-festival-adventure"
+          source: "."
+          target: "/opt/spring-festival-adventure/spring-festival-adventure/source"
+          rm: true
 
-      - name: Deploy to VPS
+      - name: Build and deploy on server
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 15m
           script: |
-            export GITHUB_USER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')
             cd /opt/spring-festival-adventure/spring-festival-adventure
-            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            # Generate complete .env
-            cat > .env << 'ENVEOF'
 
-            ENVEOF
-            sed -i 's/^ *//' .env
+            # Copy source files to build context
+            cp -r source/. build-context/
+            rm -rf source
 
-            docker compose pull
+            cd build-context
+
+            # Build image locally on server
+            docker build -t spring-festival-adventure:latest .
+
+            # Go back and update compose
+            cd /opt/spring-festival-adventure/spring-festival-adventure
+            cp build-context/docker-compose.yml . 2>/dev/null || true
+
+            # Stop old container, start new
+            docker compose down
             docker compose up -d --remove-orphans
 
+            # Cleanup
+            rm -rf build-context
             docker image prune -f
 
       - name: Health check

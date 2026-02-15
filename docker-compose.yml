@@ -1,6 +1,6 @@
 services:
   spring-festival-adventure:
-    image: ghcr.io/${GITHUB_USER:-spring-festival-adventure}/spring-festival-adventure:latest
+    image: spring-festival-adventure:latest
     container_name: spring-festival-adventure
     restart: unless-stopped
 
