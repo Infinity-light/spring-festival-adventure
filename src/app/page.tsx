@@ -51,7 +51,7 @@ export default function Home() {
         transition={{ delay: 0.5, duration: 0.6 }}
         className="text-text-secondary text-sm leading-7 mb-12 space-y-1"
       >
-        <p>扮演一匹在大城市打工的马</p>
+        <p>🐴 扮演一匹在大城市打工的马</p>
         <p>经历春运回家的重重考验</p>
         <p>搞笑吐槽 · 生存选择 · 专属贺卡</p>
       </motion.div>
@@ -68,7 +68,7 @@ export default function Home() {
           shadow-lg shadow-festival-red/20
           active:scale-95 transition-transform cursor-pointer"
       >
-        开始冒险
+        🐴 开始冒险
       </motion.button>
     </div>
   )

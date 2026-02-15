@@ -7,9 +7,15 @@ interface ParticleEffectProps {
   count?: number
 }
 
-const SHAPES = ['circle', 'diamond', 'dot'] as const
+const EMOJI_MAP = {
+  redpacket: ['🧧', '🧧', '🧧', '💰'],
+  firework: ['✨', '🎆', '🎇', '⭐'],
+  blessing: ['福', '福', '🐴', '🧧'],
+} as const
 
 export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps) {
+  const emojis = EMOJI_MAP[type]
+
   const particles = useMemo(
     () =>
       Array.from({ length: count }, (_, i) => ({
@@ -17,15 +23,10 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
         left: Math.random() * 100,
         delay: Math.random() * 5,
         duration: 3 + Math.random() * 4,
-        size: 4 + Math.random() * 8,
-        shape: SHAPES[Math.floor(Math.random() * SHAPES.length)],
-        color: type === 'firework'
-          ? ['#C53030', '#D69E2E', '#ECC94B', '#E53E3E'][Math.floor(Math.random() * 4)]
-          : type === 'redpacket'
-            ? ['#C53030', '#9B2C2C', '#E53E3E'][Math.floor(Math.random() * 3)]
-            : '#D69E2E',
+        size: 16 + Math.random() * 12,
+        emoji: emojis[Math.floor(Math.random() * emojis.length)],
       })),
-    [type, count],
+    [type, count, emojis],
   )
 
   const animName = type === 'firework' ? 'pFirework' : type === 'redpacket' ? 'pFall' : 'pBlessing'
@@ -61,15 +62,14 @@ export default function ParticleEffect({ type, count = 15 }: ParticleEffectProps
             left: `${p.left}%`,
             top: type === 'firework' ? 'auto' : '0',
             bottom: type === 'firework' ? '0' : 'auto',
-            width: p.size,
-            height: p.size,
-            backgroundColor: p.color,
-            borderRadius: p.shape === 'circle' ? '50%' : p.shape === 'dot' ? '50%' : '2px',
-            transform: p.shape === 'diamond' ? 'rotate(45deg)' : undefined,
+            fontSize: p.size,
+            lineHeight: 1,
             animation: `${animName} ${p.duration}s ${p.delay}s ease-in-out infinite`,
             willChange: 'transform, opacity',
           }}
-        />
+        >
+          {p.emoji}
+        </span>
       ))}
     </div>
   )

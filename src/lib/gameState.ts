@@ -57,7 +57,7 @@ function checkGameOver(resources: Resources): EndingType | null {
   return null
 }
 
-function applyChoiceEffects(state: GameState, choice: Choice): GameState {
+function computeChoiceUpdates(state: GameState, choice: Choice) {
   const updatedResources = choice.effects.reduce<Resources>(
     (res, effect) => ({
       ...res,
@@ -84,12 +84,27 @@ function applyChoiceEffects(state: GameState, choice: Choice): GameState {
     choicesMade: [...state.stats.choicesMade, choice.id],
   }
 
+  return { updatedResources, updatedStats }
+}
+
+function applyChoiceEffects(state: GameState, choice: Choice): GameState {
+  const { updatedResources, updatedStats } = computeChoiceUpdates(state, choice)
   return {
     ...state,
     currentNodeId: choice.nextNodeId,
     resources: updatedResources,
     stats: updatedStats,
     narrativeIndex: 0,
+  }
+}
+
+/** Apply resource effects and record stats, but stay on the current node. */
+function applyEffectsOnly(state: GameState, choice: Choice): GameState {
+  const { updatedResources, updatedStats } = computeChoiceUpdates(state, choice)
+  return {
+    ...state,
+    resources: updatedResources,
+    stats: updatedStats,
   }
 }
 
@@ -105,6 +120,18 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       }
       return next
     }
+
+    case 'APPLY_CHOICE_EFFECTS': {
+      const next = applyEffectsOnly(state, action.choice)
+      const ending = checkGameOver(next.resources)
+      if (ending) {
+        return { ...next, isGameOver: true, ending }
+      }
+      return next
+    }
+
+    case 'NAVIGATE_TO_NODE':
+      return { ...state, currentNodeId: action.nodeId, narrativeIndex: 0 }
 
     case 'ADVANCE_NARRATIVE':
       return { ...state, narrativeIndex: state.narrativeIndex + 1 }
@@ -142,6 +169,16 @@ export function useGameState() {
     [],
   )
 
+  const applyChoiceEffects = useCallback(
+    (choice: Choice) => dispatch({ type: 'APPLY_CHOICE_EFFECTS', choice }),
+    [],
+  )
+
+  const navigateToNode = useCallback(
+    (nodeId: string) => dispatch({ type: 'NAVIGATE_TO_NODE', nodeId }),
+    [],
+  )
+
   const advanceNarrative = useCallback(
     () => dispatch({ type: 'ADVANCE_NARRATIVE' }),
     [],
@@ -173,6 +210,8 @@ export function useGameState() {
   return {
     state,
     makeChoice,
+    applyChoiceEffects,
+    navigateToNode,
     advanceNarrative,
     setTransport,
     addItem,

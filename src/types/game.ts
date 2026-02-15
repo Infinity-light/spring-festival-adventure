@@ -34,6 +34,8 @@ export interface Choice {
   tooltip?: string
   /** 显示此选项的前置条件 */
   condition?: Condition
+  /** 选择后的即时反馈文案 */
+  feedback?: string
 }
 
 export interface StoryNode {
@@ -118,6 +120,8 @@ export interface GameState {
 
 export type GameAction =
   | { type: 'MAKE_CHOICE'; choice: Choice }
+  | { type: 'APPLY_CHOICE_EFFECTS'; choice: Choice }
+  | { type: 'NAVIGATE_TO_NODE'; nodeId: string }
   | { type: 'ADVANCE_NARRATIVE' }
   | { type: 'SET_TRANSPORT'; mode: 'train' | 'car' | 'plane' }
   | { type: 'ADD_ITEM'; itemId: string }

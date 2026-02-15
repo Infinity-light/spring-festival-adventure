@@ -17,11 +17,13 @@ interface GameEngineProps {
 }
 
 export function GameEngine({ storyNodes }: GameEngineProps) {
-  const { state, makeChoice, advanceNarrative, triggerGameOver, restart } = useGameState()
+  const { state, makeChoice, applyChoiceEffects, navigateToNode, advanceNarrative, triggerGameOver, restart } = useGameState()
   const [previousResources, setPreviousResources] = useState<
     Resources | undefined
   >(undefined)
   const [isChoosing, setIsChoosing] = useState(false)
+  const [feedbackText, setFeedbackText] = useState<string | null>(null)
+  const [pendingNextNodeId, setPendingNextNodeId] = useState<string | null>(null)
 
   const currentNode = storyNodes[state.currentNodeId] ?? null
   const endingData: Ending | undefined = state.ending ? ENDINGS[state.ending] : undefined
@@ -40,11 +42,28 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
         return
       }
 
-      makeChoice(choice)
-      setTimeout(() => setIsChoosing(false), CHOICE_COOLDOWN_MS)
+      if (choice.feedback) {
+        // Has feedback: apply effects now, but defer node transition
+        applyChoiceEffects(choice)
+        setFeedbackText(choice.feedback)
+        setPendingNextNodeId(choice.nextNodeId)
+        setTimeout(() => setIsChoosing(false), CHOICE_COOLDOWN_MS)
+      } else {
+        // No feedback: immediate transition as before
+        makeChoice(choice)
+        setTimeout(() => setIsChoosing(false), CHOICE_COOLDOWN_MS)
+      }
     },
-    [isChoosing, state, makeChoice, triggerGameOver],
+    [isChoosing, state, makeChoice, applyChoiceEffects, triggerGameOver],
   )
+
+  const handleDismissFeedback = useCallback(() => {
+    if (pendingNextNodeId) {
+      navigateToNode(pendingNextNodeId)
+      setPendingNextNodeId(null)
+    }
+    setFeedbackText(null)
+  }, [pendingNextNodeId, navigateToNode])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -74,6 +93,8 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
             onAdvance={advanceNarrative}
             onChoose={handleChoice}
             isChoosing={isChoosing}
+            feedbackText={feedbackText}
+            onDismissFeedback={handleDismissFeedback}
           />
         ) : (
           <div className="flex-1 flex items-center justify-center">

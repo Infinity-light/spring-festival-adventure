@@ -10,6 +10,8 @@ interface StorySceneProps {
   onAdvance: () => void
   onChoose: (choice: Choice) => void
   isChoosing: boolean
+  feedbackText?: string | null
+  onDismissFeedback?: () => void
 }
 
 const SCENE_FADE = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
@@ -31,6 +33,8 @@ export default function StoryScene({
   onAdvance,
   onChoose,
   isChoosing,
+  feedbackText,
+  onDismissFeedback,
 }: StorySceneProps) {
   const visibleParagraphs = node.narrative.slice(0, narrativeIndex + 1)
   const hasMoreNarrative = narrativeIndex < node.narrative.length - 1
@@ -71,7 +75,28 @@ export default function StoryScene({
 
       {/* 底部操作区 */}
       <div className="shrink-0 flex flex-col items-center gap-3">
-        {hasMoreNarrative ? (
+        {feedbackText ? (
+          <motion.button
+            type="button"
+            key="feedback-panel"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            onClick={onDismissFeedback}
+            className="w-full max-w-md bg-festival-gold/10 border border-festival-gold/30 rounded-xl px-5 py-4 text-left cursor-pointer hover:bg-festival-gold/15 transition-colors"
+            aria-label="点击继续"
+          >
+            <p className="text-lg leading-relaxed text-text-primary italic">
+              {feedbackText}
+            </p>
+            <div className="flex flex-col items-center gap-1 text-text-secondary mt-3">
+              <span className="text-sm">继续</span>
+              <motion.span animate={BOUNCE_Y} className="text-lg">
+                ↓
+              </motion.span>
+            </div>
+          </motion.button>
+        ) : hasMoreNarrative ? (
           <button
             type="button"
             onClick={onAdvance}
