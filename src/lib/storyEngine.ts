@@ -9,8 +9,8 @@ const RESOURCE_ZERO = 0
 /** 触发隐藏结局所需的好事件 ID */
 const LUCKY_CHOICE_IDS = [
   'help_fainted',
-  'share_food',
-  'give_seat',
+  'ch3_uncle_chat',
+  'ch6_redpacket_send',
   'help_cook_success',
 ] as const
 
@@ -98,8 +98,8 @@ export function determineEnding(state: GameState): EndingType {
     || mood < RESOURCE_BARELY_THRESHOLD
   if (isAnyBarely) return 'barely'
 
-  // 兜底：普通完美（资源都在 30-60 之间，不算完美但也没危险）
-  return 'perfect'
+  // 兜底：平安到家（资源都在 30-60 之间，不算完美但也没危险）
+  return 'normal'
 }
 
 // --- 章节标题 ---

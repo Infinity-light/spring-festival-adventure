@@ -17,6 +17,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
         emoji: '🚂',
         effects: [],
         nextNodeId: 'ch2_train_1',
+        condition: { type: 'choice_made', choiceId: 'start_train' },
       },
       {
         id: 'ch2_start_car',
@@ -24,6 +25,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
         emoji: '🚗',
         effects: [],
         nextNodeId: 'ch2_car_1',
+        condition: { type: 'choice_made', choiceId: 'start_car' },
       },
       {
         id: 'ch2_start_plane',
@@ -31,6 +33,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
         emoji: '✈️',
         effects: [],
         nextNodeId: 'ch2_plane_1',
+        condition: { type: 'choice_made', choiceId: 'start_plane' },
       },
     ],
   },

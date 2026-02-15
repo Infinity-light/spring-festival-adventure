@@ -10,6 +10,16 @@ const ENDINGS: Record<string, Ending> = {
       '🐴 马到成功，万事如意！新的一年，愿你像本马一样，体力充沛、钱包鼓鼓、心情美美！',
     cardStyle: 'bg-gradient-to-br from-yellow-600 via-red-600 to-yellow-700',
   },
+  normal: {
+    type: 'normal',
+    title: '平安到家',
+    emoji: '🏠',
+    description:
+      '一路磕磕绊绊，但你还是平安到了家。没有大富大贵，也没有狼狈不堪，这就是普通人的春运。',
+    greeting:
+      '🐴 平平安安就是福！新年快乐，愿你来年的每一段旅途都顺顺利利！',
+    cardStyle: 'bg-gradient-to-br from-sky-700 via-blue-800 to-sky-700',
+  },
   barely: {
     type: 'barely',
     title: '勉强到家',

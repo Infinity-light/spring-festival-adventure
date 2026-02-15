@@ -73,9 +73,14 @@ function applyChoiceEffects(state: GameState, choice: Choice): GameState {
     .filter((e) => e.resource === 'money' && e.delta < 0)
     .reduce((sum, e) => sum + Math.abs(e.delta), 0)
 
+  const isRelationshipQuestion = choice.id.startsWith('relationship_')
+  const isNoodle = ['pack1_noodles', 'pack2_noodles', 'ch2_train2_noodle', 'ch2_car2_noodle'].includes(choice.id)
+
   const updatedStats: GameStats = {
     ...state.stats,
     totalMoneySpent: state.stats.totalMoneySpent + moneySpent,
+    relationshipQuestions: state.stats.relationshipQuestions + (isRelationshipQuestion ? 1 : 0),
+    noodleCupsEaten: state.stats.noodleCupsEaten + (isNoodle ? 1 : 0),
     choicesMade: [...state.stats.choicesMade, choice.id],
   }
 

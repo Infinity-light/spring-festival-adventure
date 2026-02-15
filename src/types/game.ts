@@ -80,6 +80,7 @@ export interface GameStats {
 
 export type EndingType =
   | 'perfect'
+  | 'normal'
   | 'barely'
   | 'exhausted'
   | 'broke'

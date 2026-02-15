@@ -21,6 +21,7 @@ function parseGradient(cardStyle: string): string {
     'green-800': '#166534', 'emerald-900': '#064e3b',
     'amber-700': '#b45309', 'amber-800': '#92400e',
     'purple-800': '#6b21a8', 'pink-900': '#831843',
+    'sky-700': '#0369a1', 'blue-800': '#1e40af',
   }
   const from = cardStyle.match(/from-(\S+)/)?.[1] ?? ''
   const via = cardStyle.match(/via-(\S+)/)?.[1] ?? ''
