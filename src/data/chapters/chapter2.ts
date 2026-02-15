@@ -230,9 +230,9 @@ const chapter2Nodes: Record<string, StoryNode> = {
         id: 'ch2_car2_both',
         text: '两个都要！排队+买泡面',
         effects: [
-          { resource: 'stamina', delta: -15 },
+          { resource: 'stamina', delta: -10, message: '折腾但问题都解决了🔄' },
           { resource: 'money', delta: -50 },
-          { resource: 'mood', delta: -10 },
+          { resource: 'mood', delta: -5 },
         ],
         nextNodeId: 'ch2_car_3',
         feedback: '排完厕所买泡面，买完泡面又想上厕所。本马陷入了服务区的无限循环 🔄😩',
@@ -267,7 +267,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
         text: '继续走，说不定是捷径',
         effects: [
           { resource: 'stamina', delta: -5, message: '赌一把🎲' },
-          { resource: 'mood', delta: -20 },
+          { resource: 'mood', delta: -12 },
         ],
         nextNodeId: 'ch2_end',
         feedback: '土路越走越窄，本马的心也越来越慌。油表灯疯狂闪烁，仿佛在说"你完了" 🎲😱',
@@ -313,8 +313,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
         id: 'ch2_plane1_refund',
         text: '退票，改坐高铁！',
         effects: [
-          { resource: 'money', delta: 1500 },
-          { resource: 'money', delta: -800, message: '折腾一圈💫' },
+          { resource: 'money', delta: 700, message: '退票后改买高铁票，折腾一圈💫' },
           { resource: 'stamina', delta: -15 },
         ],
         nextNodeId: 'ch2_plane_2',

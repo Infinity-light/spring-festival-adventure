@@ -8,6 +8,7 @@ import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
 import EndingCard from '@/components/EndingCard'
 import ENDINGS from '@/data/endings'
+import { getAvailableChoices } from '@/lib/storyEngine'
 import type { StoryNode, Choice, Resources, Ending } from '@/types/game'
 
 const CHOICE_COOLDOWN_MS = 300
@@ -23,6 +24,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
   >(undefined)
   const [isChoosing, setIsChoosing] = useState(false)
   const [feedbackText, setFeedbackText] = useState<string | null>(null)
+  const [feedbackEffects, setFeedbackEffects] = useState<Choice['effects']>([])
   const [pendingNextNodeId, setPendingNextNodeId] = useState<string | null>(null)
 
   const currentNode = storyNodes[state.currentNodeId] ?? null
@@ -46,6 +48,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
         // Has feedback: apply effects now, but defer node transition
         applyChoiceEffects(choice)
         setFeedbackText(choice.feedback)
+        setFeedbackEffects(choice.effects)
         setPendingNextNodeId(choice.nextNodeId)
         setTimeout(() => setIsChoosing(false), CHOICE_COOLDOWN_MS)
       } else {
@@ -63,7 +66,13 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       setPendingNextNodeId(null)
     }
     setFeedbackText(null)
+    setFeedbackEffects([])
   }, [pendingNextNodeId, navigateToNode])
+
+  // Filter choices by condition so only valid options show
+  const filteredNode = currentNode
+    ? { ...currentNode, choices: getAvailableChoices(currentNode, state) }
+    : null
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -86,14 +95,15 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
               <div>加载结局中...</div>
             )}
           </div>
-        ) : currentNode ? (
+        ) : filteredNode ? (
           <StoryScene
-            node={currentNode}
+            node={filteredNode}
             narrativeIndex={state.narrativeIndex}
             onAdvance={advanceNarrative}
             onChoose={handleChoice}
             isChoosing={isChoosing}
             feedbackText={feedbackText}
+            feedbackEffects={feedbackEffects}
             onDismissFeedback={handleDismissFeedback}
           />
         ) : (

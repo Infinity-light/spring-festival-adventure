@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import type { StoryNode, Choice } from '@/types/game'
+import type { StoryNode, Choice, ResourceEffect } from '@/types/game'
 import ChoiceButton from '@/components/ChoiceButton'
 
 interface StorySceneProps {
@@ -11,6 +11,7 @@ interface StorySceneProps {
   onChoose: (choice: Choice) => void
   isChoosing: boolean
   feedbackText?: string | null
+  feedbackEffects?: ResourceEffect[]
   onDismissFeedback?: () => void
 }
 
@@ -27,6 +28,12 @@ const BOUNCE_Y = {
   transition: { duration: 1.4, repeat: Infinity, ease: 'easeInOut' as const },
 }
 
+const RESOURCE_LABELS: Record<string, { icon: string; name: string }> = {
+  stamina: { icon: '体', name: '体力' },
+  money: { icon: '财', name: '钱包' },
+  mood: { icon: '心', name: '心情' },
+}
+
 export default function StoryScene({
   node,
   narrativeIndex,
@@ -34,6 +41,7 @@ export default function StoryScene({
   onChoose,
   isChoosing,
   feedbackText,
+  feedbackEffects,
   onDismissFeedback,
 }: StorySceneProps) {
   const visibleParagraphs = node.narrative.slice(0, narrativeIndex + 1)
@@ -86,6 +94,27 @@ export default function StoryScene({
             className="w-full max-w-md bg-festival-gold/10 border border-festival-gold/30 rounded-xl px-5 py-4 text-left cursor-pointer hover:bg-festival-gold/15 transition-colors"
             aria-label="点击继续"
           >
+            {feedbackEffects && feedbackEffects.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {feedbackEffects.map((effect, i) => {
+                  const info = RESOURCE_LABELS[effect.resource]
+                  const isPositive = effect.delta > 0
+                  return (
+                    <span
+                      key={i}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+                        isPositive
+                          ? 'bg-green-500/15 text-green-400'
+                          : 'bg-red-500/15 text-red-400'
+                      }`}
+                    >
+                      <span>{info?.icon}</span>
+                      <span>{isPositive ? '+' : ''}{effect.delta}</span>
+                    </span>
+                  )
+                })}
+              </div>
+            )}
             <p className="text-lg leading-relaxed text-text-primary italic">
               {feedbackText}
             </p>

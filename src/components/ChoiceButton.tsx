@@ -60,7 +60,7 @@ export default function ChoiceButton({
       `}
     >
       <span className="text-base leading-relaxed flex items-center">
-        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-festival-red/10 text-festival-red text-xs font-bold mr-2 shrink-0">
+        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-text-secondary/15 text-text-secondary text-xs font-bold mr-2 shrink-0">
           {index + 1}
         </span>
         {choice.text}

@@ -19,7 +19,7 @@ const chapter3Nodes: Record<string, StoryNode> = {
         text: '热情回应，陪他聊',
         effects: [
           { resource: 'mood', delta: 10, message: '社交达马🗣️' },
-          { resource: 'stamina', delta: -20, message: '社交达马🗣️' },
+          { resource: 'stamina', delta: -10, message: '社交达马🗣️' },
         ],
         nextNodeId: 'ch3_fainted',
         feedback: '本马使出浑身解数配合大叔的节奏，从股市聊到房价再到养生。大叔感动得又塞了三个橘子过来，本马的社交电量已经见底了 🍊🔋',
@@ -61,8 +61,8 @@ const chapter3Nodes: Record<string, StoryNode> = {
         id: 'help_fainted',
         text: '冲上去帮忙！',
         effects: [
-          { resource: 'stamina', delta: -30, message: '见义勇为的好马🏥' },
-          { resource: 'mood', delta: 20, message: '见义勇为的好马🏥' },
+          { resource: 'stamina', delta: -15, message: '见义勇为的好马🏥' },
+          { resource: 'mood', delta: 25, message: '见义勇为的好马🏥' },
         ],
         nextNodeId: 'ch3_ex',
         feedback: '本马一个箭步冲上去，B站急救视频的记忆疯狂闪回。虽然手在抖，但好歹把老奶奶扶稳了，周围响起了掌声。本马今天是英雄马！🦸‍♂️',
