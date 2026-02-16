@@ -126,13 +126,6 @@ const ACHIEVEMENTS: Achievement[] = [
     category: 'ending',
   },
   {
-    id: 'ending_normal',
-    name: '平安到家',
-    emoji: '🏠',
-    description: '平平安安就是福',
-    category: 'ending',
-  },
-  {
     id: 'ending_barely',
     name: '勉强到家',
     emoji: '😅',
