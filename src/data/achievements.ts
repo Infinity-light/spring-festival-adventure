@@ -142,6 +142,14 @@ const ACHIEVEMENTS: Achievement[] = [
     hidden: true,
   },
   {
+    id: 'fate_reunion',
+    name: '命运的安排',
+    emoji: '🔄',
+    description: '高铁难友竟然就是相亲对象，世界真小',
+    category: 'story',
+    hidden: true,
+  },
+  {
     id: 'heli_rider',
     name: '天降奇兵',
     emoji: '🚁',

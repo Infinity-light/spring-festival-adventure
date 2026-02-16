@@ -233,6 +233,17 @@ const chapter5Nodes: Record<string, StoryNode> = {
         feedback: '你妈沉默了三秒，然后甩出一句"我还不是为了你好"。空气瞬间凝固，本马感觉自己在家庭伦理剧里当了主角。🥶',
       },
       {
+        id: 'ch5_blind_date_wechat_callback',
+        text: '先加个微信——等等，这头像怎么有点眼熟……',
+        condition: { type: 'choice_made', choiceId: 'ch3_hsr_arrival_exchange' },
+        effects: [
+          { resource: 'mood', delta: 20, message: '命运的安排😲' },
+        ],
+        nextNodeId: 'ch5_end',
+        feedback: '你妈把对方微信推过来，本马随手一扫——头像是一只被延误航班气到变形的猫。等等。这个头像……本马猛地翻出高铁上加的那个难友的微信。同一只猫。同一个人。本马瞪大了眼睛：所以妈你给我介绍的相亲对象，就是我在高铁上一起吐槽航空公司的那个人？？？你妈一脸无辜：啊？你们认识？那不是更好嘛！本马和难友在微信上大眼瞪小眼了三秒，然后同时发了一条消息：「原来是你啊哈哈哈哈哈」🚄💕😂',
+        tag: 'funny',
+      },
+      {
         id: 'ch5_blind_date_wechat',
         text: '先加个微信，线上聊聊',
         effects: [

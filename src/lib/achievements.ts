@@ -87,6 +87,7 @@ const CHOICE_ACHIEVEMENT_MAP: Record<string, string> = {
   ch6_cctv_roast: 'gala_roast',
   ch6_fireworks_light: 'firework_master',
   ch4_drive_parking_hug: 'hug_dad',
+  ch5_blind_date_wechat_callback: 'fate_reunion',
   ch2_plane1_refund: 'detour_master',
   ch2_plane_morning_yes: 'heli_rider',
 }
