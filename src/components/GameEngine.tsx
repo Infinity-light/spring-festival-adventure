@@ -10,7 +10,7 @@ import ParticleEffect from '@/components/ParticleEffect'
 import EndingCard from '@/components/EndingCard'
 import AchievementToast from '@/components/AchievementToast'
 import InventoryDrawer from '@/components/InventoryDrawer'
-import { useUnicornMusic } from '@/hooks/useUnicornMusic'
+import { useBackgroundMusic } from '@/hooks/useBackgroundMusic'
 import ENDINGS from '@/data/endings'
 import ITEMS from '@/data/items'
 import { getAvailableChoices } from '@/lib/storyEngine'
@@ -27,9 +27,10 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
   const ufoQualified = useRef(false)
   const unicornQualified = useRef(false)
 
-  // 独角兽线背景音乐：进入 ch_unicorn_ 节点或独角兽结局时播放
-  const unicornMusicActive = state.currentNodeId.startsWith('ch_unicorn_') || state.ending === 'unicorn_night'
-  const { stop: stopUnicornMusic } = useUnicornMusic(unicornMusicActive)
+  // 背景音乐：独角兽线 vs 其余节点互斥播放
+  const isUnicornRoute = state.currentNodeId.startsWith('ch_unicorn_') || state.ending === 'unicorn_night'
+  const { stop: stopUnicornMusic } = useBackgroundMusic('/unicorn.mp3', isUnicornRoute)
+  const { stop: stopDefaultMusic } = useBackgroundMusic('/拾光机.mp3', !isUnicornRoute)
 
   // 挂载时检查是否解锁 UFO 线（玩过 3 局以上）和独角兽线（全成就）
   useEffect(() => {
@@ -45,6 +46,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
 
   const handleRestart = useCallback(() => {
     stopUnicornMusic()
+    stopDefaultMusic()
     restart()
     setFeedbackText(null)
     setFeedbackEffects([])
@@ -59,7 +61,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     if (unicornQualified.current) {
       addItem('unicorn_pass')
     }
-  }, [restart, addItem, stopUnicornMusic])
+  }, [restart, addItem, stopUnicornMusic, stopDefaultMusic])
 
   const [previousResources, setPreviousResources] = useState<
     Resources | undefined

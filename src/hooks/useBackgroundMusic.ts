@@ -1,24 +1,31 @@
 import { useEffect, useRef, useCallback } from 'react'
 
 /**
- * 独角兽线背景音乐 hook。
- * - 当 active 为 true 时淡入播放
- * - 当 active 变为 false 时淡出停止
+ * 通用背景音乐 hook。
+ * - active 为 true 时淡入播放指定音源
+ * - active 变为 false 时淡出停止
  */
-export function useUnicornMusic(active: boolean) {
+export function useBackgroundMusic(src: string, active: boolean) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const srcRef = useRef(src)
   const fadeTimer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // 懒初始化 Audio 实例（仅客户端）
   const getAudio = useCallback(() => {
-    if (!audioRef.current && typeof window !== 'undefined') {
-      const a = new Audio('/unicorn.mp3')
+    if (typeof window === 'undefined') return null
+    if (!audioRef.current || srcRef.current !== src) {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+      const a = new Audio(src)
       a.loop = true
       a.volume = 0
       audioRef.current = a
+      srcRef.current = src
     }
     return audioRef.current
-  }, [])
+  }, [src])
 
   useEffect(() => {
     const audio = getAudio()
