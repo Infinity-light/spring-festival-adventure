@@ -122,21 +122,21 @@ const ITEMS: Record<string, Item> = {
     name: '全成就徽章',
     emoji: '🦄',
     description: '集齐所有成就后浮现的神秘徽章，散发着彩虹色的微光',
-    image: '/items/ufo_ticket.png',
+    image: '/items/unicorn_pass.png',
   },
   courage_feather: {
     id: 'courage_feather',
     name: '勇气之羽',
     emoji: '🪶',
     description: '穿越暴风雪后凝结在翅膀上的冰晶羽毛，闪着红光',
-    image: '/items/ufo_ticket.png',
+    image: '/items/courage_feather.png',
   },
   aurora_tear: {
     id: 'aurora_tear',
     name: '极光之泪',
     emoji: '💧',
     description: '绕道星空时极光滴落的一滴光，闪着绿光',
-    image: '/items/ufo_ticket.png',
+    image: '/items/aurora_tear.png',
   },
 }
 
