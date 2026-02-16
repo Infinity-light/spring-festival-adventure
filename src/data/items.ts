@@ -1,34 +1,94 @@
 import type { Item } from '@/types/game'
 
-const ITEMS: Item[] = [
-  {
+const ITEMS: Record<string, Item> = {
+  gift_pack: {
     id: 'gift_pack',
     name: '年货大礼包',
     emoji: '🎁',
     description: '讨好亲戚必备，内含坚果礼盒、牛奶、水果',
+    image: '/items/gift_pack.png',
     effect: { resource: 'money', delta: -500, message: '年货大采购💸' },
   },
-  {
+  red_envelopes: {
     id: 'red_envelopes',
     name: '一沓红包',
     emoji: '🧧',
     description: '社交硬通货，见面就发，人人夸你大方',
+    image: '/items/red_envelopes.png',
     effect: { resource: 'money', delta: -1000, message: '红包预算拉满🧧' },
   },
-  {
+  power_bank: {
     id: 'power_bank',
-    name: '充电宝+零食',
+    name: '充电宝套装',
     emoji: '🔋',
     description: '生存必需品，手机有电心不慌',
+    image: '/items/power_bank.png',
     effect: { resource: 'stamina', delta: 10, message: '续航满格🔋' },
   },
-  {
+  instant_noodles: {
     id: 'instant_noodles',
-    name: '一箱泡面',
+    name: '泡面箱',
     emoji: '🍜',
     description: '穷鬼套餐，但真的很香',
+    image: '/items/instant_noodles.png',
     effect: { resource: 'mood', delta: -5, message: '泡面虽好，但有点心酸🍜' },
   },
-]
+  knit_horse: {
+    id: 'knit_horse',
+    name: '毛线小马',
+    emoji: '🐴',
+    description: '前任送的手工针织马年挂件，红色身子棕色卷毛',
+    image: '/items/knit_horse.png',
+  },
+  lucky_orange: {
+    id: 'lucky_orange',
+    name: '大叔的橘子',
+    emoji: '🍊',
+    description: '健谈大叔塞给你的橘子，带着旅途的温度',
+    image: '/items/lucky_orange.png',
+  },
+  train_ticket: {
+    id: 'train_ticket',
+    name: '火车票',
+    emoji: '🚂',
+    description: '春运的见证，K1234次列车',
+    image: '/items/train_ticket.png',
+  },
+  car_key: {
+    id: 'car_key',
+    name: '车钥匙',
+    emoji: '🚗',
+    description: '小破车的钥匙，陪你走过一千公里',
+    image: '/items/car_key.png',
+  },
+  boarding_pass: {
+    id: 'boarding_pass',
+    name: '登机牌',
+    emoji: '✈️',
+    description: '虽然航班取消了，但登机牌留作纪念',
+    image: '/items/boarding_pass.png',
+  },
+  dumpling: {
+    id: 'dumpling',
+    name: '妈妈的饺子',
+    emoji: '🥟',
+    description: '热腾腾的饺子，家的味道',
+    image: '/items/dumpling.png',
+  },
+  firework: {
+    id: 'firework',
+    name: '烟花',
+    emoji: '🎆',
+    description: '除夕夜空中绽放的记忆',
+    image: '/items/firework.png',
+  },
+  red_packet_rain: {
+    id: 'red_packet_rain',
+    name: '红包雨截图',
+    emoji: '🧧',
+    description: '家族群抢红包的战绩',
+    image: '/items/red_packet_rain.png',
+  },
+}
 
 export default ITEMS

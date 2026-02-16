@@ -1,15 +1,16 @@
 import type { StoryNode } from '@/types/game'
 
 const chapter4Nodes: Record<string, StoryNode> = {
-  ch4_luggage: {
-    id: 'ch4_luggage',
+  // ==================== 火车线 ====================
+
+  ch4_train_arrival: {
+    id: 'ch4_train_arrival',
     chapter: 4,
     title: '第四章：到站风波',
     narrative: [
-      '终于到了！你拖着行李走出站台，深吸一口家乡的空气。',
+      '终于到站了！你拖着行李走出车厢，深吸一口家乡的空气。',
       '嗯……空气里有一股烧秸秆的味道，熟悉的感觉。',
       '🐴 家的味道！',
-      '但是，到站不等于到家。接下来还有一系列挑战……',
       '你在行李转盘前等了半天，终于看到一个和你的箱子很像的行李。',
       '你拿起来一看——咦，这个贴纸不是我的啊？',
       '你打开一看：里面全是女装。',
@@ -17,37 +18,40 @@ const chapter4Nodes: Record<string, StoryNode> = {
     ],
     choices: [
       {
-        id: 'ch4_luggage_staff',
+        id: 'ch4_train_luggage_staff',
         text: '赶紧找工作人员处理',
         effects: [
           { resource: 'stamina', delta: -10, message: '折腾一番😵' },
           { resource: 'mood', delta: -10, message: '折腾一番😵' },
         ],
-        nextNodeId: 'ch4_pickup',
+        nextNodeId: 'ch4_train_pickup',
         feedback: '工作人员淡定地说："每年春运都有几百件拿错的，您排队吧。"本马看了看前面的长队，感觉行李今天是回不来了 😵‍💫',
       },
       {
-        id: 'ch4_luggage_shout',
+        id: 'ch4_train_luggage_shout',
         text: '在候车厅大喊：谁拿错行李了！',
         effects: [
           { resource: 'stamina', delta: -5, message: '社死现场😱' },
           { resource: 'mood', delta: -15, message: '社死现场😱' },
         ],
-        nextNodeId: 'ch4_pickup',
+        nextNodeId: 'ch4_train_pickup',
         feedback: '"谁拿错行李了！！！里面全是女装！！！"整个候车厅的目光齐刷刷看过来。本马社死程度：史诗级。一个小哥红着脸跑过来换走了箱子 👗😱',
+        tag: 'funny',
       },
       {
-        id: 'ch4_luggage_ignore',
+        id: 'ch4_train_luggage_ignore',
         text: '算了，先回家再说',
-        effects: [{ resource: 'mood', delta: -5 }],
-        nextNodeId: 'ch4_pickup',
+        effects: [
+          { resource: 'mood', delta: -5, message: '随缘吧' },
+        ],
+        nextNodeId: 'ch4_train_pickup',
         feedback: '本马决定带着这箱女装先回家。万一找不回自己的行李……过年穿JK制服拜年也不是不行？算了还是不行 👘😅',
       },
     ],
   },
 
-  ch4_pickup: {
-    id: 'ch4_pickup',
+  ch4_train_pickup: {
+    id: 'ch4_train_pickup',
     chapter: 4,
     narrative: [
       '你走出出站口，在人群中寻找来接你的人。',
@@ -58,82 +62,197 @@ const chapter4Nodes: Record<string, StoryNode> = {
     ],
     choices: [
       {
-        id: 'ch4_pickup_photo',
+        id: 'ch4_train_pickup_photo',
         text: '拍照发家族群：找到了！',
-        effects: [{ resource: 'mood', delta: 15, message: '温馨时刻📸' }],
-        nextNodeId: 'ch4_taxi',
+        effects: [
+          { resource: 'mood', delta: 15, message: '温馨时刻📸' },
+        ],
+        nextNodeId: 'ch4_home_approach',
         feedback: '照片发出去三秒，家族群炸了。大姑：瘦了！二叔：黑了！奶奶：穿这么少不冷吗？本马后悔了，不该发的 📸💬💬💬',
       },
       {
-        id: 'ch4_pickup_scare',
+        id: 'ch4_train_pickup_scare',
         text: '敲窗户吓他一跳',
         effects: [
           { resource: 'mood', delta: 10, message: '调皮的马儿😝' },
           { resource: 'stamina', delta: -5, message: '调皮的马儿😝' },
         ],
-        nextNodeId: 'ch4_taxi',
+        nextNodeId: 'ch4_home_approach',
         feedback: '"砰砰砰！"你爸被吓得一个激灵，差点把方向盘按出喇叭声。缓过神来之后追着你绕车跑了两圈。父子情深，物理表达 😝🏃‍♂️',
+        tag: 'funny',
       },
     ],
   },
 
-  ch4_taxi: {
-    id: 'ch4_taxi',
+  // ==================== 自驾线 ====================
+
+  ch4_drive_village: {
+    id: 'ch4_drive_village',
     chapter: 4,
+    title: '第四章：到站风波',
     narrative: [
-      '坐上你爸的车，终于踏上了回家的最后一段路。',
-      '你爸一边开车一边问：\'工作怎么样？涨工资了没？\'',
-      '🐴 来了来了，灵魂拷问第一弹。',
-      '你还没回答，你爸又说：\'你妈准备了一桌子菜等你呢。\'',
-      '突然有点想哭。',
+      '导航播报：\'您已到达目的地附近。\'',
+      '你把车开进了村口的小路，熟悉的老槐树映入眼帘。',
+      '🐴 到了！！！本马终于到了！！！',
+      '你刚把车停在家门口，隔壁的王大爷就探出了头。',
+      '然后是李婶、张叔、赵奶奶……',
+      '三分钟之内，你的车被围了个水泄不通。',
+      '\'哟，小X回来了！开的什么车？多少钱买的？\'',
     ],
     choices: [
       {
-        id: 'ch4_taxi_good',
-        text: '一切都好，放心吧爸',
-        effects: [{ resource: 'mood', delta: 20, message: '到家的感觉真好🏠' }],
-        nextNodeId: 'ch4_end',
-        feedback: '你爸听完沉默了两秒，然后说："好就行。"窗外的路灯一盏一盏掠过，本马鼻子突然有点酸。报喜不报忧，打工马的基本修养 🥲',
-      },
-      {
-        id: 'ch4_taxi_ok',
-        text: '还行吧，比上不足比下有余',
-        effects: [{ resource: 'mood', delta: 15 }],
-        nextNodeId: 'ch4_end',
-        feedback: '你爸笑了笑："比上不足比下有余，那就是还行呗。"本马的中庸之道拿捏得死死的，既不让老爸担心，也没把牛吹破 ⚖️',
-      },
-      {
-        id: 'ch4_taxi_later',
-        text: '别问了，到家再说',
-        effects: [{ resource: 'mood', delta: 10 }],
-        nextNodeId: 'ch4_end',
-        feedback: '你爸瞟了你一眼，没再追问，默默把车内暖风调高了两度。有些话不用说，老爸都懂。本马望着窗外，眼眶偷偷红了一圈 🚗💨',
-      },
-      {
-        id: 'ch4_taxi_ai',
-        text: '还行，就是AI来了压力挺大',
+        id: 'ch4_drive_village_show',
+        text: '大方介绍，满足乡亲们的好奇心',
         effects: [
-          { resource: 'mood', delta: 20, message: '爸爸的话暖到了🥲' },
+          { resource: 'mood', delta: 10, message: '全村焦点🌟' },
+          { resource: 'stamina', delta: -10, message: '被围观好累' },
         ],
-        nextNodeId: 'ch4_end',
-        feedback: '你爸沉默了一会儿，说："管它什么AI不AI的，能回来就好。你妈念叨你念叨了一个月了。"窗外路灯一盏盏掠过，本马鼻子一酸，赶紧扭头看窗外 🥲',
+        nextNodeId: 'ch4_drive_parking',
+        feedback: '本马打开车门，像车展模特一样介绍起了自己的小破车。王大爷摸了摸车漆："不错不错，比我家拖拉机强。"谢谢大爷，这个比较很有参考价值 🚗🚜',
+      },
+      {
+        id: 'ch4_drive_village_shy',
+        text: '低调低调，赶紧进家门',
+        effects: [
+          { resource: 'mood', delta: 5, message: '低调的马🤫' },
+          { resource: 'stamina', delta: -5, message: '突围消耗' },
+        ],
+        nextNodeId: 'ch4_drive_parking',
+        feedback: '本马试图低调地溜进家门，但乡亲们的热情像潮水一样挡不住。李婶拉着你的手不放："瘦了瘦了，在外面没吃好吧？"本马的社恐在此刻达到了巅峰 🤫👋',
       },
     ],
   },
 
-  ch4_end: {
-    id: 'ch4_end',
+  ch4_drive_parking: {
+    id: 'ch4_drive_parking',
+    chapter: 4,
+    narrative: [
+      '好不容易摆脱了乡亲们的围观，你准备把车停好。',
+      '问题是——家门口的空地上已经停了三辆车、两辆三轮车和一辆拖拉机。',
+      '你爸从屋里出来，指挥你停车：\'往左打！再往左！停！过了过了！\'',
+      '🐴 爸，你这指挥水平，交警看了都摇头。',
+      '折腾了十分钟，车终于停好了。歪歪扭扭的，但至少没撞到拖拉机。',
+      '你爸拍了拍你的肩膀：\'开了多久？累坏了吧。你妈做了你爱吃的红烧肉。\'',
+    ],
+    choices: [
+      {
+        id: 'ch4_drive_parking_hug',
+        text: '给老爸一个拥抱',
+        effects: [
+          { resource: 'mood', delta: 20, message: '到家的感觉真好🏠' },
+          { resource: 'stamina', delta: 10, message: '亲情充电' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马一把抱住了老爸，老爸愣了一下，然后拍了拍你的背："行了行了，多大的人了。"嘴上这么说，但本马感觉到他抱得更紧了。鼻子一酸，赶紧松开 🤗🥲',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch4_drive_parking_food',
+        text: '红烧肉！！！冲！！！',
+        effects: [
+          { resource: 'mood', delta: 15, message: '红烧肉的召唤🍖' },
+          { resource: 'stamina', delta: 5, message: '精神满血' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马听到"红烧肉"三个字，四条腿像装了弹簧一样弹射进了家门。一千公里的疲惫，在闻到妈妈做的红烧肉的那一刻，全部烟消云散 🍖💨',
+      },
+    ],
+  },
+
+  // ==================== 飞机线 ====================
+
+  ch4_fly_landing: {
+    id: 'ch4_fly_landing',
+    chapter: 4,
+    title: '第四章：到站风波',
+    narrative: [
+      '飞机平稳降落，你长舒一口气。',
+      '🐴 脚踏实地的感觉真好！',
+      '你走到行李转盘前，等了二十分钟，看着别人的行李一个个出来。',
+      '你的呢？',
+      '又等了十分钟。转盘停了。',
+      '你的行李……没出来。',
+      '🐴 ？？？本马的行李呢？？？去哪了？？？',
+    ],
+    choices: [
+      {
+        id: 'ch4_fly_luggage_counter',
+        text: '冲向行李查询柜台',
+        effects: [
+          { resource: 'stamina', delta: -10, message: '暴走模式🏃' },
+          { resource: 'mood', delta: -15, message: '行李丢了心态崩了' },
+        ],
+        nextNodeId: 'ch4_fly_gohome',
+        feedback: '柜台小姐姐查了半天，面带微笑地说："您的行李可能被送到了另一个城市，我们会尽快帮您找回。"本马的年货、衣服、红包……全在那个箱子里啊！😱✈️',
+      },
+      {
+        id: 'ch4_fly_luggage_calm',
+        text: '深呼吸，先填个行李延误单',
+        effects: [
+          { resource: 'mood', delta: -10, message: '冷静处理📋' },
+          { resource: 'stamina', delta: -5, message: '填表也累' },
+        ],
+        nextNodeId: 'ch4_fly_gohome',
+        feedback: '本马冷静地填完了延误申报单，工作人员承诺48小时内送到。本马看了看手里空空如也的双手——过年回家，两手空空，这画面太美不敢看 📋😶',
+      },
+    ],
+  },
+
+  ch4_fly_gohome: {
+    id: 'ch4_fly_gohome',
+    chapter: 4,
+    narrative: [
+      '不管行李的事了，先回家要紧。',
+      '问题是——机场离老家还有八十公里。',
+      '你看了看打车软件：预估费用280元，等待时间45分钟。',
+      '旁边有个大巴售票点：机场大巴50元，但要绕三个站。',
+      '🐴 花钱还是花时间，这是个问题。',
+      '这时候你爸打来电话：\'到了没？我在机场出口等你呢！\'',
+      '🐴 ！！！爸你来接我了？？？',
+    ],
+    choices: [
+      {
+        id: 'ch4_fly_gohome_dad',
+        text: '冲出去找老爸！',
+        effects: [
+          { resource: 'mood', delta: 25, message: '老爸来接，感动哭了🥲' },
+          { resource: 'stamina', delta: 5, message: '亲情buff' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '你冲出到达厅，一眼就看到了举着"接宝贝回家"纸牌的老爸。本马当场破防，眼泪差点掉下来。老爸开了两小时车来接你，嘴上说"顺路"，但这里离家八十公里哪来的顺路 🥲❤️',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch4_fly_gohome_bus',
+        text: '让老爸别等了，坐大巴省钱',
+        effects: [
+          { resource: 'money', delta: -50, message: '大巴经济实惠🚌' },
+          { resource: 'stamina', delta: -15, message: '大巴绕路好累' },
+          { resource: 'mood', delta: 5, message: '省钱的快乐' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '你让老爸回去等着，自己坐上了机场大巴。大巴绕了三个站，本马在车上又睡了一觉。到站时天都黑了，老爸还是在村口等着。"说了不用来接……""闲着也是闲着。"🚌🥲',
+      },
+    ],
+  },
+
+  // ==================== 三线汇合 ====================
+
+  ch4_home_approach: {
+    id: 'ch4_home_approach',
     chapter: 4,
     narrative: [
       '车子拐进了熟悉的小巷，你看到了家门口的灯。',
       '妈妈已经站在门口等你了。',
+      '你爸一边开车一边说：\'你妈准备了一桌子菜等你呢。\'',
+      '🐴 突然有点想哭。',
       '到家了！！！',
       '但是……亲戚们也到了。',
       '……战斗才刚刚开始。',
     ],
     choices: [
       {
-        id: 'ch4_end_continue',
+        id: 'ch4_home_approach_continue',
         text: '进门！',
         effects: [],
         nextNodeId: 'ch5_relationship',

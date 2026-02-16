@@ -7,6 +7,8 @@ import type { Resources, ResourceType } from '@/types/game'
 interface ResourceBarProps {
   resources: Resources
   previousResources?: Resources
+  onOpenInventory?: () => void
+  inventoryCount?: number
 }
 
 const RESOURCE_CONFIG: Record<ResourceType, {
@@ -26,7 +28,7 @@ function formatDelta(delta: number): string {
   return delta > 0 ? `+${delta}` : `${delta}`
 }
 
-export default function ResourceBar({ resources, previousResources }: ResourceBarProps) {
+export default function ResourceBar({ resources, previousResources, onOpenInventory, inventoryCount = 0 }: ResourceBarProps) {
   const deltas = useMemo(() => {
     if (!previousResources) return null
     return RESOURCE_KEYS.reduce((acc, key) => {
@@ -98,6 +100,22 @@ export default function ResourceBar({ resources, previousResources }: ResourceBa
           </div>
         )
       })}
+
+      {/* 背包按钮 */}
+      {onOpenInventory && (
+        <button
+          onClick={onOpenInventory}
+          className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-lg hover:bg-bg-primary transition-colors"
+          aria-label="打开背包"
+        >
+          {'🎒'}
+          {inventoryCount > 0 && (
+            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-festival-red text-[10px] font-bold text-white">
+              {inventoryCount}
+            </span>
+          )}
+        </button>
+      )}
     </div>
   )
 }

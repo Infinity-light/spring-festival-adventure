@@ -36,6 +36,12 @@ export interface Choice {
   condition?: Condition
   /** 选择后的即时反馈文案 */
   feedback?: string
+  /** 选择后获得的道具ID */
+  addItem?: string
+  /** 选择后移除的道具ID */
+  removeItem?: string
+  /** 选择标签：helpful=助人为乐, funny=搞笑时刻 */
+  tag?: 'helpful' | 'funny'
 }
 
 export interface StoryNode {
@@ -55,6 +61,7 @@ export interface Item {
   name: string
   emoji: string
   description: string
+  image: string
   effect?: ResourceEffect
 }
 
@@ -76,6 +83,20 @@ export interface GameStats {
   noodleCupsEaten: number
   /** 做过的关键选择ID */
   choicesMade: string[]
+  /** 收集的道具总数 */
+  itemsCollected: number
+  /** 助人为乐次数 */
+  helpfulActions: number
+  /** 总选择次数 */
+  totalChoices: number
+  /** 搞笑时刻计数 */
+  funnyMoments: number
+  /** 使用（消耗）道具的次数 */
+  itemsUsed: number
+  /** 体力最低值 */
+  lowestStamina: number
+  /** 心情最高值 */
+  highestMood: number
 }
 
 // --- 结局 ---
@@ -88,6 +109,9 @@ export type EndingType =
   | 'broke'
   | 'breakdown'
   | 'hidden_lucky'
+  | 'helpful_hero'
+  | 'funny_king'
+  | 'frugal_master'
 
 export interface Ending {
   type: EndingType

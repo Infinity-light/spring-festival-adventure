@@ -18,6 +18,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         effects: [{ resource: 'money', delta: -200, message: '经济实惠，本马精打细算' }],
         nextNodeId: 'ch1_train_prep',
         feedback: '经济实惠是本马的座右铭。虽然要站十几个小时，但省下的钱够吃一个月泡面了 🐴',
+        addItem: 'train_ticket',
       },
       {
         id: 'start_car',
@@ -28,6 +29,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_car_prep',
         feedback: '自由的代价就是——油费、过路费、以及十二小时独自面对方向盘的孤独。但本马就是喜欢这种掌控感！🚗',
+        addItem: 'car_key',
       },
       {
         id: 'start_plane',
@@ -35,6 +37,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         effects: [{ resource: 'money', delta: -2000, message: '钱包在哭泣💸' }],
         nextNodeId: 'ch1_plane_prep',
         feedback: '两千块没了，但本马两小时就能到家！这叫什么？这叫时间就是金钱。💸 虽然金钱也没了。',
+        addItem: 'boarding_pass',
       },
     ],
   },
@@ -157,6 +160,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_pack_2',
         feedback: '坚果礼盒、牛奶、饼干……本马拎着这堆东西，活像一个行走的年货超市 🎁',
+        addItem: 'gift_pack',
       },
       {
         id: 'pack1_redpocket',
@@ -166,6 +170,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_pack_2',
         feedback: '本马数了数红包，心在滴血。但一想到七大姑八大姨家的熊孩子们，这钱不花不行啊 🧧',
+        addItem: 'red_envelopes',
       },
       {
         id: 'pack1_survival',
@@ -175,6 +180,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_pack_2',
         feedback: '充电宝满电，零食塞满口袋。本马深谙一个道理：手机没电比没钱更可怕 🔋🍫',
+        addItem: 'power_bank',
       },
       {
         id: 'pack1_noodles',
@@ -184,6 +190,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_pack_2',
         feedback: '一箱泡面，五种口味，够吃整个春节。本马就是这么朴实无华且节俭 🍜',
+        addItem: 'instant_noodles',
       },
     ],
   },
@@ -204,6 +211,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_depart',
         feedback: '双倍年货，双倍面子！本马拎着两大袋礼盒，走路都带风 💪🎁',
+        addItem: 'gift_pack',
       },
       {
         id: 'pack2_redpocket',
@@ -213,6 +221,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_depart',
         feedback: '又是红包……本马的年终奖已经阵亡了一大半。过年就是花钱买热闹 🧧💸',
+        addItem: 'red_envelopes',
       },
       {
         id: 'pack2_survival',
@@ -222,6 +231,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_depart',
         feedback: '两套续命装备在手，本马感觉自己可以撑过任何春运战场 ⚡🍪',
+        addItem: 'power_bank',
       },
       {
         id: 'pack2_noodles',
@@ -231,6 +241,7 @@ const chapter1Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch1_depart',
         feedback: '两箱泡面……本马认真考虑了一下，回家后是不是可以摆个泡面摊 🍜🍜',
+        addItem: 'instant_noodles',
       },
     ],
   },

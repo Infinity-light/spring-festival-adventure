@@ -5,7 +5,6 @@ import chapter3Nodes from './chapter3'
 import chapter4Nodes from './chapter4'
 import chapter5Nodes from './chapter5'
 import chapter6Nodes from './chapter6'
-import chapter7Nodes from './chapter7'
 
 const allStoryNodes: Record<string, StoryNode> = {
   ...chapter1Nodes,
@@ -14,7 +13,6 @@ const allStoryNodes: Record<string, StoryNode> = {
   ...chapter4Nodes,
   ...chapter5Nodes,
   ...chapter6Nodes,
-  ...chapter7Nodes,
 }
 
 export default allStoryNodes

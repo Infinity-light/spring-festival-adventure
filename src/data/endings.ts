@@ -1,14 +1,55 @@
 import type { Ending } from '@/types/game'
 
 const ENDINGS: Record<string, Ending> = {
+  hidden_lucky: {
+    type: 'hidden_lucky',
+    title: '马上有福',
+    emoji: '🐴',
+    description:
+      '你一路助人为乐、广结善缘，还收集了满满一背包的宝贝。到家时，全村人都来迎接你！',
+    greeting:
+      '恭喜你解锁隐藏结局！这一路上你帮了大叔、陪了家人、逗笑了所有人，还把能拿的宝贝全拿了。AI正在改变世界，但你用行动证明了——人与人之间的温度，是任何算法都学不会的。马上有福，福上加福！2026，愿你好运连连！',
+    cardStyle:
+      'bg-gradient-to-br from-yellow-400 via-red-500 to-yellow-500 animate-gold-glow',
+  },
   perfect: {
     type: 'perfect',
     title: '完美团圆',
     emoji: '🏆',
-    description: '三项资源全部充裕，你不仅顺利到家，还成了全家的骄傲！',
+    description: '三项资源全部充裕，道具收集过半，你不仅顺利到家，还成了全家的骄傲！',
     greeting:
       '马到成功，万事如意！AI可以帮你抢票、做PPT、写年终总结，但它替不了你推开家门时妈妈的那个拥抱。新的一年，愿你体力充沛、钱包鼓鼓、心情美美，更愿你珍惜每一次团圆。',
     cardStyle: 'bg-gradient-to-br from-red-600 via-amber-500 to-red-600',
+  },
+  helpful_hero: {
+    type: 'helpful_hero',
+    title: '活马雷锋',
+    emoji: '🤝',
+    description:
+      '你在旅途中帮了无数人，大叔夸你、大姐谢你、熊孩子都服你。本马就是行走的正能量！',
+    greeting:
+      '你是春运路上最温暖的那匹马！帮大叔搬行李、教熊孩子写作业、给妈妈发红包……AI能优化效率，但优化不了你骨子里的善良。新年快乐，愿你的善意都被世界温柔以待。',
+    cardStyle: 'bg-gradient-to-br from-emerald-600 via-teal-700 to-emerald-600',
+  },
+  funny_king: {
+    type: 'funny_king',
+    title: '快乐马戏团',
+    emoji: '🤣',
+    description:
+      '一路上笑料不断，你把春运变成了脱口秀专场。连列车员都忍不住笑了。',
+    greeting:
+      '你是春运路上的快乐源泉！吐槽春晚、反杀亲戚、社死现场一个不落。AI能写段子，但写不出你这种天然的搞笑天赋。新年快乐，愿你的快乐感染身边每一个人！',
+    cardStyle: 'bg-gradient-to-br from-purple-600 via-pink-600 to-purple-600',
+  },
+  frugal_master: {
+    type: 'frugal_master',
+    title: '省钱达马',
+    emoji: '💰',
+    description:
+      '精打细算一路到家，钱包鼓鼓的。亲戚问你工资多少，你微微一笑——本马的理财能力，不需要解释。',
+    greeting:
+      '你是春运路上最会过日子的马！能省则省、能蹭则蹭，到家时钱包还是满的。AI能帮你记账，但帮不了你这种与生俱来的省钱直觉。新年快乐，愿你来年财源滚滚！',
+    cardStyle: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-500',
   },
   normal: {
     type: 'normal',
@@ -59,17 +100,6 @@ const ENDINGS: Record<string, Ending> = {
     greeting:
       '有时候不回家也是一种勇气。但记住，再厉害的AI也没法替你给爸妈打那通电话。新年快乐，愿你来年心情美丽，也愿你在想家的时候，别忍着。',
     cardStyle: 'bg-gradient-to-br from-purple-600 via-pink-600 to-purple-600',
-  },
-  hidden_lucky: {
-    type: 'hidden_lucky',
-    title: '马上有福',
-    emoji: '🐴',
-    description:
-      '你触发了所有好事件！一路助人为乐、广结善缘，福气满满。到家时，全村人都来迎接你！',
-    greeting:
-      '恭喜你解锁隐藏结局！这一路上，你帮了大叔、救了奶奶、陪了家人。AI正在改变世界，但你用行动证明了——人与人之间的温度，是任何算法都学不会的。马上有福，福上加福！2026，愿你好运连连，更愿你身边的人都被你温暖过。',
-    cardStyle:
-      'bg-gradient-to-br from-yellow-400 via-red-500 to-yellow-500 animate-gold-glow',
   },
 }
 

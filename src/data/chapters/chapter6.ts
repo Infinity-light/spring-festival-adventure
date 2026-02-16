@@ -23,6 +23,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_redpacket',
         feedback: '本马闭着眼一刀下去——鱼没事，砧板裂了。但最后居然把菜端上了桌，你妈投来了难以置信的目光。🔪✨',
+        tag: 'helpful',
       },
       {
         id: 'ch6_cook_learn',
@@ -33,6 +34,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_redpacket',
         feedback: '老妈手把手教你刮鳞切花，本马学得有模有样。"下次回来你做给我吃啊"——老妈笑得眼睛都眯起来了。👩‍🍳',
+        tag: 'helpful',
       },
       {
         id: 'ch6_cook_escape',
@@ -67,6 +69,8 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_cctv',
         feedback: '本马豪气地发了个200的红包，群里瞬间炸了一片"谢谢老板"。二叔回了句"这孩子大方"，你妈在旁边偷偷笑。🧧',
+        tag: 'helpful',
+        addItem: 'red_packet_rain',
       },
       {
         id: 'ch6_redpacket_emoji',
@@ -118,6 +122,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_fireworks',
         feedback: '朋友圈文案："这个小品的编剧是AI写的吧"——三分钟收获58个赞。本马的吐槽事业在除夕夜达到了巅峰。🎤',
+        tag: 'funny',
       },
       {
         id: 'ch6_cctv_ai_talk',
@@ -138,6 +143,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_fireworks',
         feedback: '本马靠在沙发上，不知不觉就睡着了。醒来发现脸上被表弟画了个乌龟，全家都在笑。春晚果然是最强安眠药。💤',
+        tag: 'funny',
       },
     ],
   },
@@ -160,6 +166,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_end',
         feedback: '本马颤抖着手点燃引线，然后撒腿就跑。轰——夜空炸开一朵巨大的金色花，全村最靓的烟花是本马放的！🎆',
+        addItem: 'firework',
       },
       {
         id: 'ch6_fireworks_photo',
@@ -169,6 +176,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_end',
         feedback: '本马举着手机拍了三十多条视频，发了九宫格朋友圈。配文："回村过年的含金量还在上升。"点赞破百。📷',
+        addItem: 'firework',
       },
       {
         id: 'ch6_fireworks_indoor',
@@ -192,6 +200,8 @@ const chapter6Nodes: Record<string, StoryNode> = {
       '你妈端来了热腾腾的饺子：\'来，吃饺子，新年快乐！\'',
       '🐴 新年快乐！本马……到家了。',
       '这一路的奔波、折腾、欢笑、崩溃，都值了。',
+      '这一路的奔波、折腾、欢笑、崩溃，都值了。',
+      '🐴 新年快乐！本马……到家了。',
       '你的春节回家历险记，到此结束。',
       '让我们来看看你的旅途成绩单……',
     ],
@@ -201,6 +211,7 @@ const chapter6Nodes: Record<string, StoryNode> = {
         text: '查看我的结局',
         effects: [],
         nextNodeId: 'game_end',
+        addItem: 'dumpling',
       },
     ],
   },

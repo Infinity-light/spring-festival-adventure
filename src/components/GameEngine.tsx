@@ -7,7 +7,9 @@ import ResourceBar from '@/components/ResourceBar'
 import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
 import EndingCard from '@/components/EndingCard'
+import InventoryDrawer from '@/components/InventoryDrawer'
 import ENDINGS from '@/data/endings'
+import ITEMS from '@/data/items'
 import { getAvailableChoices } from '@/lib/storyEngine'
 import type { StoryNode, Choice, Resources, Ending } from '@/types/game'
 
@@ -26,6 +28,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
   const [feedbackText, setFeedbackText] = useState<string | null>(null)
   const [feedbackEffects, setFeedbackEffects] = useState<Choice['effects']>([])
   const [pendingNextNodeId, setPendingNextNodeId] = useState<string | null>(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const currentNode = storyNodes[state.currentNodeId] ?? null
   const endingData: Ending | undefined = state.ending ? ENDINGS[state.ending] : undefined
@@ -79,6 +82,14 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       <ResourceBar
         resources={state.resources}
         previousResources={previousResources}
+        onOpenInventory={() => setIsDrawerOpen(true)}
+        inventoryCount={state.inventory.length}
+      />
+      <InventoryDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        inventory={state.inventory}
+        items={ITEMS}
       />
       <main className="flex-1 flex flex-col p-4 max-w-lg mx-auto w-full">
         {state.isGameOver ? (
@@ -89,6 +100,8 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
                 ending={endingData}
                 stats={state.stats}
                 resources={state.resources}
+                inventory={state.inventory}
+                items={ITEMS}
                 onRestart={restart}
               />
             ) : (

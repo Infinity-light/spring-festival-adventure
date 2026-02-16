@@ -29,6 +29,13 @@ const INITIAL_STATS: GameStats = {
   relationshipQuestions: 0,
   noodleCupsEaten: 0,
   choicesMade: [],
+  itemsCollected: 0,
+  helpfulActions: 0,
+  totalChoices: 0,
+  funnyMoments: 0,
+  itemsUsed: 0,
+  lowestStamina: MAX_STAMINA,
+  highestMood: MAX_MOOD,
 }
 
 const INITIAL_GAME_STATE: GameState = {
@@ -76,12 +83,21 @@ function computeChoiceUpdates(state: GameState, choice: Choice) {
   const isRelationshipQuestion = choice.id.startsWith('relationship_')
   const isNoodle = ['pack1_noodles', 'pack2_noodles', 'ch2_train2_noodle', 'ch2_car2_noodle'].includes(choice.id)
 
+  // 通过 tag 或 choice id 前缀识别助人/搞笑选择
+  const isHelpful = choice.tag === 'helpful' || choice.id.startsWith('help_')
+  const isFunny = choice.tag === 'funny'
+
   const updatedStats: GameStats = {
     ...state.stats,
     totalMoneySpent: state.stats.totalMoneySpent + moneySpent,
     relationshipQuestions: state.stats.relationshipQuestions + (isRelationshipQuestion ? 1 : 0),
     noodleCupsEaten: state.stats.noodleCupsEaten + (isNoodle ? 1 : 0),
     choicesMade: [...state.stats.choicesMade, choice.id],
+    totalChoices: state.stats.totalChoices + 1,
+    helpfulActions: state.stats.helpfulActions + (isHelpful ? 1 : 0),
+    funnyMoments: state.stats.funnyMoments + (isFunny ? 1 : 0),
+    lowestStamina: Math.min(state.stats.lowestStamina, updatedResources.stamina),
+    highestMood: Math.max(state.stats.highestMood, updatedResources.mood),
   }
 
   return { updatedResources, updatedStats }
@@ -108,12 +124,38 @@ function applyEffectsOnly(state: GameState, choice: Choice): GameState {
   }
 }
 
+/** Apply addItem / removeItem from a choice. */
+function applyItemChanges(state: GameState, choice: Choice): GameState {
+  let inventory = state.inventory
+  let itemsCollected = state.stats.itemsCollected
+  let itemsUsed = state.stats.itemsUsed
+
+  if (choice.addItem && !inventory.includes(choice.addItem)) {
+    inventory = [...inventory, choice.addItem]
+    itemsCollected += 1
+  }
+
+  if (choice.removeItem) {
+    inventory = inventory.filter((id) => id !== choice.removeItem)
+    itemsUsed += 1
+  }
+
+  if (inventory === state.inventory && itemsUsed === state.stats.itemsUsed) return state
+
+  return {
+    ...state,
+    inventory,
+    stats: { ...state.stats, itemsCollected, itemsUsed },
+  }
+}
+
 // --- Reducer ---
 
 function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'MAKE_CHOICE': {
-      const next = applyChoiceEffects(state, action.choice)
+      let next = applyChoiceEffects(state, action.choice)
+      next = applyItemChanges(next, action.choice)
       const ending = checkGameOver(next.resources)
       if (ending) {
         return { ...next, isGameOver: true, ending }
@@ -122,7 +164,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     }
 
     case 'APPLY_CHOICE_EFFECTS': {
-      const next = applyEffectsOnly(state, action.choice)
+      let next = applyEffectsOnly(state, action.choice)
+      next = applyItemChanges(next, action.choice)
       const ending = checkGameOver(next.resources)
       if (ending) {
         return { ...next, isGameOver: true, ending }

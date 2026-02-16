@@ -6,14 +6,6 @@ const RESOURCE_PERFECT_THRESHOLD = 60
 const RESOURCE_BARELY_THRESHOLD = 30
 const RESOURCE_ZERO = 0
 
-/** 触发隐藏结局所需的好事件 ID */
-const LUCKY_CHOICE_IDS = [
-  'help_fainted',
-  'ch3_uncle_chat',
-  'ch6_redpacket_send',
-  'help_cook_success',
-] as const
-
 const CHAPTER_TITLES: Record<number, string> = {
   1: '第一章：出发准备',
   2: '第二章：春运大作战',
@@ -21,7 +13,6 @@ const CHAPTER_TITLES: Record<number, string> = {
   4: '第四章：到站风波',
   5: '第五章：亲戚围攻',
   6: '第六章：年夜饭大作战',
-  7: '第七章：结局',
 }
 
 // --- 条件判断 ---
@@ -65,40 +56,92 @@ export function findNextNode(
 }
 
 // --- 结局判定 ---
+// 按优先级从高到低匹配，第一个命中的就是最终结局
 
-function isAllLuckyChoicesMade(choicesMade: string[]): boolean {
-  return LUCKY_CHOICE_IDS.every((id) => choicesMade.includes(id))
+/**
+ * 隐藏结局「马上有福」：
+ * - 助人 >= 4 次
+ * - 搞笑 >= 3 次
+ * - 道具收集 >= 8 个
+ * - 心情最高峰 >= 90
+ *
+ * 可达性分析：
+ * helpful 标记的选择共约 8 个（ch1~ch6），拿到 4 次完全可行
+ * funny 标记的选择共约 8 个，拿到 3 次可行
+ * 12 个道具中拿到 8 个需要刻意收集但可达
+ */
+function isHiddenLucky(state: GameState): boolean {
+  return (
+    state.stats.helpfulActions >= 4 &&
+    state.stats.funnyMoments >= 3 &&
+    state.stats.itemsCollected >= 8 &&
+    state.stats.highestMood >= 90
+  )
 }
 
-function isAnyResourceZero(state: GameState): EndingType | null {
-  if (state.resources.stamina === RESOURCE_ZERO) return 'exhausted'
-  if (state.resources.money === RESOURCE_ZERO) return 'broke'
-  if (state.resources.mood === RESOURCE_ZERO) return 'breakdown'
-  return null
+/**
+ * 完美结局「完美团圆」：
+ * - 三项资源都 > 60
+ * - 道具收集 >= 6
+ */
+function isPerfect(state: GameState): boolean {
+  const { stamina, money, mood } = state.resources
+  return (
+    stamina > RESOURCE_PERFECT_THRESHOLD &&
+    money > RESOURCE_PERFECT_THRESHOLD &&
+    mood > RESOURCE_PERFECT_THRESHOLD &&
+    state.stats.itemsCollected >= 6
+  )
+}
+
+/**
+ * 风格结局「活马雷锋」：助人为乐型
+ * - 助人 >= 4 次
+ * - 心情 > 50（好人有好报）
+ */
+function isHelpfulHero(state: GameState): boolean {
+  return state.stats.helpfulActions >= 4 && state.resources.mood > 50
+}
+
+/**
+ * 风格结局「快乐马戏团」：搞笑达马型
+ * - 搞笑时刻 >= 4 次
+ * - 心情最高峰 >= 80
+ */
+function isFunnyKing(state: GameState): boolean {
+  return state.stats.funnyMoments >= 4 && state.stats.highestMood >= 80
+}
+
+/**
+ * 风格结局「省钱达马」：精打细算型
+ * - 总花费 <= 1500（初始5000，到家还剩3500+）
+ * - 钱 > 3000
+ */
+function isFrugalMaster(state: GameState): boolean {
+  return state.stats.totalMoneySpent <= 1500 && state.resources.money > 3000
 }
 
 export function determineEnding(state: GameState): EndingType {
-  // 隐藏结局优先级最高
-  if (isAllLuckyChoicesMade(state.stats.choicesMade)) return 'hidden_lucky'
+  // P10 隐藏结局：最高优先级
+  if (isHiddenLucky(state)) return 'hidden_lucky'
 
-  // 归零结局
-  const zeroEnding = isAnyResourceZero(state)
-  if (zeroEnding) return zeroEnding
+  // P9 完美结局
+  if (isPerfect(state)) return 'perfect'
 
-  // 三项资源都高于阈值 → 完美结局
+  // P7 风格结局（互斥，按优先级）
+  if (isHelpfulHero(state)) return 'helpful_hero'
+  if (isFunnyKing(state)) return 'funny_king'
+  if (isFrugalMaster(state)) return 'frugal_master'
+
+  // P2 勉强结局：有一项资源低于警戒线
   const { stamina, money, mood } = state.resources
-  const isAllAbove = stamina > RESOURCE_PERFECT_THRESHOLD
-    && money > RESOURCE_PERFECT_THRESHOLD
-    && mood > RESOURCE_PERFECT_THRESHOLD
-  if (isAllAbove) return 'perfect'
-
-  // 有一项低于警戒线 → 勉强结局
-  const isAnyBarely = stamina < RESOURCE_BARELY_THRESHOLD
-    || money < RESOURCE_BARELY_THRESHOLD
-    || mood < RESOURCE_BARELY_THRESHOLD
+  const isAnyBarely =
+    stamina < RESOURCE_BARELY_THRESHOLD ||
+    money < RESOURCE_BARELY_THRESHOLD ||
+    mood < RESOURCE_BARELY_THRESHOLD
   if (isAnyBarely) return 'barely'
 
-  // 兜底：平安到家（资源都在 30-60 之间，不算完美但也没危险）
+  // P0 默认结局：平安到家
   return 'normal'
 }
 
