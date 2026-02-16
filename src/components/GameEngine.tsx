@@ -27,10 +27,23 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
   const ufoQualified = useRef(false)
   const unicornQualified = useRef(false)
 
+  // 全局静音（持久化到 localStorage）
+  const [isMuted, setIsMuted] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem('bgm-muted') === '1'
+  })
+  const toggleMute = useCallback(() => {
+    setIsMuted(prev => {
+      const next = !prev
+      localStorage.setItem('bgm-muted', next ? '1' : '0')
+      return next
+    })
+  }, [])
+
   // 背景音乐：独角兽线 vs 其余节点互斥播放
   const isUnicornRoute = state.currentNodeId.startsWith('ch_unicorn_') || state.ending === 'unicorn_night'
-  const { stop: stopUnicornMusic } = useBackgroundMusic('/unicorn.mp3', isUnicornRoute)
-  const { stop: stopDefaultMusic } = useBackgroundMusic('/拾光机.mp3', !isUnicornRoute)
+  const { stop: stopUnicornMusic } = useBackgroundMusic('/unicorn.mp3', isUnicornRoute, isMuted)
+  const { stop: stopDefaultMusic } = useBackgroundMusic('/拾光机.mp3', !isUnicornRoute, isMuted)
 
   // 挂载时检查是否解锁 UFO 线（玩过 3 局以上）和独角兽线（全成就）
   useEffect(() => {
@@ -183,6 +196,8 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
         previousResources={previousResources}
         onOpenInventory={() => setIsDrawerOpen(true)}
         inventoryCount={state.inventory.length}
+        isMuted={isMuted}
+        onToggleMute={toggleMute}
       />
       <InventoryDrawer
         isOpen={isDrawerOpen}

@@ -9,6 +9,8 @@ interface ResourceBarProps {
   previousResources?: Resources
   onOpenInventory?: () => void
   inventoryCount?: number
+  isMuted?: boolean
+  onToggleMute?: () => void
 }
 
 const RESOURCE_CONFIG: Record<ResourceType, {
@@ -28,7 +30,7 @@ function formatDelta(delta: number): string {
   return delta > 0 ? `+${delta}` : `${delta}`
 }
 
-export default function ResourceBar({ resources, previousResources, onOpenInventory, inventoryCount = 0 }: ResourceBarProps) {
+export default function ResourceBar({ resources, previousResources, onOpenInventory, inventoryCount = 0, isMuted, onToggleMute }: ResourceBarProps) {
   const deltas = useMemo(() => {
     if (!previousResources) return null
     return RESOURCE_KEYS.reduce((acc, key) => {
@@ -100,6 +102,17 @@ export default function ResourceBar({ resources, previousResources, onOpenInvent
           </div>
         )
       })}
+
+      {/* 静音按钮 */}
+      {onToggleMute && (
+        <button
+          onClick={onToggleMute}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-lg hover:bg-bg-primary transition-colors"
+          aria-label={isMuted ? '开启音乐' : '关闭音乐'}
+        >
+          {isMuted ? '🔇' : '🔊'}
+        </button>
+      )}
 
       {/* 背包按钮 */}
       {onOpenInventory && (

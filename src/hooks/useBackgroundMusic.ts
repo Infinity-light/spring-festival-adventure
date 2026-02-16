@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback } from 'react'
  * - active 为 true 时淡入播放指定音源
  * - active 变为 false 时淡出停止
  */
-export function useBackgroundMusic(src: string, active: boolean) {
+export function useBackgroundMusic(src: string, active: boolean, muted: boolean = false) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const srcRef = useRef(src)
   const fadeTimer = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -36,7 +36,22 @@ export function useBackgroundMusic(src: string, active: boolean) {
       fadeTimer.current = null
     }
 
-    if (active) {
+    if (muted || !active) {
+      if (!audio.paused) {
+        // 淡出
+        fadeTimer.current = setInterval(() => {
+          if (audio.volume > 0.05) {
+            audio.volume = Math.max(audio.volume - 0.05, 0)
+          } else {
+            audio.pause()
+            audio.currentTime = active ? audio.currentTime : 0
+            audio.volume = 0
+            if (fadeTimer.current) clearInterval(fadeTimer.current)
+            fadeTimer.current = null
+          }
+        }, 80)
+      }
+    } else {
       // 淡入
       audio.volume = 0
       audio.play().catch(() => {})
@@ -48,19 +63,6 @@ export function useBackgroundMusic(src: string, active: boolean) {
           fadeTimer.current = null
         }
       }, 100)
-    } else if (!audio.paused) {
-      // 淡出
-      fadeTimer.current = setInterval(() => {
-        if (audio.volume > 0.05) {
-          audio.volume = Math.max(audio.volume - 0.05, 0)
-        } else {
-          audio.pause()
-          audio.currentTime = 0
-          audio.volume = 0
-          if (fadeTimer.current) clearInterval(fadeTimer.current)
-          fadeTimer.current = null
-        }
-      }, 80)
     }
 
     return () => {
@@ -69,7 +71,7 @@ export function useBackgroundMusic(src: string, active: boolean) {
         fadeTimer.current = null
       }
     }
-  }, [active, getAudio])
+  }, [active, muted, getAudio])
 
   /** 立即停止（用于 restart） */
   const stop = useCallback(() => {
