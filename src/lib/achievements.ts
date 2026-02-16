@@ -1,6 +1,7 @@
 'use client'
 
 import type { GameState, Choice, EndingType } from '@/types/game'
+import ACHIEVEMENTS from '@/data/achievements'
 
 const STORAGE_KEY = 'spring-festival-achievements'
 const GLOBAL_STATS_KEY = 'spring-festival-global-stats'
@@ -91,6 +92,7 @@ const CHOICE_ACHIEVEMENT_MAP: Record<string, string> = {
   ch2_plane1_refund: 'detour_master',
   ch2_plane_morning_yes: 'heli_rider',
   start_ufo: 'ufo_rider',
+  unicorn_give_horse_yes: 'ending_unicorn_night',
 }
 
 // 前任重逢：到达 ch3_train_ex 节点时触发（通过 nextNodeId 检测）
@@ -157,4 +159,11 @@ export function checkEndingAchievements(
   }
 
   return newIds
+}
+
+/** 检查是否已解锁除 ending_unicorn_night 之外的所有成就 */
+export function isAllAchievementsUnlocked(): boolean {
+  const unlocked = loadUnlocked()
+  const required = ACHIEVEMENTS.filter((a) => a.id !== 'ending_unicorn_night')
+  return required.every((a) => !!unlocked[a.id])
 }

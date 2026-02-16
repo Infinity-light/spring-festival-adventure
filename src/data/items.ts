@@ -117,6 +117,27 @@ const ITEMS: Record<string, Item> = {
     description: '外星马送的发光小球，据说能带来好运',
     image: '/items/alien_souvenir.png',
   },
+  unicorn_pass: {
+    id: 'unicorn_pass',
+    name: '全成就徽章',
+    emoji: '🦄',
+    description: '集齐所有成就后浮现的神秘徽章，散发着彩虹色的微光',
+    image: '/items/ufo_ticket.png',
+  },
+  courage_feather: {
+    id: 'courage_feather',
+    name: '勇气之羽',
+    emoji: '🪶',
+    description: '穿越暴风雪后凝结在翅膀上的冰晶羽毛，闪着红光',
+    image: '/items/ufo_ticket.png',
+  },
+  aurora_tear: {
+    id: 'aurora_tear',
+    name: '极光之泪',
+    emoji: '💧',
+    description: '绕道星空时极光滴落的一滴光，闪着绿光',
+    image: '/items/ufo_ticket.png',
+  },
 }
 
 export default ITEMS

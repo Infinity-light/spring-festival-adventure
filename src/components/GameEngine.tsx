@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useGameState } from '@/lib/gameState'
 import { determineEnding } from '@/lib/storyEngine'
-import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements, accumulateGlobalStats, loadGlobalStats } from '@/lib/achievements'
+import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements, accumulateGlobalStats, loadGlobalStats, isAllAchievementsUnlocked } from '@/lib/achievements'
 import ResourceBar from '@/components/ResourceBar'
 import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
@@ -24,12 +24,17 @@ interface GameEngineProps {
 export function GameEngine({ storyNodes }: GameEngineProps) {
   const { state, makeChoice, applyChoiceEffects, navigateToNode, advanceNarrative, addItem, triggerGameOver, restart } = useGameState()
   const ufoQualified = useRef(false)
+  const unicornQualified = useRef(false)
 
-  // 挂载时检查是否解锁 UFO 线（玩过 3 局以上）
+  // 挂载时检查是否解锁 UFO 线（玩过 3 局以上）和独角兽线（全成就）
   useEffect(() => {
     ufoQualified.current = loadGlobalStats().gamesPlayed >= 3
     if (ufoQualified.current) {
       addItem('ufo_pass')
+    }
+    unicornQualified.current = isAllAchievementsUnlocked()
+    if (unicornQualified.current) {
+      addItem('unicorn_pass')
     }
   }, [addItem])
 
@@ -43,6 +48,10 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     setSessionAchievements([])
     if (ufoQualified.current) {
       addItem('ufo_pass')
+    }
+    unicornQualified.current = isAllAchievementsUnlocked()
+    if (unicornQualified.current) {
+      addItem('unicorn_pass')
     }
   }, [restart, addItem])
 
@@ -107,6 +116,23 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       // 检测剧情/里程碑成就
       const newAchs = checkChoiceAchievements(choice, state)
       handleNewAchievements(newAchs)
+
+      // 预判资源归零结局，同步处理成就（避免 useEffect 延迟导致 EndingCard 首帧不亮）
+      const projected = choice.effects.reduce(
+        (res, e) => ({ ...res, [e.resource]: Math.max(0, res[e.resource] + e.delta) }),
+        state.resources,
+      )
+      if (projected.stamina <= 0 || projected.money <= 0) {
+        const resourceEnding = projected.stamina <= 0
+          ? 'exhausted' as EndingType
+          : state.stats.choicesMade.includes('ch2_plane_morning_yes')
+            ? 'sky_rider_broke' as EndingType
+            : 'broke' as EndingType
+        const globalStats = accumulateGlobalStats(state.stats)
+        ufoQualified.current = globalStats.gamesPlayed >= 3
+        const endingAchs = checkEndingAchievements(resourceEnding, state, globalStats)
+        handleNewAchievements(endingAchs)
+      }
 
       if (choice.feedback) {
         // Has feedback: apply effects now, but defer node transition

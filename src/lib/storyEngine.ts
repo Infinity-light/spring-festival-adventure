@@ -149,7 +149,23 @@ function isSkyRider(state: GameState): boolean {
   )
 }
 
+/**
+ * 终极隐藏结局「独角兽之夜」：
+ * - 走独角兽线（选了红马或绿马）
+ * - 送出了毛线小马
+ */
+function isUnicornNight(state: GameState): boolean {
+  return (
+    (state.stats.choicesMade.includes('unicorn_pick_red') ||
+     state.stats.choicesMade.includes('unicorn_pick_green')) &&
+    state.stats.choicesMade.includes('unicorn_give_horse_yes')
+  )
+}
+
 export function determineEnding(state: GameState): EndingType {
+  // P11 终极隐藏结局：独角兽之夜（全成就解锁）
+  if (isUnicornNight(state)) return 'unicorn_night'
+
   // P10 隐藏结局：最高优先级
   if (isHiddenLucky(state)) return 'hidden_lucky'
 

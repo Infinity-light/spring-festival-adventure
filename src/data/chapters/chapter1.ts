@@ -48,6 +48,14 @@ const chapter1Nodes: Record<string, StoryNode> = {
         feedback: '本马揉了揉眼睛——选项里居然有飞碟？？？这一定是玩了太多次产生的幻觉。但管它呢，上！🛸',
         addItem: 'ufo_ticket',
       },
+      {
+        id: 'start_unicorn',
+        text: '🦄 不对，今天不是腊月二十八……',
+        effects: [{ resource: 'mood', delta: 5, message: '记忆开始扭曲……' }],
+        nextNodeId: 'ch_unicorn_overtime',
+        condition: { type: 'has_item', itemId: 'unicorn_pass' },
+        feedback: '你盯着日历看了很久。腊月二十八？不……你隐约记得，事情不是这样的。一股奇怪的力量在牵引着你，让你想起了另一个版本的故事。🦄',
+      },
     ],
   },
 
