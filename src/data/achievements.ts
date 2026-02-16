@@ -182,6 +182,45 @@ const ACHIEVEMENTS: Achievement[] = [
     description: '累计体力消耗超过300点，百折不挠',
     category: 'milestone',
   },
+
+  // ---- 新增成就 ----
+  {
+    id: 'ending_fate_reunion',
+    name: '命中注马',
+    emoji: '💕',
+    description: '高铁难友竟是相亲对象，烟花下重逢',
+    category: 'ending',
+    hidden: true,
+  },
+  {
+    id: 'ending_sky_rider',
+    name: '天降奇马',
+    emoji: '🚁',
+    description: '坐直升机回村，成为全村传说',
+    category: 'ending',
+  },
+  {
+    id: 'car_breakdown',
+    name: '半路抛锚',
+    emoji: '🔧',
+    description: '自驾路上车子罢工，好在有惊无险',
+    category: 'story',
+  },
+  {
+    id: 'heli_fame',
+    name: '全村名马',
+    emoji: '🌟',
+    description: '坐直升机回来后被全村围观追问',
+    category: 'story',
+  },
+  {
+    id: 'firework_reunion',
+    name: '烟花下的重逢',
+    emoji: '🎆',
+    description: '除夕夜烟花下，和命中注定的人并肩而立',
+    category: 'story',
+    hidden: true,
+  },
 ]
 
 export default ACHIEVEMENTS

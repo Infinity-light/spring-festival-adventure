@@ -266,7 +266,7 @@ const chapter3Nodes: Record<string, StoryNode> = {
           { resource: 'stamina', delta: 10, message: '姜汤暖胃又暖心🫚' },
           { resource: 'mood', delta: 10, message: '人间自有温情在' },
         ],
-        nextNodeId: 'ch3_almost_there',
+        nextNodeId: 'ch3_drive_breakdown',
         feedback: '大爷的姜汤又辣又甜，喝完浑身暖洋洋的。大爷还画了张手绘地图，比导航靠谱一万倍。临走时大爷塞了两个烤红薯："路上吃！"本马眼眶有点湿 🫚🍠',
       },
       {
@@ -276,7 +276,7 @@ const chapter3Nodes: Record<string, StoryNode> = {
           { resource: 'stamina', delta: -10, message: '又多绕了半小时😤' },
           { resource: 'mood', delta: -5, message: '倔强的马' },
         ],
-        nextNodeId: 'ch3_almost_there',
+        nextNodeId: 'ch3_drive_breakdown',
         feedback: '本马倔强地打开手机地图，研究了十分钟，然后……还是按大爷说的路走了。大爷在后面喊"我说的对吧！"本马假装没听见，默默加速 🗺️😤',
       },
     ],
@@ -677,6 +677,56 @@ const chapter3Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch4_ufo_landing',
         condition: { type: 'has_item', itemId: 'ufo_ticket' },
+      },
+    ],
+  },
+
+  // ==================== 自驾线：半路抛锚 ====================
+
+  ch3_drive_breakdown: {
+    id: 'ch3_drive_breakdown',
+    chapter: 3,
+    narrative: [
+      '好不容易找到正路，你踩下油门准备冲刺——',
+      '突然，车子发出一声"咔嗒"，然后……熄火了。',
+      '你试了三次打火，发动机纹丝不动。',
+      '🐴 不是吧？？？本马的车在这个前不着村后不着店的地方罢工了？？？',
+      '你下车检查，引擎盖打开的瞬间冒出一股白烟。',
+      '路边只有一棵歪脖子树和无尽的农田。',
+    ],
+    choices: [
+      {
+        id: 'ch3_drive_breakdown_call',
+        text: '打救援电话，花钱消灾',
+        effects: [
+          { resource: 'money', delta: -500, message: '救援费心在滴血💸' },
+          { resource: 'stamina', delta: -5, message: '等了一小时' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '救援电话打了三个才找到一个愿意来的，等了一个多小时。师傅看了一眼：\"水箱漏了，临时补一下能撑到家。\"收了五百块，本马的钱包又瘦了一圈。但至少能走了 💸🔧',
+      },
+      {
+        id: 'ch3_drive_breakdown_fix',
+        text: '自己动手，丰衣足食！',
+        effects: [
+          { resource: 'stamina', delta: -20, message: '累得像条狗🐶' },
+          { resource: 'mood', delta: 10, message: '居然修好了！' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '本马打开手机搜"车子熄火怎么办"，照着视频折腾了四十分钟。满手机油、满头大汗，最后发现……是水箱缺水。从路边水沟舀了点水灌进去，居然打着火了。本马：我是修车天才还是运气天才？🔧😂',
+        tag: 'funny',
+      },
+      {
+        id: 'ch3_drive_breakdown_orange',
+        text: '在路边啃橘子等奇迹……真来了！',
+        condition: { type: 'has_item', itemId: 'lucky_orange' },
+        effects: [
+          { resource: 'mood', delta: 15, message: '幸运橘子显灵🍊' },
+          { resource: 'stamina', delta: -5, message: '等了一会儿' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '本马坐在路边绝望地啃橘子，一辆大卡车停了下来。司机探出头："小伙子抛锚了？我看看。"三分钟搞定，司机摆摆手不要钱："过年嘛，互相帮忙。"本马看了看手里的橘子——这是幸运橘子吧？大叔的橘子果然有福气 🍊🚛',
+        tag: 'helpful',
       },
     ],
   },

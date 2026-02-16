@@ -336,7 +336,7 @@ const chapter4Nodes: Record<string, StoryNode> = {
         id: 'ch4_heli_home_continue',
         text: '进门！',
         effects: [],
-        nextNodeId: 'ch5_relationship',
+        nextNodeId: 'ch5_heli_fame',
       },
     ],
   },

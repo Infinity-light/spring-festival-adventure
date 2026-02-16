@@ -46,6 +46,19 @@ const chapter6Nodes: Record<string, StoryNode> = {
         nextNodeId: 'ch6_redpacket',
         feedback: '本马悄悄溜到沙发上，跟老爸一起嗑瓜子看电视。厨房传来老妈的怒吼："都给我滚进来帮忙！"——假装没听见。🛋️',
       },
+      {
+        id: 'ch6_cook_orange',
+        text: '用橘子做一道创意菜！',
+        condition: { type: 'has_item', itemId: 'lucky_orange' },
+        effects: [
+          { resource: 'mood', delta: 10, message: '创意大厨🍊' },
+          { resource: 'stamina', delta: -5, message: '折腾半天' },
+        ],
+        nextNodeId: 'ch6_redpacket',
+        feedback: '本马灵机一动，把大叔给的橘子切片摆盘，淋上蜂蜜，撒上枸杞——"橘运当头"！你妈看了三秒，从嫌弃变成了惊喜："哟，还挺像回事的。"这道菜成了今晚饭桌上被拍照最多的一道 🍊✨',
+        tag: 'funny',
+        removeItem: 'lucky_orange',
+      },
     ],
   },
 
@@ -145,6 +158,16 @@ const chapter6Nodes: Record<string, StoryNode> = {
         feedback: '本马靠在沙发上，不知不觉就睡着了。醒来发现脸上被表弟画了个乌龟，全家都在笑。春晚果然是最强安眠药。💤',
         tag: 'funny',
       },
+      {
+        id: 'ch6_cctv_horse',
+        text: '把毛线小马摆在电视旁边当吉祥物',
+        condition: { type: 'has_item', itemId: 'knit_horse' },
+        effects: [
+          { resource: 'mood', delta: 5, message: '小马看春晚🐴' },
+        ],
+        nextNodeId: 'ch6_fireworks',
+        feedback: '你把那匹红色毛线小马摆在电视机旁边，棕色卷毛鬃毛对着屏幕，像在认真看春晚。表弟拍了张照发朋友圈："我哥的对象在看春晚。"全家笑疯了，你妈笑着擦眼泪："这孩子，什么时候找个真的回来。" 🐴📺',
+      },
     ],
   },
 
@@ -187,6 +210,18 @@ const chapter6Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch6_end',
         feedback: '本马裹着棉被趴在窗台上看烟花，暖气片烤着后背，窗外火树银花。这大概就是幸福的形状吧。🪟✨',
+      },
+      {
+        id: 'ch6_fireworks_reunion',
+        text: '发现 ta 也在村口看烟花，走过去一起看',
+        condition: { type: 'choice_made', choiceId: 'ch5_blind_date_wechat_callback' },
+        effects: [
+          { resource: 'mood', delta: 20, message: '烟花下的重逢🎆💕' },
+        ],
+        nextNodeId: 'ch6_end',
+        feedback: '你走过去，ta 正好转头看到你。两个人在烟花下站了一会儿，没说什么话，但都笑了。天上的烟花一朵接一朵，照亮了两张有点傻的脸。你妈和王阿姨在远处交换了一个"成了成了"的眼神。这个除夕夜，烟花不是最亮的，但一定是最暖的 🎆💕',
+        tag: 'helpful',
+        addItem: 'firework',
       },
     ],
   },

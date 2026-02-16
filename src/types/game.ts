@@ -114,6 +114,8 @@ export type EndingType =
   | 'helpful_hero'
   | 'funny_king'
   | 'frugal_master'
+  | 'fate_reunion'
+  | 'sky_rider'
 
 export interface Ending {
   type: EndingType

@@ -1,6 +1,55 @@
 import type { StoryNode } from '@/types/game'
 
 const chapter5Nodes: Record<string, StoryNode> = {
+  // ==================== 直升机线专属：全村名马 ====================
+
+  ch5_heli_fame: {
+    id: 'ch5_heli_fame',
+    chapter: 5,
+    title: '第五章：亲戚围攻',
+    narrative: [
+      '你刚进门，还没来得及换鞋，亲戚们就围上来了——但今天的画风不太一样。',
+      '没有人问你有没有对象。',
+      '因为所有人都在问：那个直升机是怎么回事？？？',
+      '七大姑："小X，你是不是发财了？"',
+      '八大姨："直升机多少钱一架？"',
+      '表弟举着手机在拍你："哥/姐你现在是我们村的顶流！"',
+      '🐴 本马从社恐变成了社牛，全靠一架不属于自己的直升机。',
+    ],
+    choices: [
+      {
+        id: 'ch5_heli_fame_honest',
+        text: '如实说：免费搭的，帮了个奶奶的忙',
+        effects: [
+          { resource: 'mood', delta: 10, message: '诚实的马🐴' },
+        ],
+        nextNodeId: 'ch5_salary',
+        feedback: '你把织毛线奶奶和老爷子的故事讲了一遍，亲戚们听得一愣一愣的。七大姑感慨："好人有好报啊！"八大姨已经在盘算让你下次帮她也搭一趟了。本马的诚实人设，意外地加了不少分 🐴✨',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch5_heli_fame_vague',
+        text: '故意含糊其辞，享受被崇拜的感觉',
+        effects: [
+          { resource: 'mood', delta: 15, message: '全村最靓的马🌟' },
+        ],
+        nextNodeId: 'ch5_salary',
+        feedback: '本马微微一笑，既不承认也不否认："嗯……认识一些朋友嘛。"亲戚们的眼神瞬间变了，看你的目光像在看一匹成功马士。表弟的短视频已经发出去了，标题是"我哥坐直升机回村过年"，播放量正在起飞 🌟📱',
+        tag: 'funny',
+      },
+      {
+        id: 'ch5_heli_fame_deflect',
+        text: '赶紧转移话题，太社死了',
+        effects: [
+          { resource: 'stamina', delta: -5, message: '突围消耗' },
+          { resource: 'mood', delta: 5, message: '低调的马' },
+        ],
+        nextNodeId: 'ch5_salary',
+        feedback: '本马拼命转移话题："别说直升机了，妈你做的什么菜这么香？"但没人接茬，所有人还在追问直升机的事。本马的社恐在全村的热情面前，不堪一击 🙈',
+      },
+    ],
+  },
+
   ch5_relationship: {
     id: 'ch5_relationship',
     chapter: 5,

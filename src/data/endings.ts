@@ -91,6 +91,28 @@ const ENDINGS: Record<string, Ending> = {
       '钱没了可以再赚，团圆的心不能丢！AI能帮你理财，但帮不了你感受除夕夜泡面的热气和远方家人的牵挂。新年快乐，愿你来年财源滚滚，更愿你常回家看看。',
     cardStyle: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-500',
   },
+  fate_reunion: {
+    type: 'fate_reunion',
+    title: '命中注马',
+    emoji: '💕',
+    description:
+      '飞机取消、高铁转签、难友变知己——最后发现，命运早就安排好了一切。烟花下的重逢，是这个春节最好的礼物。',
+    greeting:
+      '缘分这种事，AI算不出来。一张被取消的机票，一趟临时改签的高铁，一个在车上吐槽航空公司的陌生人——谁能想到，这一切都是命运的铺垫？新年快乐，愿你的每一次意外，都是惊喜的伏笔。',
+    cardStyle:
+      'bg-gradient-to-br from-pink-400 via-rose-500 to-pink-600',
+  },
+  sky_rider: {
+    type: 'sky_rider',
+    title: '天降奇马',
+    emoji: '🚁',
+    description:
+      '你用一匹毛线小马换了一张直升机票，从天而降回到村里。全村人都记住了这个除夕——那匹从天上飞回来的马。',
+    greeting:
+      '人生就是这么魔幻——航班取消、机场过夜、织毛线的奶奶、直升机回村。AI能规划最优路线，但规划不出这种离谱又温暖的奇遇。新年快乐，愿你的人生永远充满意想不到的精彩！',
+    cardStyle:
+      'bg-gradient-to-br from-sky-400 via-blue-500 to-amber-400',
+  },
   breakdown: {
     type: 'breakdown',
     title: '精神崩溃',

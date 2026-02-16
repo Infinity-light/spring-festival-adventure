@@ -121,12 +121,46 @@ function isFrugalMaster(state: GameState): boolean {
   return state.stats.totalMoneySpent <= 1500 && state.resources.money > 3000
 }
 
+/**
+ * 隐藏结局「命中注马」：命运重逢型
+ * - 走高铁线（加了难友微信）
+ * - 发现相亲对象就是高铁难友
+ * - 心情 > 60
+ */
+function isFateReunion(state: GameState): boolean {
+  return (
+    state.stats.choicesMade.includes('ch3_hsr_arrival_exchange') &&
+    state.stats.choicesMade.includes('ch5_blind_date_wechat_callback') &&
+    state.resources.mood > 60
+  )
+}
+
+/**
+ * 特殊结局「天降奇马」：直升机专属
+ * - 走直升机线
+ * - 心情 > 70
+ * - 助人 >= 2（帮了织毛线奶奶才能上直升机）
+ */
+function isSkyRider(state: GameState): boolean {
+  return (
+    state.stats.choicesMade.includes('ch2_plane_morning_yes') &&
+    state.resources.mood > 70 &&
+    state.stats.helpfulActions >= 2
+  )
+}
+
 export function determineEnding(state: GameState): EndingType {
   // P10 隐藏结局：最高优先级
   if (isHiddenLucky(state)) return 'hidden_lucky'
 
+  // P9.5 隐藏结局：命运重逢
+  if (isFateReunion(state)) return 'fate_reunion'
+
   // P9 完美结局
   if (isPerfect(state)) return 'perfect'
+
+  // P8.5 特殊结局：直升机专属
+  if (isSkyRider(state)) return 'sky_rider'
 
   // P7 风格结局（互斥，按优先级）
   if (isHelpfulHero(state)) return 'helpful_hero'
