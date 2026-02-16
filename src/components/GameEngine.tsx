@@ -96,7 +96,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     : null
 
   return (
-    <div className="flex flex-col min-h-[100dvh]">
+    <div className="flex flex-col h-[100dvh]">
       <AchievementToast
         queue={achievementQueue}
         onDone={() => setAchievementQueue([])}
@@ -113,7 +113,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
         inventory={state.inventory}
         items={ITEMS}
       />
-      <main className="flex-1 flex flex-col p-4 pt-14 pb-[max(1rem,env(safe-area-inset-bottom))] max-w-xl mx-auto w-full">
+      <main className="flex-1 flex flex-col min-h-0 p-4 max-w-lg mx-auto w-full">
         {state.isGameOver ? (
           <div className="flex-1 flex flex-col items-center justify-start pt-8 overflow-y-auto pb-6">
             <ParticleEffect type="firework" count={20} />

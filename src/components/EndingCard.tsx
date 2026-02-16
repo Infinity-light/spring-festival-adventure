@@ -172,8 +172,7 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
 
         {/* 底部 */}
         <div style={{ textAlign: 'center', fontSize: 11, opacity: 0.6 }}>
-          <div>春节回家历险记 · 2026</div>
-          <div style={{ marginTop: 2 }}>WaterFish@godpenAI.com, Cytopia, 2026</div>
+          春节回家历险记 · 2026
         </div>
       </div>
 
@@ -246,7 +245,7 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
       {/* ---- 打赏 & 群聊区域 ---- */}
       <div className="w-full max-w-sm mt-2 rounded-2xl border border-border bg-bg-card/80 p-5 flex flex-col items-center gap-4">
         <p className="text-text-secondary text-sm text-center">
-          如果这趟旅途让你会心一笑，欢迎请作者喝杯咖啡 ☕
+          如果这趟旅途让你会心一笑，欢迎请作者吃顿年夜饭 🥟
         </p>
         <div className="flex gap-6 w-full justify-center">
           {/* 收款码 */}
@@ -277,7 +276,7 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
           </div>
         </div>
         <p className="text-text-secondary/60 text-xs text-center">
-          所有打赏纯属自愿，感谢每一份支持 🧧
+          新年快乐，万事如意，马到成功 🧧
         </p>
       </div>
     </motion.div>
