@@ -11,11 +11,13 @@ import { loadUnlocked } from '@/lib/achievements'
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false)
   const [hasCleared, setHasCleared] = useState(false)
+  const [hasUnicorn, setHasUnicorn] = useState(false)
 
   useEffect(() => {
     const unlocked = loadUnlocked()
     const hasEnding = Object.keys(unlocked).some((k) => k.startsWith('ending_'))
     setHasCleared(hasEnding)
+    setHasUnicorn(!!unlocked['ending_unicorn_night'])
   }, [])
 
   if (isStarted) {
@@ -86,7 +88,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.5 }}
-          className="mt-4"
+          className="mt-4 flex flex-col items-center gap-2"
         >
           <Link
             href="/afterword"
@@ -94,6 +96,14 @@ export default function Home() {
           >
             📝 后日谈
           </Link>
+          {hasUnicorn && (
+            <Link
+              href="/afterword2"
+              className="text-sm text-text-secondary opacity-70 hover:opacity-100 transition-opacity"
+            >
+              🦄 后后日谈
+            </Link>
+          )}
         </motion.div>
       )}
 

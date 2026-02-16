@@ -85,7 +85,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       return
     }
     if (resourceGameOverProcessed.current) return
-    const resourceEndings: EndingType[] = ['exhausted', 'broke']
+    const resourceEndings: EndingType[] = ['exhausted', 'broke', 'sky_rider_broke']
     if (state.ending && resourceEndings.includes(state.ending)) {
       resourceGameOverProcessed.current = true
       const globalStats = accumulateGlobalStats(state.stats)
