@@ -80,6 +80,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     if (state.ending && resourceEndings.includes(state.ending)) {
       resourceGameOverProcessed.current = true
       const globalStats = accumulateGlobalStats(state.stats)
+      ufoQualified.current = globalStats.gamesPlayed >= 3
       const endingAchs = checkEndingAchievements(state.ending, state, globalStats)
       handleNewAchievements(endingAchs)
     }
@@ -95,6 +96,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       if (choice.nextNodeId === 'game_end') {
         const endingType = determineEnding(state)
         const globalStats = accumulateGlobalStats(state.stats)
+        ufoQualified.current = globalStats.gamesPlayed >= 3
         const endingAchs = checkEndingAchievements(endingType, state, globalStats)
         handleNewAchievements(endingAchs)
         triggerGameOver(endingType)
