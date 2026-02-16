@@ -422,6 +422,122 @@ const chapter2Nodes: Record<string, StoryNode> = {
     ],
   },
 
+  // ==================== UFO 线（隐藏彩蛋） ====================
+
+  ch2_ufo_1: {
+    id: 'ch2_ufo_1',
+    chapter: 2,
+    title: '第二章：春运大作战',
+    narrative: [
+      '你正在路边等车，天上突然降下一个发光的飞碟。',
+      '一匹绿色的外星马从舱门探出头来，用蹩脚的普通话说：',
+      '"老乡，顺路不？我也要回母星过年！"',
+      '🐴 本马这辈子见过堵车、见过晚点，还没见过飞碟拼车的。',
+    ],
+    choices: [
+      {
+        id: 'ch2_ufo1_board',
+        text: '上车！反正比春运靠谱',
+        effects: [
+          { resource: 'mood', delta: 20, message: '心情起飞🛸' },
+          { resource: 'stamina', delta: -5 },
+        ],
+        nextNodeId: 'ch2_ufo_2',
+        feedback:
+          '本马一个箭步跳上飞碟，舱门在身后嗖地关上。座椅自动调整成四条腿的姿势——好家伙，人体工学不行，马体工学倒是一流。外星马递过来安全带，本马发现安全带是用星光编的，系上之后全身暖洋洋的。窗外的城市在脚下越来越小，本马第一次觉得春运也没那么糟 🛸✨',
+        tag: 'funny',
+      },
+      {
+        id: 'ch2_ufo1_hesitate',
+        text: '你确定这安全吗？',
+        effects: [
+          { resource: 'mood', delta: 10, message: '犹豫就会败北🤔' },
+          { resource: 'stamina', delta: -10 },
+        ],
+        nextNodeId: 'ch2_ufo_2',
+        feedback:
+          '本马犹豫了三秒钟，外星马掏出一本《银河系客运安全手册》晃了晃："我们飞碟零事故率，比你们高铁还稳。"本马看了看身后排到天际线的候车队伍，又看了看眼前闪闪发光的飞碟，一咬牙跳了上去。反正都是赌，不如赌个大的 🤔🛸',
+      },
+    ],
+  },
+
+  ch2_ufo_2: {
+    id: 'ch2_ufo_2',
+    chapter: 2,
+    title: '第二章：春运大作战',
+    narrative: [
+      '飞碟内部出乎意料地宽敞，座椅是悬浮的水晶球，仪表盘上全是看不懂的符号。',
+      '外星马递过来一杯冒着气泡的饮料：',
+      '"尝尝？我们那边的年货，银河汽水。"',
+      '🐴 这颜色……像把北极光塞进了杯子里。',
+    ],
+    choices: [
+      {
+        id: 'ch2_ufo2_drink',
+        text: '干了！',
+        effects: [
+          { resource: 'stamina', delta: 15, message: '能量灌注⚡' },
+          { resource: 'mood', delta: 10 },
+        ],
+        nextNodeId: 'ch2_ufo_3',
+        feedback:
+          '一口下去，舌尖上炸开了烟花的味道——不是比喻，是真的能尝到颜色。本马感觉四条腿都在发光，精力值直接拉满。外星马竖起蹄子比了个赞："地球马酒量不错嘛。"本马打了个嗝，嗝出来一颗小星星 ⚡🌟',
+        addItem: 'alien_souvenir',
+        tag: 'funny',
+      },
+      {
+        id: 'ch2_ufo2_chat',
+        text: '不喝了，聊聊你们星球怎么过年？',
+        effects: [
+          { resource: 'mood', delta: 15, message: '涨知识了🪐' },
+          { resource: 'stamina', delta: 5 },
+        ],
+        nextNodeId: 'ch2_ufo_3',
+        feedback:
+          '外星马来了兴致，说他们星球过年要绕恒星跑三圈，相当于地球的"舞龙"。年夜饭吃的是压缩星云，味道像棉花糖。最离谱的是，他们也有春晚——全息投影版的，收视率覆盖三个星系。本马听得目瞪口呆，原来宇宙尽头也逃不过春晚 🪐📺',
+        addItem: 'alien_souvenir',
+        tag: 'helpful',
+      },
+    ],
+  },
+
+  ch2_ufo_3: {
+    id: 'ch2_ufo_3',
+    chapter: 2,
+    title: '第二章：春运大作战',
+    narrative: [
+      '飞碟加速，窗外的城市变成了光点，高速公路上的车流像一条发光的河。',
+      '外星马指着下面说：',
+      '"你们地球马每年都这样大迁徙？比我们星球的星际春运还壮观。"',
+      '🐴 从太空看春运……好像确实挺壮观的。',
+    ],
+    choices: [
+      {
+        id: 'ch2_ufo3_photo',
+        text: '拍照！这辈子就这一次！',
+        effects: [
+          { resource: 'mood', delta: 15, message: '绝版照片📸' },
+          { resource: 'stamina', delta: -5 },
+        ],
+        nextNodeId: 'ch2_end',
+        feedback:
+          '本马掏出手机对准窗外猛拍，结果飞碟突然转弯，手机差点被气流吸出舱外！本马一个马尾甩过去勾住了手机，外星马吓得脸都绿了——等等，他本来就是绿的。照片倒是拍到了：半个地球、一条光带、和本马惊恐的大脸。发朋友圈绝对炸裂 📸😱',
+        tag: 'funny',
+      },
+      {
+        id: 'ch2_ufo3_enjoy',
+        text: '放下手机，用眼睛记住这一刻',
+        effects: [
+          { resource: 'mood', delta: 20, message: '此刻永恒✨' },
+          { resource: 'stamina', delta: 5 },
+        ],
+        nextNodeId: 'ch2_end',
+        feedback:
+          '本马把手机揣回兜里，安静地看着窗外。城市的灯火像撒在黑丝绒上的碎钻，高速公路是一条流动的金线，连接着每一个想回家的人。外星马也安静下来，轻声说："不管哪个星球，回家的路都是最亮的。"本马的眼眶突然有点热 ✨🌍',
+      },
+    ],
+  },
+
   // ==================== 汇合点 ====================
 
   ch2_end: {
@@ -468,6 +584,13 @@ const chapter2Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch3_heli_takeoff',
         condition: { type: 'choice_made', choiceId: 'ch2_plane_morning_yes' },
+      },
+      {
+        id: 'ch2_end_ufo',
+        text: '继续坐飞碟前进！',
+        effects: [],
+        nextNodeId: 'ch3_ufo_cruise',
+        condition: { type: 'has_item', itemId: 'ufo_ticket' },
       },
     ],
   },

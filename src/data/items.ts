@@ -103,6 +103,20 @@ const ITEMS: Record<string, Item> = {
     description: '家族群抢红包的战绩',
     image: '/items/red_packet_rain.png',
   },
+  ufo_ticket: {
+    id: 'ufo_ticket',
+    name: '飞碟船票',
+    emoji: '🛸',
+    description: '外星马签发的星际顺风车票，限乘一次',
+    image: '/items/ufo_ticket.png',
+  },
+  alien_souvenir: {
+    id: 'alien_souvenir',
+    name: '外星纪念品',
+    emoji: '👽',
+    description: '外星马送的发光小球，据说能带来好运',
+    image: '/items/alien_souvenir.png',
+  },
 }
 
 export default ITEMS

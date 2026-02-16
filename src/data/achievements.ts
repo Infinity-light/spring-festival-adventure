@@ -158,6 +158,15 @@ const ACHIEVEMENTS: Achievement[] = [
     hidden: true,
   },
 
+  {
+    id: 'ufo_rider',
+    name: '飞碟搭便车',
+    emoji: '🛸',
+    description: '搭乘外星马的飞碟回家过年',
+    category: 'story',
+    hidden: true,
+  },
+
   // ---- 里程碑成就 ----
   {
     id: 'big_spender',

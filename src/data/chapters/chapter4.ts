@@ -301,7 +301,7 @@ const chapter4Nodes: Record<string, StoryNode> = {
           { resource: 'mood', delta: 30, message: '全村最靓的马🚁' },
           { resource: 'stamina', delta: -5, message: '社交消耗' },
         ],
-        nextNodeId: 'ch4_home_approach',
+        nextNodeId: 'ch4_heli_home',
         feedback: '本马从直升机上跳下来，朝围观群众挥了挥手。那一刻，本马感觉自己是凯旋的将军。你爸缓过神来，第一句话是："这……这得多少钱？"本马："免费的。"全场哗然。老爷子在驾驶座上笑着摆摆手，螺旋桨重新转动，直升机腾空而去。奶奶从窗户探出头喊："小马新年快乐！"🚁👋✨',
         tag: 'funny',
       },
@@ -312,8 +312,70 @@ const chapter4Nodes: Record<string, StoryNode> = {
           { resource: 'mood', delta: 20, message: '社死但开心🙈' },
           { resource: 'stamina', delta: -10, message: '拼命跑' },
         ],
-        nextNodeId: 'ch4_home_approach',
+        nextNodeId: 'ch4_heli_home',
         feedback: '本马红着脸从直升机上跳下来，拎着包就往家里冲。身后是全村人的议论声和手机拍照的咔嚓声。你妈一把拽住你："站住！这到底怎么回事？"本马用了十分钟解释了织毛线小马换直升机票的离奇经历，你妈听完沉默了三秒："……所以你小时候跟姥姥学的手艺终于用上了？"🙈🏃',
+      },
+    ],
+  },
+
+  ch4_heli_home: {
+    id: 'ch4_heli_home',
+    chapter: 4,
+    narrative: [
+      '你爸你妈一左一右把你架回了家，一路上全村人都在围观。',
+      '隔壁张婶追着问："小X，下次能不能带我飞一圈？"',
+      '你妈紧紧拉着你的手，嘴上骂着"瞎折腾"，眼角却有点湿。',
+      '🐴 突然有点想哭。',
+      '推开家门，一桌子菜的香味扑面而来。',
+      '到家了！！！',
+      '但是……亲戚们也到了。',
+      '……战斗才刚刚开始。',
+    ],
+    choices: [
+      {
+        id: 'ch4_heli_home_continue',
+        text: '进门！',
+        effects: [],
+        nextNodeId: 'ch5_relationship',
+      },
+    ],
+  },
+
+  // ==================== UFO线（隐藏彩蛋） ====================
+
+  ch4_ufo_landing: {
+    id: 'ch4_ufo_landing',
+    chapter: 4,
+    title: '第四章：到站风波',
+    narrative: [
+      '飞碟开始降落，外星马选了村口的打谷场作为着陆点。',
+      '一道光柱从天而降，把整个村子照得亮如白昼。鸡飞狗跳不说，隔壁王大爷的假牙都吓掉了。',
+      '全村人冲出来，以为是外星人入侵。你爸举着扫帚冲在最前面，你妈在后面喊"别冲动！"',
+      '🐴 本马……坐飞碟回村了。这大概是地球有史以来最离谱的回家方式。',
+      '外星马从舱门探出头，用蹩脚的普通话喊了一句："新年好！打扰了！"',
+      '全村石化。',
+    ],
+    choices: [
+      {
+        id: 'ch4_ufo_landing_introduce',
+        text: '给大家介绍一下，这是我的外星朋友！',
+        effects: [
+          { resource: 'mood', delta: 30, message: '全宇宙最靓的马🛸' },
+          { resource: 'stamina', delta: -5, message: '社交消耗' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马大手一挥开始介绍，全村人从恐惧变成好奇，三分钟后外星马就被围着合影了。王大爷捡起假牙问："这飞碟多少钱？能跑多少公里？"你爸放下扫帚，第一句话是："这……不用油钱吧？"你妈已经在问外星马吃不吃饺子了。本马站在人群中央，感觉自己是全村最有排面的马，不，全银河系最有排面的马🛸📸✨',
+        tag: 'funny',
+      },
+      {
+        id: 'ch4_ufo_landing_bye',
+        text: '赶紧告别外星马，溜回家！',
+        effects: [
+          { resource: 'mood', delta: 20, message: '低调回家🏃' },
+          { resource: 'stamina', delta: -10, message: '拼命跑' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马和外星马挥手告别，飞碟腾空而去，在夜空中留下一圈金色光环，比烟花还好看。全村人目瞪口呆地仰望天空，你趁机溜进家门。没跑两步就被你妈一把拽住："给我解释清楚！"本马用了半小时讲完这个离奇故事，从服务区偶遇到星际旅行。你爸全程沉默，听完只关心一个问题："所以你没花钱？"🏃🛸💫',
       },
     ],
   },

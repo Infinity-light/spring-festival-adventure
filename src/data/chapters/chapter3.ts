@@ -584,6 +584,45 @@ const chapter3Nodes: Record<string, StoryNode> = {
     ],
   },
 
+  // ==================== UFO线（隐藏彩蛋） ====================
+
+  ch3_ufo_cruise: {
+    id: 'ch3_ufo_cruise',
+    chapter: 3,
+    title: '第三章：旅途奇遇',
+    narrative: [
+      '飞碟进入巡航模式，外星马打开了自动驾驶，掏出一个发光的平板开始刷"星际抖音"。',
+      '屏幕上全是外星生物的搞笑视频——有三头蜥蜴跳广场舞的，有气态生物吹泡泡把自己吹炸了的。',
+      '外星马一边刷一边笑得前仰后合："哈哈哈这个地球猫的视频在我们那边播放量破亿了。"',
+      '你凑过去一看——好家伙，是你上个月发的猫咪视频。',
+      '🐴 本马的猫居然是星际网红？？？',
+      '外星马激动地拍了拍你的肩膀："你就是CatMaster_Horse？！我关注你好久了！"',
+    ],
+    choices: [
+      {
+        id: 'ch3_ufo_cruise_collab',
+        text: '要不咱合拍一个？地球马×外星马联动！',
+        effects: [
+          { resource: 'mood', delta: 20, message: '星际联动，流量密码🛸' },
+          { resource: 'stamina', delta: -5, message: '拍视频也挺累的' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '两匹马对着飞碟的全息摄像头拍了个搞笑视频——地球马教外星马吃火锅，外星马被辣得触角都竖起来了。外星马说会帮他在银河系全平台推广，预计播放量至少五百亿。本马已经开始想星际网红的商业变现方案了 🛸🎬✨',
+        tag: 'funny',
+      },
+      {
+        id: 'ch3_ufo_cruise_nap',
+        text: '你刷你的，本马眯一会儿',
+        effects: [
+          { resource: 'stamina', delta: 15, message: '飞碟悬浮座椅，睡感一流💤' },
+          { resource: 'mood', delta: 5, message: '太空级别的午睡' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '本马往悬浮座椅上一躺，座椅自动调整到最舒适的角度，还释放出淡淡的薰衣草香气——外星科技果然不一样。一觉醒来，发现外星马不知道什么时候给盖了一条发光的毯子，暖烘烘的，上面的星星图案还会一闪一闪。外星马头也不抬："你们地球马睡觉打呼噜的频率刚好是我们星球的助眠白噪音，谢谢你。" 🛸💤✨',
+      },
+    ],
+  },
+
   // ==================== 三线汇合 ====================
 
   ch3_almost_there: {
@@ -631,6 +670,13 @@ const chapter3Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch4_heli_landing',
         condition: { type: 'choice_made', choiceId: 'ch2_plane_morning_yes' },
+      },
+      {
+        id: 'ch3_almost_there_ufo',
+        text: '飞碟开始降落了！',
+        effects: [],
+        nextNodeId: 'ch4_ufo_landing',
+        condition: { type: 'has_item', itemId: 'ufo_ticket' },
       },
     ],
   },
