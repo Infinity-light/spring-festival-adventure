@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ACHIEVEMENTS_MAP } from '@/data/achievements'
 
-const DISPLAY_DURATION = 4000
-const STAGGER_DELAY = 600
+const DISPLAY_DURATION = 1000
+const STAGGER_DELAY = 300
 
 interface AchievementToastProps {
   /** 新解锁的成就 ID 队列 */
