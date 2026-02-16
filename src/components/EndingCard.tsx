@@ -318,7 +318,7 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
             </div>
-            <span className="text-xs text-text-secondary">自愿打赏</span>
+            <span className="text-xs text-text-secondary">打赏一二</span>
           </div>
           {/* 群聊码 */}
           <div className="flex flex-col items-center gap-2">
