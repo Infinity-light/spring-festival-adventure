@@ -3,10 +3,12 @@
 import { useState, useCallback } from 'react'
 import { useGameState } from '@/lib/gameState'
 import { determineEnding } from '@/lib/storyEngine'
+import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements } from '@/lib/achievements'
 import ResourceBar from '@/components/ResourceBar'
 import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
 import EndingCard from '@/components/EndingCard'
+import AchievementToast from '@/components/AchievementToast'
 import InventoryDrawer from '@/components/InventoryDrawer'
 import ENDINGS from '@/data/endings'
 import ITEMS from '@/data/items'
@@ -29,9 +31,19 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
   const [feedbackEffects, setFeedbackEffects] = useState<Choice['effects']>([])
   const [pendingNextNodeId, setPendingNextNodeId] = useState<string | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [achievementQueue, setAchievementQueue] = useState<string[]>([])
+  const [sessionAchievements, setSessionAchievements] = useState<string[]>([])
 
   const currentNode = storyNodes[state.currentNodeId] ?? null
   const endingData: Ending | undefined = state.ending ? ENDINGS[state.ending] : undefined
+
+  /** 将新解锁的成就写入 localStorage 并推入弹窗队列 */
+  const handleNewAchievements = useCallback((ids: string[]) => {
+    if (ids.length === 0) return
+    unlockAchievements(ids)
+    setAchievementQueue((prev) => [...prev, ...ids])
+    setSessionAchievements((prev) => [...prev, ...ids])
+  }, [])
 
   const handleChoice = useCallback(
     (choice: Choice) => {
@@ -42,10 +54,16 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       // 第7章查看结局：触发结局判定
       if (choice.nextNodeId === 'game_end') {
         const endingType = determineEnding(state)
+        const endingAchs = checkEndingAchievements(endingType, state)
+        handleNewAchievements(endingAchs)
         triggerGameOver(endingType)
         setIsChoosing(false)
         return
       }
+
+      // 检测剧情/里程碑成就
+      const newAchs = checkChoiceAchievements(choice, state)
+      handleNewAchievements(newAchs)
 
       if (choice.feedback) {
         // Has feedback: apply effects now, but defer node transition
@@ -60,7 +78,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
         setTimeout(() => setIsChoosing(false), CHOICE_COOLDOWN_MS)
       }
     },
-    [isChoosing, state, makeChoice, applyChoiceEffects, triggerGameOver],
+    [isChoosing, state, makeChoice, applyChoiceEffects, triggerGameOver, handleNewAchievements],
   )
 
   const handleDismissFeedback = useCallback(() => {
@@ -79,6 +97,10 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
 
   return (
     <div className="flex flex-col min-h-[100dvh]">
+      <AchievementToast
+        queue={achievementQueue}
+        onDone={() => setAchievementQueue([])}
+      />
       <ResourceBar
         resources={state.resources}
         previousResources={previousResources}
@@ -100,8 +122,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
                 ending={endingData}
                 stats={state.stats}
                 resources={state.resources}
-                inventory={state.inventory}
-                items={ITEMS}
+                newlyUnlocked={sessionAchievements}
                 onRestart={restart}
               />
             ) : (

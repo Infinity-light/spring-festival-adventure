@@ -124,6 +124,20 @@ export interface Ending {
   cardStyle: string
 }
 
+// --- 成就系统 ---
+
+export type AchievementCategory = 'story' | 'ending' | 'milestone'
+
+export interface Achievement {
+  id: string
+  name: string
+  emoji: string
+  description: string
+  category: AchievementCategory
+  /** 隐藏成就：解锁前不显示名称和描述 */
+  hidden?: boolean
+}
+
 // --- 游戏状态 ---
 
 export interface GameState {

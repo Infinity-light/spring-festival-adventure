@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import html2canvas from 'html2canvas'
-import type { Ending, GameStats, Resources, Item } from '@/types/game'
+import AchievementPanel from '@/components/AchievementPanel'
+import type { Ending, GameStats, Resources } from '@/types/game'
 
 const TOTAL_ITEMS = 12
 
@@ -11,8 +12,7 @@ interface EndingCardProps {
   ending: Ending
   stats: GameStats
   resources: Resources
-  inventory: string[]
-  items: Record<string, Item>
+  newlyUnlocked: string[]
   onRestart: () => void
 }
 
@@ -105,7 +105,7 @@ function StatCard({ emoji, label, value, suffix }: {
 
 const SCREENSHOT_SCALE = 2
 
-export default function EndingCard({ ending, stats, resources, inventory, items, onRestart }: EndingCardProps) {
+export default function EndingCard({ ending, stats, resources, newlyUnlocked, onRestart }: EndingCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
 
   const handleSaveCard = async () => {
@@ -197,37 +197,8 @@ export default function EndingCard({ ending, stats, resources, inventory, items,
         </div>
       </motion.div>
 
-      {/* ---- 道具展示栏 ---- */}
-      {inventory.length > 0 && (
-        <motion.div
-          className="w-full max-w-sm rounded-2xl bg-festival-gold/10 border border-festival-gold/20 p-5"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-        >
-          <h3 className="text-center text-text-gold font-bold text-base mb-3">
-            🎒 收集的道具
-          </h3>
-          <div className="flex flex-wrap justify-center gap-2">
-            {inventory.map((itemId) => {
-              const item = items[itemId]
-              if (!item) return null
-              return (
-                <motion.div
-                  key={itemId}
-                  className="flex items-center gap-1.5 rounded-full bg-white/80 border border-festival-gold/30 px-3 py-1.5 text-sm text-text-primary"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.8 + Math.random() * 0.3, type: 'spring', stiffness: 300 }}
-                >
-                  <span>{item.emoji}</span>
-                  <span className="text-xs font-medium">{item.name}</span>
-                </motion.div>
-              )
-            })}
-          </div>
-        </motion.div>
-      )}
+      {/* ---- 成就面板 ---- */}
+      <AchievementPanel newlyUnlocked={newlyUnlocked} />
 
       {/* ---- 旅途评价 ---- */}
       <motion.div
