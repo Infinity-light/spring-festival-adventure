@@ -39,7 +39,7 @@ export default function ResourceBar({ resources, previousResources, onOpenInvent
   }, [resources, previousResources])
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-2 border-b border-border bg-bg-secondary/95 backdrop-blur-sm px-3 py-2 sm:gap-4 sm:px-6">
+    <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-2 border-b border-border bg-bg-secondary/95 backdrop-blur-sm px-3 pt-[max(0.5rem,env(safe-area-inset-top))] pb-2 sm:gap-4 sm:px-6">
       {RESOURCE_KEYS.map((key) => {
         const { icon, label, colorClass, maxValue } = RESOURCE_CONFIG[key]
         const value = resources[key]
