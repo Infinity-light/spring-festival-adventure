@@ -125,13 +125,6 @@ const ACHIEVEMENTS: Achievement[] = [
     description: '钱花光了在车站吃泡面',
     category: 'ending',
   },
-  {
-    id: 'ending_barely',
-    name: '勉强到家',
-    emoji: '😅',
-    description: '一路坎坷但还是撑到了家门口',
-    category: 'ending',
-  },
 
   {
     id: 'detour_master',
