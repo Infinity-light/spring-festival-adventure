@@ -13,7 +13,7 @@ import InventoryDrawer from '@/components/InventoryDrawer'
 import ENDINGS from '@/data/endings'
 import ITEMS from '@/data/items'
 import { getAvailableChoices } from '@/lib/storyEngine'
-import type { StoryNode, Choice, Resources, Ending } from '@/types/game'
+import type { StoryNode, Choice, Resources, Ending, EndingType } from '@/types/game'
 
 const CHOICE_COOLDOWN_MS = 300
 
@@ -67,6 +67,23 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     setAchievementQueue((prev) => [...prev, ...ids])
     setSessionAchievements((prev) => [...prev, ...ids])
   }, [])
+
+  // 资源归零结局（broke/exhausted/breakdown）的成就与全局统计补录
+  const resourceGameOverProcessed = useRef(false)
+  useEffect(() => {
+    if (!state.isGameOver) {
+      resourceGameOverProcessed.current = false
+      return
+    }
+    if (resourceGameOverProcessed.current) return
+    const resourceEndings: EndingType[] = ['exhausted', 'broke', 'breakdown']
+    if (state.ending && resourceEndings.includes(state.ending)) {
+      resourceGameOverProcessed.current = true
+      const globalStats = accumulateGlobalStats(state.stats)
+      const endingAchs = checkEndingAchievements(state.ending, state, globalStats)
+      handleNewAchievements(endingAchs)
+    }
+  }, [state.isGameOver, state.ending, state.stats, handleNewAchievements])
 
   const handleChoice = useCallback(
     (choice: Choice) => {
