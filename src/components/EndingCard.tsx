@@ -304,7 +304,7 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
       {/* ---- 打赏 & 群聊区域 ---- */}
       <div className="w-full max-w-sm mt-2 rounded-2xl border border-border bg-bg-card/80 p-5 flex flex-col items-center gap-4">
         <p className="text-text-secondary text-sm text-center">
-          如果这趟旅途让你会心一笑，欢迎请作者吃顿年夜饭 🥟
+          如果这趟旅途让你会心一笑，欢迎请作者喝杯奶茶 🧋
         </p>
         <div className="flex gap-6 w-full justify-center">
           {/* 收款码 */}
