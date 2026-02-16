@@ -109,7 +109,6 @@ export type EndingType =
   | 'barely'
   | 'exhausted'
   | 'broke'
-  | 'breakdown'
   | 'hidden_lucky'
   | 'helpful_hero'
   | 'funny_king'

@@ -68,7 +68,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
     setSessionAchievements((prev) => [...prev, ...ids])
   }, [])
 
-  // 资源归零结局（broke/exhausted/breakdown）的成就与全局统计补录
+  // 资源归零结局（broke/exhausted）的成就与全局统计补录
   const resourceGameOverProcessed = useRef(false)
   useEffect(() => {
     if (!state.isGameOver) {
@@ -76,7 +76,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       return
     }
     if (resourceGameOverProcessed.current) return
-    const resourceEndings: EndingType[] = ['exhausted', 'broke', 'breakdown']
+    const resourceEndings: EndingType[] = ['exhausted', 'broke']
     if (state.ending && resourceEndings.includes(state.ending)) {
       resourceGameOverProcessed.current = true
       const globalStats = accumulateGlobalStats(state.stats)

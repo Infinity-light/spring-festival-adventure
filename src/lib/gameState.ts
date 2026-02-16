@@ -61,7 +61,6 @@ function clampResource(value: number, resource: ResourceType): number {
 function checkGameOver(resources: Resources): EndingType | null {
   if (resources.stamina <= MIN_RESOURCE) return 'exhausted'
   if (resources.money <= MIN_RESOURCE) return 'broke'
-  if (resources.mood <= MIN_RESOURCE) return 'breakdown'
   return null
 }
 

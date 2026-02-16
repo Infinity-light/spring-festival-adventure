@@ -113,16 +113,6 @@ const ENDINGS: Record<string, Ending> = {
     cardStyle:
       'bg-gradient-to-br from-sky-400 via-blue-500 to-amber-400',
   },
-  breakdown: {
-    type: 'breakdown',
-    title: '精神崩溃',
-    emoji: '😤',
-    description:
-      '心情降到了冰点，你决定原地躺平，在出租屋里一个人过年。外卖小哥成了你除夕唯一见到的人。',
-    greeting:
-      '有时候不回家也是一种勇气。但记住，再厉害的AI也没法替你给爸妈打那通电话。新年快乐，愿你来年心情美丽，也愿你在想家的时候，别忍着。',
-    cardStyle: 'bg-gradient-to-br from-purple-600 via-pink-600 to-purple-600',
-  },
 }
 
 export default ENDINGS

@@ -125,13 +125,6 @@ const ACHIEVEMENTS: Achievement[] = [
     description: '钱花光了在车站吃泡面',
     category: 'ending',
   },
-  {
-    id: 'ending_breakdown',
-    name: '精神崩溃',
-    emoji: '😤',
-    description: '心情降到冰点，原地躺平',
-    category: 'ending',
-  },
 
   {
     id: 'detour_master',
@@ -198,28 +191,6 @@ const ACHIEVEMENTS: Achievement[] = [
     emoji: '🚁',
     description: '坐直升机回村，成为全村传说',
     category: 'ending',
-  },
-  {
-    id: 'car_breakdown',
-    name: '半路抛锚',
-    emoji: '🔧',
-    description: '自驾路上车子罢工，好在有惊无险',
-    category: 'story',
-  },
-  {
-    id: 'heli_fame',
-    name: '全村名马',
-    emoji: '🌟',
-    description: '坐直升机回来后被全村围观追问',
-    category: 'story',
-  },
-  {
-    id: 'firework_reunion',
-    name: '烟花下的重逢',
-    emoji: '🎆',
-    description: '除夕夜烟花下，和命中注定的人并肩而立',
-    category: 'story',
-    hidden: true,
   },
 ]
 
