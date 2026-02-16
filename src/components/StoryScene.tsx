@@ -75,7 +75,7 @@ export default function StoryScene({
       )}
 
       {/* 叙事文本区域 */}
-      <div className="flex-1 overflow-y-auto space-y-4 mb-8">
+      <div className="flex-1 space-y-4 mb-8">
         <AnimatePresence mode="sync">
           {visibleParagraphs.map((text, i) => (
             <motion.p

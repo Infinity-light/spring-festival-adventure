@@ -73,7 +73,7 @@ export default function Home() {
       </motion.button>
 
       <p className="absolute bottom-4 text-text-secondary/40 text-[10px]">
-        水中鱼, Cytopia, 2026
+        水中鱼 @godpenai.com, Cytopia, 2026
       </p>
     </div>
   )
