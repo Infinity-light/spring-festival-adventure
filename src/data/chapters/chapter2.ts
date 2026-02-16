@@ -356,7 +356,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
           { resource: 'stamina', delta: 25 },
           { resource: 'mood', delta: 10 },
         ],
-        nextNodeId: 'ch2_end',
+        nextNodeId: 'ch2_plane_morning',
         feedback: '四百块一晚的机场酒店，床硬得像木板，但至少有个枕头。本马躺下的瞬间，灵魂都升华了 🏨😌',
       },
       {
@@ -366,7 +366,7 @@ const chapter2Nodes: Record<string, StoryNode> = {
           { resource: 'stamina', delta: -20, message: '腰酸背痛😴' },
           { resource: 'mood', delta: -15 },
         ],
-        nextNodeId: 'ch2_end',
+        nextNodeId: 'ch2_plane_morning',
         feedback: '机场地板又硬又凉，本马用外套裹住自己，活像一个被遗弃的行李。旁边大哥的呼噜声震天响 😴🥶',
       },
       {
@@ -376,8 +376,48 @@ const chapter2Nodes: Record<string, StoryNode> = {
           { resource: 'stamina', delta: -25, message: '熬夜冠军🏆' },
           { resource: 'mood', delta: 5 },
         ],
-        nextNodeId: 'ch2_end',
+        nextNodeId: 'ch2_plane_morning',
         feedback: '刷完短视频刷微博，刷完微博刷朋友圈。天亮时本马的眼睛已经红得像兔子，但至少没错过任何热搜 📱🏆',
+      },
+    ],
+  },
+
+  // ==================== 飞机线：机场奇遇 ====================
+
+  ch2_plane_morning: {
+    id: 'ch2_plane_morning',
+    chapter: 2,
+    narrative: [
+      '迷迷糊糊醒来，脖子已经不属于自己了。',
+      '你摸了摸身边——行李呢？？？',
+      '你的行李箱不见了！！！昨晚明明就放在脚边的！',
+      '🐴 本马的年货、衣服、充电宝……全没了？？？',
+      '你慌张地四处找，最后在隔壁登机口找到了——被清洁阿姨当无主行李挪走了。',
+      '虚惊一场。但手机只剩3%的电，航班状态还是"待定"。',
+      '一切都不顺。本马开始怀疑这趟回家之旅是不是被诅咒了。',
+      '这时候，旁边一位头发花白的奶奶拍了拍你的肩膀。',
+      '她手里拿着织了一半的毛线玩偶，面前摆了一排毛线小动物——鼠、牛、虎、兔、龙、蛇、羊、猴、鸡、狗、猪。',
+      '"年轻人，你会织毛线小马吗？我这套十二生肖就差一匹马了。"',
+    ],
+    choices: [
+      {
+        id: 'ch2_plane_morning_yes',
+        text: '会！我小时候跟姥姥学过！',
+        effects: [
+          { resource: 'mood', delta: 20, message: '命运的转折🚁' },
+        ],
+        nextNodeId: 'ch2_end',
+        feedback: '你接过毛线和钩针，凭着小时候的记忆，歪歪扭扭地织了一匹红色小马。奶奶高兴得眼睛都亮了："太好了！十二生肖终于齐了！"她从包里掏出一张卡片递给你："我老伴是开直升机的，这是他的名片。你航班不是取消了吗？他今天正好飞你老家那个方向，捎你一程！"🐴✨🚁',
+        removeItem: 'boarding_pass',
+      },
+      {
+        id: 'ch2_plane_morning_no',
+        text: '不会啊奶奶，我手笨',
+        effects: [
+          { resource: 'mood', delta: -5, message: '错过了什么？' },
+        ],
+        nextNodeId: 'ch2_end',
+        feedback: '奶奶有点失望地叹了口气："唉，找了一年了，就差这匹马。"她收起毛线继续织别的东西。本马总觉得错过了什么，但说不上来。🧶😔',
       },
     ],
   },
@@ -421,6 +461,13 @@ const chapter2Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch3_hsr_station',
         condition: { type: 'has_item', itemId: 'hsr_ticket' },
+      },
+      {
+        id: 'ch2_end_heli',
+        text: '登上直升机！',
+        effects: [],
+        nextNodeId: 'ch3_heli_takeoff',
+        condition: { type: 'choice_made', choiceId: 'ch2_plane_morning_yes' },
       },
     ],
   },

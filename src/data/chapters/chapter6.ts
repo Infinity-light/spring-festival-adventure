@@ -197,7 +197,38 @@ const chapter6Nodes: Record<string, StoryNode> = {
     narrative: [
       '十二点的钟声敲响了！',
       '烟花在夜空中绽放，照亮了整个村庄。',
-      '你妈端来了热腾腾的饺子：\'来，吃饺子，新年快乐！\'',
+      '你妈从厨房端出一个大盘子，笑眯眯地问：',
+      '\'今年想吃饺子还是汤圆？\'',
+      '🐴 这是一道关乎南北立场的终极选择题。',
+    ],
+    choices: [
+      {
+        id: 'ch6_end_dumpling',
+        text: '饺子！北方人的年夜饭灵魂！',
+        effects: [
+          { resource: 'mood', delta: 10, message: '饺子就酒，越吃越有🥟' },
+        ],
+        nextNodeId: 'ch6_finale',
+        feedback: '热腾腾的饺子端上桌，你妈包的褶子整整齐齐，每一个都像艺术品。咬一口，鲜汁四溢——这是任何米其林餐厅都复刻不了的味道。你爸夹起一个："来，吃到硬币的有福气！"本马咬到了……一颗花生。"花生也算！花生是花好月圆！"你妈赶紧圆场 🥟😂',
+        addItem: 'dumpling',
+      },
+      {
+        id: 'ch6_end_tangyuan',
+        text: '汤圆！团团圆圆才是年味！',
+        effects: [
+          { resource: 'mood', delta: 10, message: '甜甜蜜蜜，团团圆圆🍡' },
+        ],
+        nextNodeId: 'ch6_finale',
+        feedback: '一碗热气腾腾的汤圆端上来，白白胖胖地浮在甜汤里，像一群泡温泉的小雪人。咬开一个，黑芝麻馅流了一下巴。你妈笑着递纸巾："多大的马了还吃成这样。"本马不管了，团圆的味道就是这么甜 🍡🥰',
+        addItem: 'tangyuan',
+      },
+    ],
+  },
+
+  ch6_finale: {
+    id: 'ch6_finale',
+    chapter: 6,
+    narrative: [
       '🐴 新年快乐！本马……到家了。',
       '这一路的奔波、折腾、欢笑、崩溃，都值了。',
       '你的春节回家历险记，到此结束。',
@@ -205,11 +236,10 @@ const chapter6Nodes: Record<string, StoryNode> = {
     ],
     choices: [
       {
-        id: 'ch6_end_view',
+        id: 'ch6_finale_view',
         text: '查看我的结局',
         effects: [],
         nextNodeId: 'game_end',
-        addItem: 'dumpling',
       },
     ],
   },

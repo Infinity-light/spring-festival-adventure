@@ -88,6 +88,7 @@ const CHOICE_ACHIEVEMENT_MAP: Record<string, string> = {
   ch6_fireworks_light: 'firework_master',
   ch4_drive_parking_hug: 'hug_dad',
   ch2_plane1_refund: 'detour_master',
+  ch2_plane_morning_yes: 'heli_rider',
 }
 
 // 前任重逢：到达 ch3_train_ex 节点时触发（通过 nextNodeId 检测）

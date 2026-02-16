@@ -192,6 +192,27 @@ const chapter5Nodes: Record<string, StoryNode> = {
     ],
     choices: [
       {
+        id: 'ch5_blind_date_dodge_lie',
+        text: '妈！我都说有对象了！',
+        condition: { type: 'choice_made', choiceId: 'relationship_lie' },
+        effects: [
+          { resource: 'mood', delta: 5, message: '圆谎成功🤥' },
+        ],
+        nextNodeId: 'ch5_end',
+        feedback: '你妈狐疑地看了你一眼："真的假的？那让人家来家里吃顿饭呗。"本马赶紧编：人家在外地过年呢！你妈半信半疑地放弃了，但眼神写满了"年后必须带来给我看看" 🤥😅',
+      },
+      {
+        id: 'ch5_blind_date_dodge_flex',
+        text: '妈，我正在筛选呢，不急！',
+        condition: { type: 'choice_made', choiceId: 'relationship_flex' },
+        effects: [
+          { resource: 'mood', delta: 10, message: '凡尔赛再次生效💅' },
+        ],
+        nextNodeId: 'ch5_end',
+        feedback: '你妈愣了一下："筛选？你还挑上了？"本马淡定地说"宁缺毋滥嘛"。你妈虽然嘴上嘀咕"眼光别太高"，但明显被凡尔赛到了，相亲的事暂时搁置 💅✨',
+        tag: 'funny',
+      },
+      {
         id: 'ch5_blind_date_accept',
         text: '行吧，去看看',
         effects: [

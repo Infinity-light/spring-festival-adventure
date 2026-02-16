@@ -19,6 +19,7 @@ const chapter3Nodes: Record<string, StoryNode> = {
       {
         id: 'ch3_train_noodle_join',
         text: '加入泡面大战！拿出自己的存货',
+        condition: { type: 'has_item', itemId: 'instant_noodles' },
         effects: [
           { resource: 'stamina', delta: 15, message: '泡面补给，满血复活🍜' },
           { resource: 'mood', delta: 10, message: '快乐分享' },
@@ -26,6 +27,17 @@ const chapter3Nodes: Record<string, StoryNode> = {
         nextNodeId: 'ch3_train_toilet',
         feedback: '本马掏出珍藏的泡面，和大哥交换了火腿肠。三个人围着小桌板吃得热火朝天，螺蛳粉小伙被孤立了。春运的快乐，就是这么朴实无华 🍜🌭',
         addItem: 'lucky_orange',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch3_train_noodle_beg',
+        text: '厚着脸皮蹭一口',
+        effects: [
+          { resource: 'stamina', delta: 5, message: '蹭到了一口🍜' },
+          { resource: 'mood', delta: 5, message: '有点不好意思' },
+        ],
+        nextNodeId: 'ch3_train_toilet',
+        feedback: '本马可怜巴巴地看着大哥的泡面，大哥豪爽地递过来一根火腿肠和半碗面汤。虽然没带泡面，但春运的人情味，比泡面还香 🍜🙏',
         tag: 'helpful',
       },
       {
@@ -496,6 +508,82 @@ const chapter3Nodes: Record<string, StoryNode> = {
     ],
   },
 
+  // ==================== 直升机线（隐藏分支） ====================
+
+  ch3_heli_takeoff: {
+    id: 'ch3_heli_takeoff',
+    chapter: 3,
+    title: '第三章：旅途奇遇',
+    narrative: [
+      '奶奶带你来到机场旁边一个小型停机坪，一架红白相间的直升机停在那里。',
+      '驾驶座上坐着一个精神矍铄的老爷子，戴着飞行员墨镜，朝你竖了个大拇指。',
+      '"上车吧小伙子！我老伴说你帮了大忙，今天顺路捎你回家！"',
+      '🐴 本马……要坐直升机回家？？？这剧情是不是有点离谱？',
+      '老爷子笑着说："我飞了四十年了，比你坐的那些航班靠谱多了。系好安全带！"',
+      '螺旋桨开始转动，巨大的轰鸣声中，直升机缓缓升空。',
+    ],
+    choices: [
+      {
+        id: 'ch3_heli_takeoff_front',
+        text: '坐副驾驶！要看最好的风景！',
+        effects: [
+          { resource: 'mood', delta: 25, message: '人生巅峰！🚁' },
+          { resource: 'stamina', delta: -10, message: '紧张到手心出汗' },
+        ],
+        nextNodeId: 'ch3_heli_view',
+        feedback: '本马坐在副驾驶的位置上，脚下就是透明的舷窗。起飞的瞬间胃都翻了一下，但当城市变成积木、公路变成丝带的时候，本马只剩下一个字：绝。老爷子得意地笑："怎么样，比你那个取消的航班强吧？" 🚁🌆',
+        tag: 'funny',
+      },
+      {
+        id: 'ch3_heli_takeoff_back',
+        text: '坐后面吧，本马有点恐高……',
+        effects: [
+          { resource: 'mood', delta: 15, message: '虽然怕但还是很酷🚁' },
+          { resource: 'stamina', delta: -5, message: '小紧张' },
+        ],
+        nextNodeId: 'ch3_heli_view',
+        feedback: '本马缩在后座，双手紧紧抓着安全带。但透过窗户看到云层在脚下翻涌的时候，恐惧慢慢变成了震撼。奶奶在旁边淡定地继续织毛线，仿佛坐直升机跟坐公交一样平常 🚁😨→😮',
+      },
+    ],
+  },
+
+  ch3_heli_view: {
+    id: 'ch3_heli_view',
+    chapter: 3,
+    narrative: [
+      '直升机在低空飞行，窗外的风景美得不像话。',
+      '城市的高楼渐渐消失，取而代之的是连绵的山丘和蜿蜒的河流。',
+      '老爷子指着下面的高速公路："看，那些堵在路上的车，你本来也是其中之一。"',
+      '🐴 本马从天上俯瞰春运大军，有一种说不出的感觉。',
+      '奶奶递过来一个保温杯："喝口热茶，我自己泡的。"',
+      '茶很香，风景很美，这大概是本马人生中最魔幻的一段旅程。',
+    ],
+    choices: [
+      {
+        id: 'ch3_heli_view_photo',
+        text: '疯狂拍照！这辈子可能就这一次！',
+        effects: [
+          { resource: 'mood', delta: 15, message: '朋友圈炸了📸' },
+          { resource: 'stamina', delta: -5, message: '兴奋消耗' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '本马掏出仅剩1%电量的手机，疯狂按快门。发了一条朋友圈："坐直升机回家过年，不接受反驳。"配图九宫格全是航拍。三秒后手机关机了，但照片已经发出去了。评论区已经炸了，虽然本马看不到 📸📱💀',
+        tag: 'funny',
+      },
+      {
+        id: 'ch3_heli_view_chat',
+        text: '听老爷子讲飞行故事',
+        effects: [
+          { resource: 'mood', delta: 20, message: '传奇故事🎖️' },
+          { resource: 'stamina', delta: 5, message: '精神充电' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '老爷子讲起了年轻时在部队飞运输机的故事，讲起了退役后买了这架小直升机圆梦的经历。"人这辈子啊，总得有点疯狂的事。"奶奶在旁边补了一句："他最疯狂的事就是娶了我。"三个人都笑了。本马觉得，这对老夫妻比任何电影都精彩 🎖️❤️',
+        tag: 'helpful',
+      },
+    ],
+  },
+
   // ==================== 三线汇合 ====================
 
   ch3_almost_there: {
@@ -536,6 +624,13 @@ const chapter3Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch4_hsr_arrival',
         condition: { type: 'has_item', itemId: 'hsr_ticket' },
+      },
+      {
+        id: 'ch3_almost_there_heli',
+        text: '直升机开始降落了！',
+        effects: [],
+        nextNodeId: 'ch4_heli_landing',
+        condition: { type: 'choice_made', choiceId: 'ch2_plane_morning_yes' },
       },
     ],
   },

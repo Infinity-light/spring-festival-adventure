@@ -82,6 +82,13 @@ const ITEMS: Record<string, Item> = {
     description: '热腾腾的饺子，家的味道',
     image: '/items/dumpling.png',
   },
+  tangyuan: {
+    id: 'tangyuan',
+    name: '妈妈的汤圆',
+    emoji: '🍡',
+    description: '甜甜糯糯的汤圆，团圆的味道',
+    image: '/items/tangyuan.png',
+  },
   firework: {
     id: 'firework',
     name: '烟花',

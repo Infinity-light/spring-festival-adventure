@@ -141,6 +141,14 @@ const ACHIEVEMENTS: Achievement[] = [
     category: 'story',
     hidden: true,
   },
+  {
+    id: 'heli_rider',
+    name: '天降奇兵',
+    emoji: '🚁',
+    description: '用毛线小马换了一张直升机票回家',
+    category: 'story',
+    hidden: true,
+  },
 
   // ---- 里程碑成就 ----
   {
