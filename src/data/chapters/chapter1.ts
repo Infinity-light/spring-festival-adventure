@@ -39,6 +39,15 @@ const chapter1Nodes: Record<string, StoryNode> = {
         feedback: '两千块没了，但本马两小时就能到家！这叫什么？这叫时间就是金钱。💸 虽然金钱也没了。',
         addItem: 'boarding_pass',
       },
+      {
+        id: 'start_ufo',
+        text: '🛸 坐飞碟！？',
+        effects: [{ resource: 'mood', delta: 15, message: '这是什么神仙选项？！' }],
+        nextNodeId: 'ch2_ufo_1',
+        condition: { type: 'has_item', itemId: 'ufo_pass' },
+        feedback: '本马揉了揉眼睛——选项里居然有飞碟？？？这一定是玩了太多次产生的幻觉。但管它呢，上！🛸',
+        addItem: 'ufo_ticket',
+      },
     ],
   },
 

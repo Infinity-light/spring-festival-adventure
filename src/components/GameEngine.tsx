@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useGameState } from '@/lib/gameState'
 import { determineEnding } from '@/lib/storyEngine'
-import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements, accumulateGlobalStats } from '@/lib/achievements'
+import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements, accumulateGlobalStats, loadGlobalStats } from '@/lib/achievements'
 import ResourceBar from '@/components/ResourceBar'
 import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
@@ -22,7 +22,30 @@ interface GameEngineProps {
 }
 
 export function GameEngine({ storyNodes }: GameEngineProps) {
-  const { state, makeChoice, applyChoiceEffects, navigateToNode, advanceNarrative, triggerGameOver, restart } = useGameState()
+  const { state, makeChoice, applyChoiceEffects, navigateToNode, advanceNarrative, addItem, triggerGameOver, restart } = useGameState()
+  const ufoQualified = useRef(false)
+
+  // 挂载时检查是否解锁 UFO 线（玩过 3 局以上）
+  useEffect(() => {
+    ufoQualified.current = loadGlobalStats().gamesPlayed >= 3
+    if (ufoQualified.current) {
+      addItem('ufo_pass')
+    }
+  }, [addItem])
+
+  const handleRestart = useCallback(() => {
+    restart()
+    setFeedbackText(null)
+    setFeedbackEffects([])
+    setPendingNextNodeId(null)
+    setPreviousResources(undefined)
+    setIsChoosing(false)
+    setSessionAchievements([])
+    if (ufoQualified.current) {
+      addItem('ufo_pass')
+    }
+  }, [restart, addItem])
+
   const [previousResources, setPreviousResources] = useState<
     Resources | undefined
   >(undefined)
@@ -124,7 +147,7 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
                 stats={state.stats}
                 resources={state.resources}
                 newlyUnlocked={sessionAchievements}
-                onRestart={restart}
+                onRestart={handleRestart}
               />
             ) : (
               <div>加载结局中...</div>
