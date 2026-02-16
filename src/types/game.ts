@@ -115,6 +115,8 @@ export type EndingType =
   | 'frugal_master'
   | 'fate_reunion'
   | 'sky_rider'
+  | 'sky_rider_broke'
+  | 'unicorn_night'
 
 export interface Ending {
   type: EndingType

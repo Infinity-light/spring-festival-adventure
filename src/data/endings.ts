@@ -113,6 +113,28 @@ const ENDINGS: Record<string, Ending> = {
     cardStyle:
       'bg-gradient-to-br from-sky-400 via-blue-500 to-amber-400',
   },
+  sky_rider_broke: {
+    type: 'sky_rider_broke',
+    title: '倾家荡马',
+    emoji: '🚁💸',
+    description:
+      '钱花光了，但你从天而降回到了村里。全村人都记住了这个除夕——那匹散尽家财、从天上飞回来的马。',
+    greeting:
+      '为了回家，你押上了最后一分钱。航班取消、机场过夜、织毛线的奶奶、直升机回村——兜比脸干净，但排面拉满。AI能帮你理财，但算不出一颗不惜一切也要回家的心值多少钱。新年快乐，愿你永远有不顾一切的勇气！',
+    cardStyle:
+      'bg-gradient-to-br from-sky-400 via-amber-500 to-red-500',
+  },
+  unicorn_night: {
+    type: 'unicorn_night',
+    title: '独角兽之夜',
+    emoji: '🦄',
+    description:
+      '除夕夜加班到最后一刻，却遇到了十二生肖的守护者。你终于想起来——你本来就是一匹马，不需要任何交通工具。展翅飞过星空，与旧日的牵挂并肩掠过烟花，各自回家。',
+    greeting:
+      '你集齐了所有成就，解锁了这个世界的终极秘密——你不是在扮演一匹马，你就是那匹马。AI能帮你抢票、规划路线、写年终总结，但它算不出一个真相：回家的路，从来不在脚下，而在心里。当你想起自己是谁，翅膀自然就长出来了。新年快乐，愿你永远记得自己的翅膀。🦄✨',
+    cardStyle:
+      'bg-gradient-to-br from-violet-500 via-fuchsia-500 to-indigo-600 animate-gold-glow',
+  },
 }
 
 export default ENDINGS

@@ -58,9 +58,15 @@ function clampResource(value: number, resource: ResourceType): number {
   return Math.max(MIN_RESOURCE, Math.min(max, value))
 }
 
-function checkGameOver(resources: Resources): EndingType | null {
+function isOnHelicopterRoute(choicesMade: string[]): boolean {
+  return choicesMade.includes('ch2_plane_morning_yes')
+}
+
+function checkGameOver(resources: Resources, choicesMade: string[]): EndingType | null {
   if (resources.stamina <= MIN_RESOURCE) return 'exhausted'
-  if (resources.money <= MIN_RESOURCE) return 'broke'
+  if (resources.money <= MIN_RESOURCE) {
+    return isOnHelicopterRoute(choicesMade) ? 'sky_rider_broke' : 'broke'
+  }
   return null
 }
 
@@ -161,7 +167,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'MAKE_CHOICE': {
       let next = applyChoiceEffects(state, action.choice)
       next = applyItemChanges(next, action.choice)
-      const ending = checkGameOver(next.resources)
+      const ending = checkGameOver(next.resources, next.stats.choicesMade)
       if (ending) {
         return { ...next, isGameOver: true, ending }
       }
@@ -171,7 +177,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'APPLY_CHOICE_EFFECTS': {
       let next = applyEffectsOnly(state, action.choice)
       next = applyItemChanges(next, action.choice)
-      const ending = checkGameOver(next.resources)
+      const ending = checkGameOver(next.resources, next.stats.choicesMade)
       if (ending) {
         return { ...next, isGameOver: true, ending }
       }

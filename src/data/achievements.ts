@@ -160,6 +160,15 @@ const ACHIEVEMENTS: Achievement[] = [
     hidden: true,
   },
 
+  {
+    id: 'ending_unicorn_night',
+    name: '独角兽之夜',
+    emoji: '🦄',
+    description: '全成就解锁后的终极隐藏结局',
+    category: 'ending',
+    hidden: true,
+  },
+
   // ---- 里程碑成就 ----
   {
     id: 'big_spender',
@@ -191,6 +200,14 @@ const ACHIEVEMENTS: Achievement[] = [
     emoji: '🚁',
     description: '坐直升机回村，成为全村传说',
     category: 'ending',
+  },
+  {
+    id: 'ending_sky_rider_broke',
+    name: '倾家荡马',
+    emoji: '🚁💸',
+    description: '散尽家财坐直升机回村，排面拉满但兜比脸干净',
+    category: 'ending',
+    hidden: true,
   },
 ]
 
