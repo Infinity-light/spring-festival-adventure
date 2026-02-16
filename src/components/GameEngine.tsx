@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useGameState } from '@/lib/gameState'
 import { determineEnding } from '@/lib/storyEngine'
-import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements } from '@/lib/achievements'
+import { checkChoiceAchievements, checkEndingAchievements, unlockAchievements, accumulateGlobalStats } from '@/lib/achievements'
 import ResourceBar from '@/components/ResourceBar'
 import StoryScene from '@/components/StoryScene'
 import ParticleEffect from '@/components/ParticleEffect'
@@ -54,7 +54,8 @@ export function GameEngine({ storyNodes }: GameEngineProps) {
       // 第7章查看结局：触发结局判定
       if (choice.nextNodeId === 'game_end') {
         const endingType = determineEnding(state)
-        const endingAchs = checkEndingAchievements(endingType, state)
+        const globalStats = accumulateGlobalStats(state.stats)
+        const endingAchs = checkEndingAchievements(endingType, state, globalStats)
         handleNewAchievements(endingAchs)
         triggerGameOver(endingType)
         setIsChoosing(false)

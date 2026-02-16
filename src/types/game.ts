@@ -97,6 +97,8 @@ export interface GameStats {
   lowestStamina: number
   /** 心情最高值 */
   highestMood: number
+  /** 累计体力消耗（用于跨局里程碑） */
+  totalStaminaSpent: number
 }
 
 // --- 结局 ---
@@ -147,7 +149,7 @@ export interface GameState {
   /** 道具ID列表 */
   inventory: string[]
   stats: GameStats
-  transportMode: 'train' | 'car' | 'plane' | null
+  transportMode: 'train' | 'car' | 'plane' | 'hsr' | null
   isGameOver: boolean
   ending: EndingType | null
   /** 当前叙事文本的显示进度 */
@@ -161,7 +163,7 @@ export type GameAction =
   | { type: 'APPLY_CHOICE_EFFECTS'; choice: Choice }
   | { type: 'NAVIGATE_TO_NODE'; nodeId: string }
   | { type: 'ADVANCE_NARRATIVE' }
-  | { type: 'SET_TRANSPORT'; mode: 'train' | 'car' | 'plane' }
+  | { type: 'SET_TRANSPORT'; mode: 'train' | 'car' | 'plane' | 'hsr' }
   | { type: 'ADD_ITEM'; itemId: string }
   | { type: 'REMOVE_ITEM'; itemId: string }
   | { type: 'GAME_OVER'; ending: EndingType }

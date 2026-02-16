@@ -68,6 +68,13 @@ const ITEMS: Record<string, Item> = {
     description: '飞越千里的凭证，留作旅途纪念',
     image: '/items/boarding_pass.png',
   },
+  hsr_ticket: {
+    id: 'hsr_ticket',
+    name: '高铁票',
+    emoji: '🚄',
+    description: '退票改签的高铁票，曲线回家的见证',
+    image: '/items/hsr_ticket.png',
+  },
   dumpling: {
     id: 'dumpling',
     name: '妈妈的饺子',

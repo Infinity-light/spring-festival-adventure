@@ -133,19 +133,28 @@ const ACHIEVEMENTS: Achievement[] = [
     category: 'ending',
   },
 
+  {
+    id: 'detour_master',
+    name: '曲线救国',
+    emoji: '🚄',
+    description: '从飞机退票改坐高铁，殊途同归',
+    category: 'story',
+    hidden: true,
+  },
+
   // ---- 里程碑成就 ----
   {
     id: 'big_spender',
     name: '豪气冲天',
     emoji: '💎',
-    description: '单局花费超过3000元',
+    description: '累计花费超过30000元，真·散财马',
     category: 'milestone',
   },
   {
     id: 'iron_horse',
     name: '铁马精神',
     emoji: '💪',
-    description: '体力降到20以下还坚持到了终点',
+    description: '累计体力消耗超过300点，百折不挠',
     category: 'milestone',
   },
 ]

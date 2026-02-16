@@ -1,13 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { GameEngine } from '@/components/GameEngine'
 import ParticleEffect from '@/components/ParticleEffect'
 import allStoryNodes from '@/data/chapters'
+import { loadUnlocked } from '@/lib/achievements'
 
 export default function Home() {
   const [isStarted, setIsStarted] = useState(false)
+  const [hasCleared, setHasCleared] = useState(false)
+
+  useEffect(() => {
+    const unlocked = loadUnlocked()
+    const hasEnding = Object.keys(unlocked).some((k) => k.startsWith('ending_'))
+    setHasCleared(hasEnding)
+  }, [])
 
   if (isStarted) {
     return <GameEngine storyNodes={allStoryNodes} />
@@ -71,6 +80,22 @@ export default function Home() {
       >
         🐴 开始冒险
       </motion.button>
+
+      {hasCleared && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+          className="mt-4"
+        >
+          <Link
+            href="/afterword"
+            className="text-sm text-text-secondary opacity-70 hover:opacity-100 transition-opacity"
+          >
+            📝 后日谈
+          </Link>
+        </motion.div>
+      )}
 
       <p className="absolute bottom-4 text-text-secondary/40 text-[10px]">
         水中鱼 @godpenai.com, Cytopia, 2026

@@ -236,6 +236,48 @@ const chapter4Nodes: Record<string, StoryNode> = {
     ],
   },
 
+
+  // ==================== 高铁线（隐藏分支） ====================
+
+  ch4_hsr_arrival: {
+    id: 'ch4_hsr_arrival',
+    chapter: 4,
+    title: '第四章：到站风波',
+    narrative: [
+      '高铁缓缓停靠，本马拖着行李走出车厢，深吸一口家乡的空气。',
+      '比起机场，高铁站离家近多了——只有二十公里！这大概是退票最大的福利。',
+      '🐴 曲线回家，殊途同归，本马是战术大师。',
+      '出了站，本马正准备打车，突然看到出口处有个熟悉的身影——',
+      '老爸！举着一张手写纸牌站在那里，纸牌上歪歪扭扭地写着：接小马回家🐴',
+      '旁边的人都在看，老爸浑然不觉，踮着脚尖在人群里找你。',
+      '🐴 爸……你这纸牌也太显眼了吧。',
+    ],
+    choices: [
+      {
+        id: 'ch4_hsr_arrival_hug',
+        text: '冲过去给老爸一个拥抱',
+        effects: [
+          { resource: 'mood', delta: 20, message: '到家的感觉真好🏠' },
+          { resource: 'stamina', delta: 5, message: '亲情充电' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马三步并作两步冲过去，一把抱住了老爸。老爸被撞得往后退了两步，手里的纸牌掉在地上。愣了一秒，然后用力拍了拍你的背：行了行了，多大的马了还撒娇。但本马感觉到他的手在微微发抖。鼻子一酸，赶紧松开，假装看别处 🤗🥲',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch4_hsr_arrival_photo',
+        text: '先拍照发朋友圈曲线回家成功',
+        effects: [
+          { resource: 'mood', delta: 15, message: '朋友圈素材到手📸' },
+          { resource: 'stamina', delta: -5, message: '摆拍也累' },
+        ],
+        nextNodeId: 'ch4_home_approach',
+        feedback: '本马掏出手机，对着老爸和他的手写纸牌咔嚓一张。配文：飞机取消→退票→高铁→到家。曲线救国，本马是春运战术大师🐴🚄。发出去三秒，获赞47个，评论区全是哈哈哈哈哈和你爸的纸牌太可爱了。老爸凑过来看：发的啥？给我也看看。然后他也笑了 📸😂',
+        tag: 'funny',
+      },
+    ],
+  },
+
   // ==================== 三线汇合 ====================
 
   ch4_home_approach: {

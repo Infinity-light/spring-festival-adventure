@@ -36,6 +36,7 @@ const INITIAL_STATS: GameStats = {
   itemsUsed: 0,
   lowestStamina: MAX_STAMINA,
   highestMood: MAX_MOOD,
+  totalStaminaSpent: 0,
 }
 
 const INITIAL_GAME_STATE: GameState = {
@@ -80,6 +81,10 @@ function computeChoiceUpdates(state: GameState, choice: Choice) {
     .filter((e) => e.resource === 'money' && e.delta < 0)
     .reduce((sum, e) => sum + Math.abs(e.delta), 0)
 
+  const staminaSpent = choice.effects
+    .filter((e) => e.resource === 'stamina' && e.delta < 0)
+    .reduce((sum, e) => sum + Math.abs(e.delta), 0)
+
   const isRelationshipQuestion = choice.id.startsWith('relationship_')
   const isNoodle = ['pack1_noodles', 'pack2_noodles', 'ch2_train2_noodle', 'ch2_car2_noodle'].includes(choice.id)
 
@@ -98,6 +103,7 @@ function computeChoiceUpdates(state: GameState, choice: Choice) {
     funnyMoments: state.stats.funnyMoments + (isFunny ? 1 : 0),
     lowestStamina: Math.min(state.stats.lowestStamina, updatedResources.stamina),
     highestMood: Math.max(state.stats.highestMood, updatedResources.mood),
+    totalStaminaSpent: state.stats.totalStaminaSpent + staminaSpent,
   }
 
   return { updatedResources, updatedStats }
@@ -228,7 +234,7 @@ export function useGameState() {
   )
 
   const setTransport = useCallback(
-    (mode: 'train' | 'car' | 'plane') =>
+    (mode: 'train' | 'car' | 'plane' | 'hsr') =>
       dispatch({ type: 'SET_TRANSPORT', mode }),
     [],
   )

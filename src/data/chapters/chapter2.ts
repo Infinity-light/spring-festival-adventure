@@ -321,6 +321,8 @@ const chapter2Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch2_end',
         feedback: '退票、买高铁票、拖着行李从机场赶去火车站……本马折腾了一大圈，但至少今晚能在高铁上睡一觉 💫🚄',
+        removeItem: 'boarding_pass',
+        addItem: 'hsr_ticket',
       },
       {
         id: 'ch2_plane1_argue',
@@ -412,6 +414,13 @@ const chapter2Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch3_fly_delay',
         condition: { type: 'has_item', itemId: 'boarding_pass' },
+      },
+      {
+        id: 'ch2_end_hsr',
+        text: '继续坐高铁前进！',
+        effects: [],
+        nextNodeId: 'ch3_hsr_station',
+        condition: { type: 'has_item', itemId: 'hsr_ticket' },
       },
     ],
   },

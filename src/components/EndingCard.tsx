@@ -3,8 +3,11 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import html2canvas from 'html2canvas'
+import QRCode from 'qrcode'
 import AchievementPanel from '@/components/AchievementPanel'
 import type { Ending, GameStats, Resources } from '@/types/game'
+
+const GAME_URL = 'https://newyear.godpenai.com'
 
 const TOTAL_ITEMS = 12
 
@@ -107,6 +110,32 @@ const SCREENSHOT_SCALE = 2
 
 export default function EndingCard({ ending, stats, resources, newlyUnlocked, onRestart }: EndingCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
+  const [homeNumber, setHomeNumber] = useState<number | null>(null)
+  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null)
+
+  // 生成游戏链接二维码
+  useEffect(() => {
+    QRCode.toDataURL(GAME_URL, {
+      width: 112,
+      margin: 1,
+      color: { dark: '#ffffff', light: '#00000000' },
+      errorCorrectionLevel: 'M',
+    }).then(setQrDataUrl).catch(() => {})
+  }, [])
+
+  // 到达结局时调用计数器 API
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/counter', { method: 'POST' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && typeof data.number === 'number') {
+          setHomeNumber(data.number)
+        }
+      })
+      .catch(() => { /* silently fail */ })
+    return () => { cancelled = true }
+  }, [])
 
   const handleSaveCard = async () => {
     if (!cardRef.current) return
@@ -170,9 +199,39 @@ export default function EndingCard({ ending, stats, resources, newlyUnlocked, on
           {ending.greeting}
         </p>
 
-        {/* 底部 */}
-        <div style={{ textAlign: 'center', fontSize: 11, opacity: 0.6 }}>
-          春节回家历险记 · 2026
+        {/* 第N个回家的小马 */}
+        {homeNumber !== null && (
+          <div style={{ textAlign: 'center', fontSize: 13, opacity: 0.9, marginTop: 4 }}>
+            🐴 你是第 <span style={{ fontWeight: 800, fontSize: 16 }}>{homeNumber}</span> 个回家的小马
+          </div>
+        )}
+
+        {/* 底部：左文右码 */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          background: 'rgba(255,255,255,0.12)',
+          borderRadius: 12,
+          padding: '10px 14px',
+          marginTop: 4,
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 0.5 }}>
+              春节回家历险记
+            </span>
+            <span style={{ fontSize: 11, opacity: 0.7 }}>
+              扫码来玩 →
+            </span>
+          </div>
+          {qrDataUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={qrDataUrl}
+              alt="扫码来玩"
+              style={{ width: 56, height: 56, flexShrink: 0 }}
+            />
+          )}
         </div>
       </div>
 

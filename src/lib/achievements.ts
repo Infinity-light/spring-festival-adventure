@@ -3,11 +3,18 @@
 import type { GameState, Choice, EndingType } from '@/types/game'
 
 const STORAGE_KEY = 'spring-festival-achievements'
+const GLOBAL_STATS_KEY = 'spring-festival-global-stats'
 
 // ---- localStorage 读写 ----
 
 export interface UnlockedRecord {
   unlockedAt: string
+}
+
+export interface GlobalStats {
+  totalMoneySpent: number
+  totalStaminaSpent: number
+  gamesPlayed: number
 }
 
 export function loadUnlocked(): Record<string, UnlockedRecord> {
@@ -37,6 +44,37 @@ export function unlockAchievements(ids: string[]): void {
   saveUnlocked(data)
 }
 
+// ---- 跨局全局统计 ----
+
+export function loadGlobalStats(): GlobalStats {
+  if (typeof window === 'undefined') return { totalMoneySpent: 0, totalStaminaSpent: 0, gamesPlayed: 0 }
+  try {
+    const raw = localStorage.getItem(GLOBAL_STATS_KEY)
+    return raw ? JSON.parse(raw) : { totalMoneySpent: 0, totalStaminaSpent: 0, gamesPlayed: 0 }
+  } catch {
+    return { totalMoneySpent: 0, totalStaminaSpent: 0, gamesPlayed: 0 }
+  }
+}
+
+function saveGlobalStats(data: GlobalStats) {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(GLOBAL_STATS_KEY, JSON.stringify(data))
+  } catch { /* quota exceeded, silently fail */ }
+}
+
+/** 游戏结束时累加本局统计到全局，返回更新后的全局统计 */
+export function accumulateGlobalStats(sessionStats: GameState['stats']): GlobalStats {
+  const global = loadGlobalStats()
+  const updated: GlobalStats = {
+    totalMoneySpent: global.totalMoneySpent + sessionStats.totalMoneySpent,
+    totalStaminaSpent: global.totalStaminaSpent + sessionStats.totalStaminaSpent,
+    gamesPlayed: global.gamesPlayed + 1,
+  }
+  saveGlobalStats(updated)
+  return updated
+}
+
 // ---- 剧情成就：choice ID → achievement ID ----
 
 const CHOICE_ACHIEVEMENT_MAP: Record<string, string> = {
@@ -49,6 +87,7 @@ const CHOICE_ACHIEVEMENT_MAP: Record<string, string> = {
   ch6_cctv_roast: 'gala_roast',
   ch6_fireworks_light: 'firework_master',
   ch4_drive_parking_hug: 'hug_dad',
+  ch2_plane1_refund: 'detour_master',
 }
 
 // 前任重逢：到达 ch3_train_ex 节点时触发（通过 nextNodeId 检测）
@@ -82,25 +121,18 @@ export function checkChoiceAchievements(
     newIds.push('ex_encounter')
   }
 
-  // 3. 里程碑：豪气冲天（花费 > 3000）
-  const moneySpent = choice.effects
-    .filter((e) => e.resource === 'money' && e.delta < 0)
-    .reduce((sum, e) => sum + Math.abs(e.delta), 0)
-  const totalSpent = state.stats.totalMoneySpent + moneySpent
-  if (totalSpent > 3000 && !unlocked['big_spender']) {
-    newIds.push('big_spender')
-  }
-
   return newIds
 }
 
 /**
  * 结局触发时检测成就。
+ * globalStats 是已经累加了本局数据的全局统计。
  * 返回本次新解锁的成就 ID 列表。
  */
 export function checkEndingAchievements(
   ending: EndingType,
   state: GameState,
+  globalStats?: GlobalStats,
 ): string[] {
   const unlocked = loadUnlocked()
   const newIds: string[] = []
@@ -111,13 +143,13 @@ export function checkEndingAchievements(
     newIds.push(endingAchId)
   }
 
-  // 铁马精神：体力最低 ≤ 20 且成功到家（非 exhausted/broke/breakdown）
-  const badEndings: EndingType[] = ['exhausted', 'broke', 'breakdown']
-  if (
-    state.stats.lowestStamina <= 20 &&
-    !badEndings.includes(ending) &&
-    !unlocked['iron_horse']
-  ) {
+  // 跨局里程碑：豪气冲天（累计花费 > 30000）
+  if (globalStats && globalStats.totalMoneySpent > 30000 && !unlocked['big_spender']) {
+    newIds.push('big_spender')
+  }
+
+  // 跨局里程碑：铁马精神（累计体力消耗 > 300）
+  if (globalStats && globalStats.totalStaminaSpent > 300 && !unlocked['iron_horse']) {
     newIds.push('iron_horse')
   }
 

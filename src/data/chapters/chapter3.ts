@@ -380,6 +380,122 @@ const chapter3Nodes: Record<string, StoryNode> = {
     ],
   },
 
+
+  // ==================== 高铁线（隐藏分支） ====================
+
+  ch3_hsr_station: {
+    id: 'ch3_hsr_station',
+    chapter: 3,
+    title: '第三章：旅途奇遇',
+    narrative: [
+      '从机场打车赶到高铁站，一路上本马都在怀疑人生——今天到底换了几种交通工具？',
+      '高铁站到了，好家伙，春运的高铁站也是人山人海，和机场不相上下。',
+      '🐴 本马从飞机难民变成了高铁难民，这算不算无缝衔接？',
+      '正排队过安检呢，后面有人拍了拍你的肩膀。',
+      '一回头，是个跟你差不多大的小伙子，拖着个比他还大的行李箱，一脸苦笑。',
+      '"兄弟，你也是退票改高铁的？我看你拖着行李从机场方向来的。"',
+      '🐴 难友！这是难友啊！',
+      '两个人对视一眼，瞬间产生了革命友谊。',
+    ],
+    choices: [
+      {
+        id: 'ch3_hsr_station_rant',
+        text: '和难友一起吐槽航空公司',
+        effects: [
+          { resource: 'mood', delta: 10, message: '吐槽使人快乐😤' },
+          { resource: 'stamina', delta: -5, message: '嘴巴停不下来' },
+        ],
+        nextNodeId: 'ch3_hsr_ride',
+        feedback: '两个人从航班取消吐槽到机场服务，从退票流程吐槽到改签手续费，越说越激动，旁边排队的大姐都听入迷了。难友从包里掏出一个橘子递过来：吃个橘子消消气。本马觉得这个橘子格外甜 🍊😤',
+        addItem: 'lucky_orange',
+        tag: 'funny',
+      },
+      {
+        id: 'ch3_hsr_station_quiet',
+        text: '默默排队进站，保存体力',
+        effects: [
+          { resource: 'stamina', delta: -10, message: '沉默的消耗😶' },
+          { resource: 'mood', delta: -5, message: '一个人扛着有点闷' },
+        ],
+        nextNodeId: 'ch3_hsr_ride',
+        feedback: '本马礼貌地笑了笑，戴上耳机默默排队。难友识趣地没再说话，但两个人默契地站在一起，像两个被航空公司抛弃的孤儿。安检的时候难友帮本马扶了一下行李箱，嗯，还是有点温暖的 😶🧳',
+      },
+    ],
+  },
+
+  ch3_hsr_ride: {
+    id: 'ch3_hsr_ride',
+    chapter: 3,
+    narrative: [
+      '上了高铁，本马不得不承认——这座位比飞机经济舱宽敞多了。',
+      '腿能伸直！能伸直！这是什么神仙体验！',
+      '🐴 早知道一开始就买高铁票了，飞机经济舱简直是给沙丁鱼设计的。',
+      '难友就坐在旁边，两个人相视一笑，有种同是天涯沦落马的默契。',
+      '列车刚开动没多久，难友从包里掏出了一个保鲜盒——打开的瞬间，整个车厢都安静了。',
+      '卤鸭脖、卤鸡爪、卤藕片……一股浓郁的卤味香气弥漫开来。',
+      '乘务员小姐姐温柔地走过来：先生，车厢内请尽量不要食用气味较大的食品哦。',
+      '难友尴尬地笑了笑，但手没停。',
+    ],
+    choices: [
+      {
+        id: 'ch3_hsr_ride_feast',
+        text: '和难友分享卤味大餐！',
+        effects: [
+          { resource: 'stamina', delta: 10, message: '卤味补给，真香🍗' },
+          { resource: 'mood', delta: 15, message: '快乐分享，双倍快乐' },
+        ],
+        nextNodeId: 'ch3_hsr_arrival',
+        feedback: '本马毫不犹豫地加入了卤味盛宴。鸭脖辣得嘶嘶哈哈，鸡爪啃得满手油光，两个人吃得昏天黑地。乘务员小姐姐又来了两次，表情从温柔变成了无奈。对面的大爷默默咽了咽口水，难友大方地递过去一个鸡爪：大爷您也来一个！整排座位瞬间变成了流水席 🍗🦆',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch3_hsr_ride_window',
+        text: '戴上耳机，看窗外风景',
+        effects: [
+          { resource: 'mood', delta: 5, message: '窗外的世界很美🌄' },
+          { resource: 'stamina', delta: 5, message: '安静地休息' },
+        ],
+        nextNodeId: 'ch3_hsr_arrival',
+        feedback: '本马戴上耳机，把头靠在窗户上。窗外的风景飞速后退——城市的高楼变成了郊区的工厂，工厂变成了田野，田野变成了山丘。高铁时速350公里，窗外的世界像一部快进的电影。难友在旁边吃得正香，偶尔递过来一块鸭脖，本马摇摇头，继续看风景。这一刻，挺好的 🌄🎧',
+      },
+    ],
+  },
+
+  ch3_hsr_arrival: {
+    id: 'ch3_hsr_arrival',
+    chapter: 3,
+    narrative: [
+      '窗外的风景越来越熟悉了——那些连绵的小山丘，那些整齐的农田，那些冒着炊烟的村庄。',
+      '高铁广播响起：前方到站——',
+      '🐴 快到了！本马闻到家的味道了！',
+      '难友也开始收拾东西，两个人对视一眼，都有点感慨。',
+      '从机场到高铁站，从陌生人到难友，这一路折腾下来，居然还挺开心的。',
+      '难友掏出手机：兄弟，加个微信呗？明年春运咱们约好一起吐槽。',
+      '🐴 这大概就是春运的魔力吧——把两个被航空公司坑了的人，变成了朋友。',
+    ],
+    choices: [
+      {
+        id: 'ch3_hsr_arrival_exchange',
+        text: '交换联系方式，约好明年一起吐槽',
+        effects: [
+          { resource: 'mood', delta: 10, message: '多了一个朋友😊' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '两个人互扫了微信，难友的头像是一只被延误航班气到变形的猫。本马笑出了声。难友说：明年春运前我提前建个群，叫航空公司受害者联盟。本马觉得这个群一定会火 😊📱',
+        tag: 'helpful',
+      },
+      {
+        id: 'ch3_hsr_arrival_bye',
+        text: '礼貌告别，各奔东西',
+        effects: [
+          { resource: 'mood', delta: 5, message: '缘分到了自然散🤝' },
+        ],
+        nextNodeId: 'ch3_almost_there',
+        feedback: '本马笑着摆摆手：后会有期！难友拎着他那个巨大的行李箱消失在人群中。虽然没留联系方式，但这段退票难友的经历，大概会成为本马每年春节饭桌上的保留节目 🤝👋',
+      },
+    ],
+  },
+
   // ==================== 三线汇合 ====================
 
   ch3_almost_there: {
@@ -413,6 +529,13 @@ const chapter3Nodes: Record<string, StoryNode> = {
         effects: [],
         nextNodeId: 'ch4_fly_landing',
         condition: { type: 'has_item', itemId: 'boarding_pass' },
+      },
+      {
+        id: 'ch3_almost_there_hsr',
+        text: '高铁到站了！',
+        effects: [],
+        nextNodeId: 'ch4_hsr_arrival',
+        condition: { type: 'has_item', itemId: 'hsr_ticket' },
       },
     ],
   },
