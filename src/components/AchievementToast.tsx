@@ -24,6 +24,7 @@ export default function AchievementToast({ queue, onDone }: AchievementToastProp
       setIndex((i) => i + 1)
     } else {
       setVisible(null)
+      setIndex(0)
       onDone()
     }
   }, [index, queue, onDone])
