@@ -65,7 +65,7 @@ const ITEMS: Record<string, Item> = {
     id: 'boarding_pass',
     name: '登机牌',
     emoji: '✈️',
-    description: '虽然航班取消了，但登机牌留作纪念',
+    description: '飞越千里的凭证，留作旅途纪念',
     image: '/items/boarding_pass.png',
   },
   dumpling: {

@@ -54,7 +54,7 @@ export default function Home() {
         <p>🐴 扮演一匹在大城市打工的马</p>
         <p>经历春运回家的重重考验</p>
         <p>搞笑吐槽 · 生存选择 · 专属贺卡</p>
-        <p className="text-text-secondary/50 text-xs mt-2">7 种结局等你解锁，含 1 个隐藏结局 🐴</p>
+        <p className="text-text-secondary/50 text-xs mt-2">10 种结局等你解锁，含隐藏结局 🐴</p>
       </motion.div>
 
       <motion.button
@@ -71,6 +71,10 @@ export default function Home() {
       >
         🐴 开始冒险
       </motion.button>
+
+      <p className="absolute bottom-4 text-text-secondary/40 text-[10px]">
+        WaterFish@godpenAI.com, Cytopia, 2026
+      </p>
     </div>
   )
 }

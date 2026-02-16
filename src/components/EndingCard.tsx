@@ -103,7 +103,6 @@ function StatCard({ emoji, label, value, suffix }: {
   )
 }
 
-const CARD_ASPECT = '3 / 4'
 const SCREENSHOT_SCALE = 2
 
 export default function EndingCard({ ending, stats, resources, inventory, items, onRestart }: EndingCardProps) {
@@ -141,12 +140,11 @@ export default function EndingCard({ ending, stats, resources, inventory, items,
         ref={cardRef}
         style={{
           background: gradient,
-          aspectRatio: CARD_ASPECT,
           color: '#fff',
           position: 'relative',
           overflow: 'hidden',
         }}
-        className="w-full max-w-sm rounded-2xl shadow-2xl flex flex-col justify-between px-6 py-8"
+        className="w-full max-w-sm rounded-2xl shadow-2xl flex flex-col gap-5 px-6 py-8"
       >
         {/* 顶部：emoji + 标题 */}
         <div style={{ textAlign: 'center' }}>
@@ -175,7 +173,7 @@ export default function EndingCard({ ending, stats, resources, inventory, items,
         {/* 底部 */}
         <div style={{ textAlign: 'center', fontSize: 11, opacity: 0.6 }}>
           <div>春节回家历险记 · 2026</div>
-          <div>扫码挑战 →</div>
+          <div style={{ marginTop: 2 }}>WaterFish@godpenAI.com, Cytopia, 2026</div>
         </div>
       </div>
 

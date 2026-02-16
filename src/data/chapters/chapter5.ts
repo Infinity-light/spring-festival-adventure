@@ -166,6 +166,7 @@ const chapter5Nodes: Record<string, StoryNode> = {
         ],
         nextNodeId: 'ch5_blind_date',
         feedback: '你掏出充电宝递过去："这个给你玩，手机哥哥要用。"熊孩子研究了一下充电宝上的LED灯，居然玩得很开心。本马的充电宝，一物多用。🔋😎',
+        removeItem: 'power_bank',
       },
       {
         id: 'ch5_kid_noodles',
