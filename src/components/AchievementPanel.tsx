@@ -22,7 +22,7 @@ export default function AchievementPanel({ newlyUnlocked }: AchievementPanelProp
 
   useEffect(() => {
     setUnlocked(loadUnlocked())
-  }, [])
+  }, [newlyUnlocked])
 
   const totalUnlocked = Object.keys(unlocked).length
   const newSet = new Set(newlyUnlocked)
